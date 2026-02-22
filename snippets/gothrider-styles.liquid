@@ -12,7 +12,7 @@
 <script
   src="{{ 'gothrider-cart.js' | asset_url }}"
   defer
-  data-threshold="{{ settings.gr_free_shipping_threshold | default: 7500 }}"
+  data-threshold="{{ settings.gr_free_shipping_threshold | default: 75 | times: 100 }}"
   data-currency="{{ cart.currency.symbol | default: '$' }}"
   data-upsell-collection="{{ settings.gr_cart_upsell_collection | default: '' }}"
   data-upsell-limit="6"

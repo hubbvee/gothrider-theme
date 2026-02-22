@@ -84,12 +84,13 @@
       {
         "type": "range",
         "id": "gr_free_shipping_threshold",
-        "label": "Free shipping threshold (cents)",
+        "label": "Free shipping threshold ($)",
         "min": 0,
-        "max": 25000,
-        "step": 100,
-        "default": 7500,
-        "info": "Amount in cents. 7500 = $75.00. Set to 0 to disable."
+        "max": 250,
+        "step": 5,
+        "default": 75,
+        "unit": "$",
+        "info": "Dollar amount. Set to 0 to disable."
       },
       {
         "type": "collection",
