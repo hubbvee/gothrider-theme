@@ -377,6 +377,19 @@ a:hover {
 }
 
 /* ============================================
+   HEADER NAVIGATION OVERRIDE (match gothrider.ca)
+   ============================================ */
+
+@media screen and (min-width: 750px) {
+  .menu-list__link {
+    font-family: var(--font-heading--family, var(--gr-font-heading)) !important;
+    font-size: 1.5rem !important;
+    font-weight: var(--font-heading--weight, var(--gr-weight-regular)) !important;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* ============================================
    RESPONSIVE
    ============================================ */
 
