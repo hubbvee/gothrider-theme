@@ -512,7 +512,7 @@
             "label": "18px"
           }
         ],
-        "default": "14"
+        "default": "16"
       },
       {
         "type": "select",
@@ -928,7 +928,7 @@
             "label": "184px"
           }
         ],
-        "default": "32"
+        "default": "40"
       },
       {
         "type": "select",
@@ -1012,7 +1012,7 @@
             "label": "t:options.body"
           }
         ],
-        "default": "subheading"
+        "default": "heading"
       },
       {
         "type": "select",
@@ -1084,7 +1084,7 @@
             "label": "184px"
           }
         ],
-        "default": "24"
+        "default": "32"
       },
       {
         "type": "select",
@@ -1168,7 +1168,7 @@
             "label": "t:options.body"
           }
         ],
-        "default": "subheading"
+        "default": "heading"
       },
       {
         "type": "select",
@@ -1240,7 +1240,7 @@
             "label": "184px"
           }
         ],
-        "default": "18"
+        "default": "24"
       },
       {
         "type": "select",
@@ -1324,7 +1324,7 @@
             "label": "t:options.body"
           }
         ],
-        "default": "subheading"
+        "default": "heading"
       },
       {
         "type": "select",
@@ -1396,7 +1396,7 @@
             "label": "184px"
           }
         ],
-        "default": "16"
+        "default": "20"
       },
       {
         "type": "select",
