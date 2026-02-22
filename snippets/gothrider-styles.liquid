@@ -6,6 +6,19 @@
 {{ 'gothrider-header.css' | asset_url | stylesheet_tag }}
 {{ 'gothrider-product.css' | asset_url | stylesheet_tag }}
 {{ 'gothrider-collection.css' | asset_url | stylesheet_tag }}
+{{ 'gothrider-cart.css' | asset_url | stylesheet_tag }}
+
+<script
+  src="{{ 'gothrider-cart.js' | asset_url }}"
+  defer
+  data-threshold="{{ settings.gr_free_shipping_threshold | default: 7500 }}"
+  data-currency="{{ cart.currency.symbol | default: '$' }}"
+  data-upsell-collection="{{ settings.gr_cart_upsell_collection | default: '' }}"
+  data-upsell-limit="6"
+  data-qualified-text="{{ 'general.cart.free_shipping_qualified' | t | default: 'You qualify for free shipping!' }}"
+  data-remaining-text="{{ 'general.cart.free_shipping_remaining' | t | default: 'away from free shipping' }}"
+  data-upsell-title="{{ 'general.cart.upsell_title' | t | default: 'You might also like' }}"
+></script>
 
 {% if settings.gr_enable_scroll_reveal %}
   <script src="{{ 'gothrider-scroll-reveal.js' | asset_url }}" defer></script>

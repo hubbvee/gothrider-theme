@@ -76,6 +76,26 @@
         "id": "gr_enable_marquee",
         "label": "Enable marquee scrolling text",
         "default": true
+      },
+      {
+        "type": "header",
+        "content": "Cart Enhancements"
+      },
+      {
+        "type": "range",
+        "id": "gr_free_shipping_threshold",
+        "label": "Free shipping threshold (cents)",
+        "min": 0,
+        "max": 25000,
+        "step": 100,
+        "default": 7500,
+        "info": "Amount in cents. 7500 = $75.00. Set to 0 to disable."
+      },
+      {
+        "type": "collection",
+        "id": "gr_cart_upsell_collection",
+        "label": "Cart upsell collection",
+        "info": "Products from this collection appear in the cart drawer. Leave blank to disable."
       }
     ]
   },
