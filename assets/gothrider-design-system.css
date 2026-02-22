@@ -384,6 +384,45 @@ a:hover {
 }
 
 /* ============================================
+   FOCUS & ACCESSIBILITY
+   ============================================ */
+
+/* Focus-visible ring for keyboard navigation */
+:focus-visible {
+  outline: 2px solid var(--gr-cta);
+  outline-offset: 2px;
+}
+
+/* Remove outline for mouse clicks */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.gr-btn:focus-visible {
+  outline: 2px solid var(--gr-cta);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.25);
+}
+
+/* Skip link (already present in Horizon, this styles GR-specific uses) */
+.gr-skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: var(--gr-z-toast);
+  background: var(--gr-cta);
+  color: var(--gr-text-primary);
+  padding: var(--gr-space-sm) var(--gr-space-md);
+  font-family: var(--gr-font-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+}
+
+.gr-skip-link:focus {
+  left: var(--gr-gutter);
+}
+
+/* ============================================
    REDUCED MOTION
    ============================================ */
 

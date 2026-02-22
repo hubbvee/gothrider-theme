@@ -4,12 +4,12 @@
       <h2 class="gr-heading gr-heading-xl gr-testimonials__heading">{{ section.settings.heading }}</h2>
     {% endif %}
 
-    <div class="gr-testimonials" data-gr-testimonials>
-      <div class="gr-testimonials__track" data-gr-testimonials-track>
+    <div class="gr-testimonials" data-gr-testimonials role="region" aria-roledescription="carousel" aria-label="{{ section.settings.heading | default: 'Testimonials' }}">
+      <div class="gr-testimonials__track" data-gr-testimonials-track aria-live="polite" aria-atomic="true">
         {% for block in section.blocks %}
-          <div class="gr-testimonials__slide{% if forloop.first %} is-active{% endif %}" data-gr-slide="{{ forloop.index0 }}" {{ block.shopify_attributes }}>
+          <div class="gr-testimonials__slide{% if forloop.first %} is-active{% endif %}" data-gr-slide="{{ forloop.index0 }}" role="group" aria-roledescription="slide" aria-label="Testimonial {{ forloop.index }} of {{ section.blocks.size }}" {{ block.shopify_attributes }}>
             <blockquote class="gr-testimonials__quote">
-              <svg class="gr-testimonials__quote-icon" width="40" height="32" viewBox="0 0 40 32" fill="none">
+              <svg class="gr-testimonials__quote-icon" width="40" height="32" viewBox="0 0 40 32" fill="none" aria-hidden="true">
                 <path d="M0 32V19.2C0 8.53 5.87 2.13 17.6 0l1.6 3.2C11.73 5.07 8.27 9.6 8 16h8v16H0zm22.4 0V19.2C22.4 8.53 28.27 2.13 40 0l1.6 3.2C34.13 5.07 30.67 9.6 30.4 16h8v16H22.4z" fill="var(--gr-blood-red)" opacity="0.3"/>
               </svg>
               <p class="gr-testimonials__text">{{ block.settings.quote }}</p>
@@ -169,12 +169,19 @@
       var dots = container.querySelectorAll('[data-gr-dot]');
       var current = 0;
       var autoplayInterval;
+      var isPaused = false;
 
       function showSlide(index) {
         slides.forEach(function(s) { s.classList.remove('is-active'); });
-        dots.forEach(function(d) { d.classList.remove('is-active'); });
+        dots.forEach(function(d) {
+          d.classList.remove('is-active');
+          d.setAttribute('aria-selected', 'false');
+        });
         slides[index].classList.add('is-active');
-        if (dots[index]) dots[index].classList.add('is-active');
+        if (dots[index]) {
+          dots[index].classList.add('is-active');
+          dots[index].setAttribute('aria-selected', 'true');
+        }
         current = index;
       }
 
@@ -186,7 +193,9 @@
       });
 
       function nextSlide() {
-        showSlide((current + 1) % slides.length);
+        if (!isPaused) {
+          showSlide((current + 1) % slides.length);
+        }
       }
 
       function resetAutoplay() {
@@ -194,9 +203,38 @@
         autoplayInterval = setInterval(nextSlide, 5000);
       }
 
-      if (slides.length > 1) {
+      /* Pause autoplay on hover or focus within */
+      container.addEventListener('mouseenter', function() { isPaused = true; });
+      container.addEventListener('mouseleave', function() { isPaused = false; });
+      container.addEventListener('focusin', function() { isPaused = true; });
+      container.addEventListener('focusout', function() { isPaused = false; });
+
+      /* Keyboard navigation on dot container */
+      container.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          showSlide((current - 1 + slides.length) % slides.length);
+          resetAutoplay();
+        } else if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          showSlide((current + 1) % slides.length);
+          resetAutoplay();
+        }
+      });
+
+      /* Respect reduced motion */
+      var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+      if (slides.length > 1 && !prefersReduced.matches) {
         autoplayInterval = setInterval(nextSlide, 5000);
       }
+
+      prefersReduced.addEventListener('change', function(e) {
+        if (e.matches) {
+          clearInterval(autoplayInterval);
+        } else {
+          resetAutoplay();
+        }
+      });
     });
   })();
 </script>

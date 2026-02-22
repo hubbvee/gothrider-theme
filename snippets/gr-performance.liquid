@@ -1,0 +1,43 @@
+{% doc %}
+  GothRider Performance Optimizations
+  Resource hints, preconnects, and critical loading optimizations.
+{% enddoc %}
+
+{% comment %} ── Preconnect to known origins ── {% endcomment %}
+<link rel="preconnect" href="https://cdn.shopify.com">
+<link rel="preconnect" href="https://monorail-edge.shopifysvc.com">
+{% if settings.gr_cart_upsell_collection != blank %}
+  <link rel="dns-prefetch" href="https://cdn.shopify.com">
+{% endif %}
+
+{% comment %} ── Preload critical above-the-fold assets ── {% endcomment %}
+<link rel="preload" href="{{ 'gothrider-design-system.css' | asset_url }}" as="style">
+<link rel="preload" href="{{ 'gothrider-header.css' | asset_url }}" as="style">
+
+{% comment %} ── Preload hero image on homepage for LCP ── {% endcomment %}
+{% if template.name == 'index' %}
+  {% for block in section.blocks %}
+    {% if block.type == 'gr-hero-banner' and block.settings.image %}
+      <link
+        rel="preload"
+        as="image"
+        href="{{ block.settings.image | image_url: width: 1920 }}"
+        imagesrcset="{{ block.settings.image | image_url: width: 640 }} 640w, {{ block.settings.image | image_url: width: 960 }} 960w, {{ block.settings.image | image_url: width: 1280 }} 1280w, {{ block.settings.image | image_url: width: 1920 }} 1920w"
+        imagesizes="100vw"
+      >
+      {% break %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} ── Inline critical font-face declarations to avoid FOUT ── {% endcomment %}
+<style>
+  @font-face {
+    font-family: 'Fjalla One';
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'Lato';
+    font-display: swap;
+  }
+</style>
