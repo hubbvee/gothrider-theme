@@ -1,0 +1,200 @@
+<div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-container">
+    <div class="gr-newsletter gr-newsletter--{{ section.settings.style }}">
+      <div class="gr-newsletter__content">
+        {% if section.settings.heading != blank %}
+          <h2 class="gr-heading gr-heading-lg">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if section.settings.subtext != blank %}
+          <p class="gr-newsletter__subtext">{{ section.settings.subtext }}</p>
+        {% endif %}
+      </div>
+
+      <div class="gr-newsletter__form-wrapper">
+        {% form 'customer', class: 'gr-newsletter__form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter">
+          <div class="gr-newsletter__input-group">
+            <input
+              type="email"
+              name="contact[email]"
+              class="gr-newsletter__input"
+              placeholder="{{ section.settings.placeholder | default: 'Enter your email' }}"
+              required
+              autocomplete="email"
+              aria-label="{{ section.settings.placeholder | default: 'Enter your email' }}"
+            >
+            <button type="submit" class="gr-btn gr-btn--primary gr-newsletter__submit">
+              {{ section.settings.button_label | default: 'Subscribe' }}
+            </button>
+          </div>
+          {% if form.posted_successfully? %}
+            <p class="gr-newsletter__success">{{ section.settings.success_message | default: "Welcome to the ride." }}</p>
+          {% endif %}
+          {% if form.errors %}
+            <p class="gr-newsletter__error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+          {% endif %}
+        {% endform %}
+        {% if section.settings.disclaimer != blank %}
+          <p class="gr-newsletter__disclaimer">{{ section.settings.disclaimer }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gr-newsletter {
+    text-align: center;
+    max-width: var(--gr-narrow-max);
+    margin-inline: auto;
+    padding: var(--gr-space-3xl);
+  }
+
+  .gr-newsletter--bordered {
+    border: 1px solid var(--gr-border);
+  }
+
+  .gr-newsletter--surface {
+    background-color: var(--gr-surface);
+  }
+
+  .gr-newsletter__subtext {
+    color: var(--gr-text-secondary);
+    margin-top: var(--gr-space-sm);
+    margin-bottom: var(--gr-space-xl);
+    line-height: var(--gr-leading-relaxed);
+  }
+
+  .gr-newsletter__form {
+    width: 100%;
+  }
+
+  .gr-newsletter__input-group {
+    display: flex;
+    gap: 0;
+    max-width: 500px;
+    margin-inline: auto;
+  }
+
+  .gr-newsletter__input {
+    flex: 1;
+    padding: var(--gr-space-sm) var(--gr-space-md);
+    background-color: var(--gr-dark);
+    border: 1px solid var(--gr-border);
+    border-right: none;
+    color: var(--gr-text-primary);
+    font-family: var(--gr-font-body);
+    font-size: var(--gr-body-md);
+    min-height: 48px;
+    outline: none;
+    transition: border-color var(--gr-transition-fast);
+  }
+
+  .gr-newsletter__input:focus {
+    border-color: var(--gr-blood-red);
+  }
+
+  .gr-newsletter__input::placeholder {
+    color: var(--gr-text-muted);
+  }
+
+  .gr-newsletter__submit {
+    flex-shrink: 0;
+    border-radius: 0;
+  }
+
+  .gr-newsletter__success {
+    color: var(--gr-success);
+    margin-top: var(--gr-space-md);
+    font-family: var(--gr-font-heading);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-wide);
+    font-size: var(--gr-body-sm);
+  }
+
+  .gr-newsletter__error {
+    color: var(--gr-error);
+    margin-top: var(--gr-space-md);
+    font-size: var(--gr-body-sm);
+  }
+
+  .gr-newsletter__disclaimer {
+    color: var(--gr-text-muted);
+    font-size: var(--gr-body-xs);
+    margin-top: var(--gr-space-md);
+  }
+
+  @media (max-width: 768px) {
+    .gr-newsletter {
+      padding: var(--gr-space-2xl) var(--gr-space-lg);
+    }
+
+    .gr-newsletter__input-group {
+      flex-direction: column;
+    }
+
+    .gr-newsletter__input {
+      border-right: 1px solid var(--gr-border);
+      border-bottom: none;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "GR Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Join the Ride"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Get exclusive drops, early access, and dark roast secrets delivered to your inbox."
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input placeholder",
+      "default": "Enter your email"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Welcome to the ride."
+    },
+    {
+      "type": "text",
+      "id": "disclaimer",
+      "label": "Disclaimer text"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Style",
+      "options": [
+        { "value": "default", "label": "Default" },
+        { "value": "bordered", "label": "Bordered" },
+        { "value": "surface", "label": "Surface background" }
+      ],
+      "default": "default"
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Newsletter"
+    }
+  ]
+}
+{% endschema %}

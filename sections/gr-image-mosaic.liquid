@@ -1,0 +1,213 @@
+<div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="gr-heading gr-heading-xl gr-image-mosaic__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="gr-image-mosaic gr-image-mosaic--{{ section.settings.layout }}">
+      {% for block in section.blocks %}
+        <div class="gr-image-mosaic__item" {{ block.shopify_attributes }}>
+          {% if block.settings.link != blank %}
+            <a href="{{ block.settings.link }}" class="gr-image-mosaic__link">
+          {% endif %}
+
+          <div class="gr-image-mosaic__media">
+            {% if block.settings.image %}
+              {{ block.settings.image | image_url: width: 800 | image_tag:
+                loading: 'lazy',
+                sizes: '(min-width: 1024px) 33vw, 50vw',
+                widths: '400, 600, 800',
+                class: 'gr-image-mosaic__img'
+              }}
+            {% else %}
+              {{ 'lifestyle-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+
+          {% if block.settings.caption != blank %}
+            <div class="gr-image-mosaic__overlay">
+              <span class="gr-image-mosaic__caption">{{ block.settings.caption }}</span>
+            </div>
+          {% endif %}
+
+          {% if block.settings.link != blank %}
+            </a>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .gr-image-mosaic__heading {
+    margin-bottom: var(--gr-space-2xl);
+  }
+
+  .gr-image-mosaic {
+    display: grid;
+    gap: var(--gr-space-sm);
+  }
+
+  .gr-image-mosaic--grid-5 {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(1) {
+    grid-column: 1 / 2;
+    grid-row: 1 / 3;
+  }
+
+  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(2) {
+    grid-column: 2 / 3;
+  }
+
+  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(3) {
+    grid-column: 3 / 4;
+  }
+
+  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(4) {
+    grid-column: 2 / 3;
+  }
+
+  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(5) {
+    grid-column: 3 / 4;
+  }
+
+  .gr-image-mosaic--grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .gr-image-mosaic--grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gr-image-mosaic__item {
+    position: relative;
+    overflow: hidden;
+    background-color: var(--gr-surface);
+  }
+
+  .gr-image-mosaic__link {
+    display: block;
+    height: 100%;
+  }
+
+  .gr-image-mosaic__media {
+    height: 100%;
+  }
+
+  .gr-image-mosaic__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--gr-transition-slow);
+  }
+
+  .gr-image-mosaic__item:hover .gr-image-mosaic__img {
+    transform: scale(1.05);
+  }
+
+  .gr-image-mosaic__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--gr-space-lg);
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.7), transparent 50%);
+    opacity: 0;
+    transition: opacity var(--gr-transition-base);
+  }
+
+  .gr-image-mosaic__item:hover .gr-image-mosaic__overlay {
+    opacity: 1;
+  }
+
+  .gr-image-mosaic__caption {
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-heading-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-wide);
+    color: var(--gr-text-primary);
+  }
+
+  @media (max-width: 768px) {
+    .gr-image-mosaic--grid-5,
+    .gr-image-mosaic--grid-3 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(1) {
+      grid-column: 1 / -1;
+      grid-row: auto;
+    }
+
+    .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(n) {
+      grid-column: auto;
+    }
+
+    .gr-image-mosaic__overlay {
+      opacity: 1;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "GR Image Mosaic",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Layout",
+      "options": [
+        { "value": "grid-5", "label": "5-image mosaic (1 tall + 4 grid)" },
+        { "value": "grid-4", "label": "4-image grid (2x2)" },
+        { "value": "grid-3", "label": "3-column grid" }
+      ],
+      "default": "grid-5"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Image Mosaic",
+      "blocks": [
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" },
+        { "type": "image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,259 @@
+<div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="gr-heading gr-heading-xl gr-before-after__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="gr-before-after" data-gr-before-after>
+      <div class="gr-before-after__container">
+        <div class="gr-before-after__before">
+          {% if section.settings.before_image %}
+            {{ section.settings.before_image | image_url: width: 1200 | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 1024px) 60vw, 100vw',
+              widths: '600, 900, 1200',
+              class: 'gr-before-after__img'
+            }}
+          {% else %}
+            <div class="gr-before-after__placeholder gr-bg-surface">Before</div>
+          {% endif %}
+          <span class="gr-before-after__label gr-before-after__label--before">
+            {{ section.settings.before_label | default: 'Before' }}
+          </span>
+        </div>
+
+        <div class="gr-before-after__after" data-gr-after>
+          {% if section.settings.after_image %}
+            {{ section.settings.after_image | image_url: width: 1200 | image_tag:
+              loading: 'lazy',
+              sizes: '(min-width: 1024px) 60vw, 100vw',
+              widths: '600, 900, 1200',
+              class: 'gr-before-after__img'
+            }}
+          {% else %}
+            <div class="gr-before-after__placeholder gr-bg-dark">After</div>
+          {% endif %}
+          <span class="gr-before-after__label gr-before-after__label--after">
+            {{ section.settings.after_label | default: 'After' }}
+          </span>
+        </div>
+
+        <div class="gr-before-after__handle" data-gr-handle>
+          <div class="gr-before-after__handle-line"></div>
+          <div class="gr-before-after__handle-knob">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M8 4l-6 8 6 8M16 4l6 8-6 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="gr-before-after__handle-line"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .gr-before-after__heading {
+    text-align: center;
+    margin-bottom: var(--gr-space-2xl);
+  }
+
+  .gr-before-after {
+    max-width: var(--gr-content-max);
+    margin-inline: auto;
+  }
+
+  .gr-before-after__container {
+    position: relative;
+    overflow: hidden;
+    cursor: ew-resize;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .gr-before-after__before {
+    position: relative;
+    width: 100%;
+  }
+
+  .gr-before-after__after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .gr-before-after__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+
+  .gr-before-after__after .gr-before-after__img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: auto;
+    min-width: 100%;
+  }
+
+  .gr-before-after__placeholder {
+    aspect-ratio: 16 / 9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-heading-lg);
+    text-transform: uppercase;
+    color: var(--gr-text-muted);
+  }
+
+  .gr-before-after__label {
+    position: absolute;
+    bottom: var(--gr-space-lg);
+    padding: var(--gr-space-xs) var(--gr-space-md);
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-wider);
+    background-color: rgba(10, 10, 10, 0.8);
+    color: var(--gr-text-primary);
+  }
+
+  .gr-before-after__label--before {
+    right: var(--gr-space-lg);
+  }
+
+  .gr-before-after__label--after {
+    left: var(--gr-space-lg);
+  }
+
+  .gr-before-after__handle {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 4px;
+    height: 100%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .gr-before-after__handle-line {
+    flex: 1;
+    width: 2px;
+    background-color: var(--gr-bone-white);
+  }
+
+  .gr-before-after__handle-knob {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--gr-radius-full);
+    background-color: var(--gr-bone-white);
+    color: var(--gr-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--gr-shadow-lg);
+    flex-shrink: 0;
+  }
+</style>
+
+<script>
+  (function() {
+    document.querySelectorAll('[data-gr-before-after]').forEach(function(widget) {
+      var container = widget.querySelector('.gr-before-after__container');
+      var afterEl = widget.querySelector('[data-gr-after]');
+      var handle = widget.querySelector('[data-gr-handle]');
+      var isDragging = false;
+
+      function setPosition(x) {
+        var rect = container.getBoundingClientRect();
+        var pos = Math.max(0, Math.min(1, (x - rect.left) / rect.width));
+        var pct = pos * 100;
+        afterEl.style.width = pct + '%';
+        handle.style.left = pct + '%';
+      }
+
+      container.addEventListener('mousedown', function(e) {
+        isDragging = true;
+        setPosition(e.clientX);
+      });
+
+      window.addEventListener('mousemove', function(e) {
+        if (isDragging) {
+          e.preventDefault();
+          setPosition(e.clientX);
+        }
+      });
+
+      window.addEventListener('mouseup', function() {
+        isDragging = false;
+      });
+
+      container.addEventListener('touchstart', function(e) {
+        isDragging = true;
+        setPosition(e.touches[0].clientX);
+      }, { passive: true });
+
+      container.addEventListener('touchmove', function(e) {
+        if (isDragging) {
+          setPosition(e.touches[0].clientX);
+        }
+      }, { passive: true });
+
+      container.addEventListener('touchend', function() {
+        isDragging = false;
+      });
+    });
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "GR Before/After",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The GothRider Effect"
+    },
+    {
+      "type": "image_picker",
+      "id": "before_image",
+      "label": "Before image"
+    },
+    {
+      "type": "image_picker",
+      "id": "after_image",
+      "label": "After image"
+    },
+    {
+      "type": "text",
+      "id": "before_label",
+      "label": "Before label",
+      "default": "Before"
+    },
+    {
+      "type": "text",
+      "id": "after_label",
+      "label": "After label",
+      "default": "After"
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Before/After"
+    }
+  ]
+}
+{% endschema %}

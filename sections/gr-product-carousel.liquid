@@ -1,0 +1,269 @@
+{%- liquid
+  assign collection = section.settings.collection
+  assign limit = section.settings.products_to_show
+  assign columns = section.settings.columns
+-%}
+
+<div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-container">
+    {% if section.settings.heading != blank %}
+      <div class="gr-product-carousel__header">
+        <h2 class="gr-heading gr-heading-xl">{{ section.settings.heading }}</h2>
+        {% if section.settings.view_all_label != blank and collection %}
+          <a href="{{ collection.url }}" class="gr-btn gr-btn--ghost gr-product-carousel__view-all">
+            {{ section.settings.view_all_label }}
+          </a>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="gr-product-carousel__grid gr-product-carousel__grid--{{ columns }}">
+      {% if collection %}
+        {% for product in collection.products limit: limit %}
+          <div class="gr-product-card gr-card">
+            <a href="{{ product.url }}" class="gr-product-card__link">
+              <div class="gr-product-card__media">
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 600 | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw',
+                    widths: '300, 400, 600',
+                    class: 'gr-product-card__img gr-product-card__img--primary'
+                  }}
+                {% endif %}
+                {% if product.images[1] and section.settings.show_second_image %}
+                  {{ product.images[1] | image_url: width: 600 | image_tag:
+                    loading: 'lazy',
+                    sizes: '(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw',
+                    widths: '300, 400, 600',
+                    class: 'gr-product-card__img gr-product-card__img--hover'
+                  }}
+                {% endif %}
+
+                {% if product.available == false %}
+                  <span class="gr-badge gr-badge--sold-out">{{ 'products.product.sold_out' | t | default: 'Sold Out' }}</span>
+                {% elsif product.created_at == product.published_at %}
+                  <span class="gr-badge gr-badge--new">{{ 'products.product.new' | t | default: 'New' }}</span>
+                {% elsif product.compare_at_price > product.price %}
+                  <span class="gr-badge gr-badge--sale">{{ 'products.product.on_sale' | t | default: 'Sale' }}</span>
+                {% endif %}
+              </div>
+
+              <div class="gr-product-card__info">
+                <h3 class="gr-product-card__title">{{ product.title }}</h3>
+                <div class="gr-product-card__price">
+                  {% if product.compare_at_price > product.price %}
+                    <span class="gr-product-card__price--compare">{{ product.compare_at_price | money }}</span>
+                  {% endif %}
+                  <span class="gr-product-card__price--current{% if product.compare_at_price > product.price %} gr-product-card__price--sale{% endif %}">
+                    {{ product.price | money }}
+                  </span>
+                </div>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      {% else %}
+        {% for i in (1..limit) %}
+          <div class="gr-product-card gr-card">
+            <div class="gr-product-card__media gr-product-card__placeholder">
+              {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="gr-product-card__info">
+              <h3 class="gr-product-card__title">Sample Product {{ forloop.index }}</h3>
+              <div class="gr-product-card__price">
+                <span class="gr-product-card__price--current">$29.99</span>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .gr-product-carousel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--gr-space-2xl);
+    gap: var(--gr-space-md);
+  }
+
+  .gr-product-carousel__view-all {
+    flex-shrink: 0;
+  }
+
+  .gr-product-carousel__grid {
+    display: grid;
+    gap: var(--gr-space-lg);
+  }
+
+  .gr-product-carousel__grid--2 { grid-template-columns: repeat(2, 1fr); }
+  .gr-product-carousel__grid--3 { grid-template-columns: repeat(3, 1fr); }
+  .gr-product-carousel__grid--4 { grid-template-columns: repeat(4, 1fr); }
+
+  .gr-product-card {
+    position: relative;
+  }
+
+  .gr-product-card__link {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .gr-product-card__link:hover {
+    color: inherit;
+  }
+
+  .gr-product-card__media {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background-color: var(--gr-surface);
+  }
+
+  .gr-product-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity var(--gr-transition-base);
+  }
+
+  .gr-product-card__img--hover {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+  }
+
+  .gr-product-card:hover .gr-product-card__img--hover {
+    opacity: 1;
+  }
+
+  .gr-product-card:hover .gr-product-card__img--primary {
+    opacity: 0;
+  }
+
+  .gr-product-card__media .gr-badge {
+    position: absolute;
+    top: var(--gr-space-sm);
+    left: var(--gr-space-sm);
+    z-index: 1;
+  }
+
+  .gr-product-card__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gr-product-card__placeholder .placeholder-svg {
+    width: 60%;
+    opacity: 0.3;
+  }
+
+  .gr-product-card__info {
+    padding: var(--gr-space-md) 0;
+  }
+
+  .gr-product-card__title {
+    font-family: var(--gr-font-body);
+    font-size: var(--gr-body-md);
+    font-weight: var(--gr-weight-medium);
+    text-transform: none;
+    letter-spacing: var(--gr-tracking-normal);
+    color: var(--gr-text-primary);
+    margin-bottom: var(--gr-space-xs);
+  }
+
+  .gr-product-card__price {
+    display: flex;
+    align-items: center;
+    gap: var(--gr-space-sm);
+    font-family: var(--gr-font-body);
+    font-size: var(--gr-body-sm);
+  }
+
+  .gr-product-card__price--compare {
+    text-decoration: line-through;
+    color: var(--gr-text-muted);
+  }
+
+  .gr-product-card__price--sale {
+    color: var(--gr-blood-red);
+  }
+
+  .gr-product-card__price--current {
+    color: var(--gr-text-secondary);
+    font-weight: var(--gr-weight-semibold);
+  }
+
+  @media (max-width: 768px) {
+    .gr-product-carousel__grid--3,
+    .gr-product-carousel__grid--4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gr-product-carousel__header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "GR Product Carousel",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Discover Our Coffees"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "Products to show",
+      "min": 2,
+      "max": 12,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_second_image",
+      "label": "Show second image on hover",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "view_all_label",
+      "label": "View All button label",
+      "default": "View All"
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Product Carousel"
+    }
+  ]
+}
+{% endschema %}
