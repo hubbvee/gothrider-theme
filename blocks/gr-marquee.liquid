@@ -1,0 +1,153 @@
+{% stylesheet %}
+  .gr-marquee-section {
+    padding-block: var(--gr-space-md);
+    overflow: hidden;
+    border-top: 1px solid var(--gr-border-subtle);
+    border-bottom: 1px solid var(--gr-border-subtle);
+  }
+
+  .gr-marquee-section--blood {
+    background-color: var(--gr-blood-red);
+    border-color: var(--gr-blood-red);
+  }
+
+  .gr-marquee-section--dark {
+    background-color: var(--gr-darker);
+  }
+
+  .gr-marquee-section--surface {
+    background-color: var(--gr-surface);
+  }
+
+  .gr-marquee__track {
+    display: flex;
+    width: max-content;
+  }
+
+  .gr-marquee__item {
+    display: flex;
+    align-items: center;
+    gap: var(--gr-space-lg);
+    padding-inline: var(--gr-space-lg);
+    font-family: var(--gr-font-heading);
+    font-weight: var(--gr-weight-bold);
+    letter-spacing: var(--gr-tracking-widest);
+    text-transform: uppercase;
+    white-space: nowrap;
+    color: var(--gr-text-primary);
+  }
+
+  .gr-marquee__item--lg {
+    font-size: var(--gr-heading-lg);
+    padding-block: var(--gr-space-sm);
+  }
+
+  .gr-marquee__item--md {
+    font-size: var(--gr-heading-md);
+  }
+
+  .gr-marquee__item--sm {
+    font-size: var(--gr-body-md);
+  }
+
+  .gr-marquee__separator {
+    color: var(--gr-bone-white-muted);
+  }
+
+  .gr-marquee-section--blood .gr-marquee__separator {
+    color: rgba(245, 245, 220, 0.5);
+  }
+
+  /* Speed variants */
+  .gr-marquee__track--slow { animation: gr-marquee 40s linear infinite; }
+  .gr-marquee__track--normal { animation: gr-marquee 25s linear infinite; }
+  .gr-marquee__track--fast { animation: gr-marquee 15s linear infinite; }
+
+  .gr-marquee:hover .gr-marquee__track {
+    animation-play-state: paused;
+  }
+{% endstylesheet %}
+
+{%- liquid
+  assign text = block.settings.text
+  assign separator = block.settings.separator
+  assign repetitions = 8
+-%}
+
+<div class="gr-marquee-section gr-marquee-section--{{ block.settings.style }}" {{ block.shopify_attributes }}>
+  <div class="gr-marquee">
+    <div class="gr-marquee__track gr-marquee__track--{{ block.settings.speed }}">
+      {% for i in (1..repetitions) %}
+        <span class="gr-marquee__item gr-marquee__item--{{ block.settings.size }}">
+          {{ text }}
+          <span class="gr-marquee__separator">{{ separator }}</span>
+        </span>
+      {% endfor %}
+      {% for i in (1..repetitions) %}
+        <span class="gr-marquee__item gr-marquee__item--{{ block.settings.size }}">
+          {{ text }}
+          <span class="gr-marquee__separator">{{ separator }}</span>
+        </span>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "GR Marquee",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Marquee Text",
+      "default": "FREE SHIPPING ON ORDERS $75+"
+    },
+    {
+      "type": "text",
+      "id": "separator",
+      "label": "Separator",
+      "default": "\u2022"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Text Size",
+      "options": [
+        { "value": "sm", "label": "Small" },
+        { "value": "md", "label": "Medium" },
+        { "value": "lg", "label": "Large" }
+      ],
+      "default": "md"
+    },
+    {
+      "type": "select",
+      "id": "speed",
+      "label": "Speed",
+      "options": [
+        { "value": "slow", "label": "Slow" },
+        { "value": "normal", "label": "Normal" },
+        { "value": "fast", "label": "Fast" }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "Background Style",
+      "options": [
+        { "value": "dark", "label": "Dark" },
+        { "value": "surface", "label": "Surface" },
+        { "value": "blood", "label": "Blood Red" }
+      ],
+      "default": "dark"
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Marquee"
+    }
+  ]
+}
+{% endschema %}

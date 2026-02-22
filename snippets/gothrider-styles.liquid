@@ -1,4 +1,9 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fjalla+One&family=Lato:wght@400;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+
 {{ 'gothrider-design-system.css' | asset_url | stylesheet_tag }}
+{{ 'gothrider-header.css' | asset_url | stylesheet_tag }}
 
 {% if settings.gr_enable_scroll_reveal %}
   <script src="{{ 'gothrider-scroll-reveal.js' | asset_url }}" defer></script>

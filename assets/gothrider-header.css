@@ -1,0 +1,135 @@
+/* ============================================
+   GOTHRIDER HEADER OVERRIDES
+   Themes the Horizon header with GR brand
+   ============================================ */
+
+/* ---- Header Base ---- */
+
+header-component,
+.header-section {
+  --color-background: var(--gr-black);
+  --color-foreground: var(--gr-text-primary);
+  --color-foreground-heading: var(--gr-text-primary);
+  --color-border: var(--gr-border-subtle);
+}
+
+.header {
+  border-bottom: 1px solid var(--gr-border-subtle);
+}
+
+/* ---- Navigation Links ---- */
+
+.header__menu-item,
+.header a,
+header-component a {
+  font-family: var(--gr-font-heading);
+  letter-spacing: var(--gr-tracking-wide);
+  text-transform: uppercase;
+  font-size: var(--gr-body-sm);
+  color: var(--gr-bone-white);
+  transition: color var(--gr-transition-fast);
+}
+
+.header__menu-item:hover,
+.header a:hover,
+header-component a:hover {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Active Nav State ---- */
+
+.header__menu-item--active,
+.header__menu-item[aria-current="page"] {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Logo ---- */
+
+.header__logo-image {
+  filter: brightness(0) invert(1);
+}
+
+/* ---- Header Icons (cart, search, account) ---- */
+
+.header__icon,
+.header-actions__icon {
+  color: var(--gr-bone-white);
+  transition: color var(--gr-transition-fast);
+}
+
+.header__icon:hover,
+.header-actions__icon:hover {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Cart Count Badge ---- */
+
+.header__cart-count,
+.cart-count-badge {
+  background-color: var(--gr-cta);
+  color: var(--gr-text-primary);
+  font-family: var(--gr-font-heading);
+  font-weight: var(--gr-weight-bold);
+}
+
+/* ---- Mega Menu / Dropdown ---- */
+
+.header__submenu,
+.mega-menu,
+[data-menu-drawer],
+.header__dropdown {
+  background-color: var(--gr-dark);
+  border: 1px solid var(--gr-border-subtle);
+  box-shadow: var(--gr-shadow-lg);
+}
+
+.header__submenu a,
+.mega-menu a,
+.header__dropdown a {
+  color: var(--gr-bone-white);
+}
+
+.header__submenu a:hover,
+.mega-menu a:hover,
+.header__dropdown a:hover {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Mobile Drawer ---- */
+
+.menu-drawer,
+.header-drawer {
+  background-color: var(--gr-black);
+  color: var(--gr-text-primary);
+}
+
+.menu-drawer a,
+.header-drawer a {
+  color: var(--gr-bone-white);
+  font-family: var(--gr-font-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+}
+
+.menu-drawer a:hover,
+.header-drawer a:hover {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Sticky Header Transition ---- */
+
+header-component[sticky] {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* ---- Transparent Header on Hero ---- */
+
+header-component[transparent] {
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+header-component[transparent]:not([stuck]) .header {
+  border-bottom-color: transparent;
+}
