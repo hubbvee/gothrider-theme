@@ -1,0 +1,112 @@
+{%- assign collection = collection -%}
+
+<div class="gr-collection-hero gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-collection-hero__media">
+    {% if collection.image %}
+      {{ collection.image | image_url: width: 1920 | image_tag:
+        loading: 'eager',
+        sizes: '100vw',
+        widths: '640, 960, 1280, 1920',
+        class: 'gr-collection-hero__img'
+      }}
+    {% elsif section.settings.fallback_image %}
+      {{ section.settings.fallback_image | image_url: width: 1920 | image_tag:
+        loading: 'eager',
+        sizes: '100vw',
+        widths: '640, 960, 1280, 1920',
+        class: 'gr-collection-hero__img'
+      }}
+    {% endif %}
+  </div>
+  <div class="gr-collection-hero__overlay"></div>
+  <div class="gr-collection-hero__content gr-container">
+    <h1 class="gr-heading gr-heading-xxl">{{ collection.title }}</h1>
+    {% if collection.description != blank and section.settings.show_description %}
+      <p class="gr-collection-hero__description">{{ collection.description | strip_html | truncatewords: 30 }}</p>
+    {% endif %}
+    {% if section.settings.show_count %}
+      <span class="gr-collection-hero__count">{{ collection.products_count }} {{ 'collections.general.items' | t | default: 'products' }}</span>
+    {% endif %}
+  </div>
+</div>
+
+<style>
+  .gr-collection-hero {
+    position: relative;
+    min-height: 30vh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    background-color: var(--gr-dark);
+  }
+
+  .gr-collection-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+
+  .gr-collection-hero__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gr-collection-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.2));
+  }
+
+  .gr-collection-hero__content {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--gr-space-3xl);
+  }
+
+  .gr-collection-hero__description {
+    color: var(--gr-text-secondary);
+    margin-top: var(--gr-space-sm);
+    max-width: var(--gr-narrow-max);
+    line-height: var(--gr-leading-relaxed);
+  }
+
+  .gr-collection-hero__count {
+    display: inline-block;
+    margin-top: var(--gr-space-md);
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-wider);
+    color: var(--gr-text-muted);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "GR Collection Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "Fallback image (if collection has no image)"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show collection description",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_count",
+      "label": "Show product count",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Collection Hero"
+    }
+  ]
+}
+{% endschema %}

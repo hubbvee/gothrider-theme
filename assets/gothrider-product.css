@@ -1,0 +1,183 @@
+/* ============================================
+   GOTHRIDER PRODUCT PAGE OVERRIDES
+   ============================================ */
+
+/* ---- Product Title ---- */
+
+.product-information h1,
+.product-information [data-type-preset="h3"] {
+  font-family: var(--gr-font-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+  color: var(--gr-text-primary);
+}
+
+/* ---- Price ---- */
+
+.product-information .price,
+.product-information [class*="price"] {
+  font-family: var(--gr-font-heading);
+  color: var(--gr-text-primary);
+}
+
+.product-information .price--on-sale .price__regular,
+.product-information .price__compare-at {
+  color: var(--gr-text-muted);
+  text-decoration: line-through;
+}
+
+.product-information .price--on-sale .price__sale,
+.product-information .price--on-sale .price__current {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Variant Picker ---- */
+
+.product-information .variant-picker__label,
+.product-information fieldset legend {
+  font-family: var(--gr-font-heading);
+  font-size: var(--gr-body-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+  color: var(--gr-text-primary);
+}
+
+.product-information .variant-picker__button,
+.product-information .variant-button {
+  border-color: var(--gr-border);
+  color: var(--gr-text-primary);
+  background-color: transparent;
+  transition: all var(--gr-transition-fast);
+}
+
+.product-information .variant-picker__button:hover,
+.product-information .variant-button:hover {
+  border-color: var(--gr-text-secondary);
+}
+
+.product-information .variant-picker__button--selected,
+.product-information .variant-picker__button[aria-checked="true"],
+.product-information .variant-button--selected {
+  border-color: var(--gr-text-primary);
+  background-color: var(--gr-text-primary);
+  color: var(--gr-black);
+}
+
+/* ---- Buy Buttons ---- */
+
+.product-information .button,
+.product-information [type="submit"].button,
+.product-information .shopify-payment-button__button {
+  font-family: var(--gr-font-heading);
+  font-weight: var(--gr-weight-bold);
+  letter-spacing: var(--gr-tracking-wider);
+  text-transform: uppercase;
+  min-height: 52px;
+  border-radius: var(--gr-radius-none);
+}
+
+.product-information .button--primary,
+.product-information [type="submit"].button:not(.button--secondary) {
+  background-color: var(--gr-cta);
+  color: var(--gr-text-primary);
+  border-color: var(--gr-cta);
+}
+
+.product-information .button--primary:hover,
+.product-information [type="submit"].button:not(.button--secondary):hover {
+  background-color: var(--gr-cta-hover);
+  border-color: var(--gr-cta-hover);
+  box-shadow: 0 0 20px rgba(255, 85, 0, 0.3);
+}
+
+.product-information .button--primary:disabled,
+.product-information [type="submit"].button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* ---- Quantity Selector ---- */
+
+.product-information .quantity-selector,
+.product-information quantity-selector {
+  border-color: var(--gr-border);
+  color: var(--gr-text-primary);
+}
+
+.product-information .quantity-selector__button {
+  color: var(--gr-text-primary);
+}
+
+.product-information .quantity-selector__button:hover {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Product Description ---- */
+
+.product-information .rte,
+.product-information .product-description {
+  color: var(--gr-text-secondary);
+  line-height: var(--gr-leading-relaxed);
+}
+
+.product-information .rte a {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Media Gallery ---- */
+
+.product-information .product-media-gallery {
+  background-color: var(--gr-surface);
+}
+
+.product-information .product-media-gallery__thumbnail {
+  border-color: var(--gr-border-subtle);
+  transition: border-color var(--gr-transition-fast);
+}
+
+.product-information .product-media-gallery__thumbnail--active,
+.product-information .product-media-gallery__thumbnail:hover {
+  border-color: var(--gr-blood-red);
+}
+
+/* ---- Product Badges ---- */
+
+.product-information .badge {
+  font-family: var(--gr-font-heading);
+  font-weight: var(--gr-weight-bold);
+  letter-spacing: var(--gr-tracking-wider);
+  text-transform: uppercase;
+}
+
+/* ---- Dividers ---- */
+
+.product-information hr,
+.product-information .divider {
+  border-color: var(--gr-border-subtle);
+}
+
+/* ---- Product Recommendations ---- */
+
+.product-recommendations h3,
+.product-recommendations [data-type-preset="h4"] {
+  font-family: var(--gr-font-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+  color: var(--gr-text-primary);
+}
+
+/* ---- Installments / Payment Info ---- */
+
+.product-information .installments,
+.product-information .shopify-installments {
+  color: var(--gr-text-muted);
+  font-size: var(--gr-body-sm);
+}
+
+/* ---- Pickup Availability ---- */
+
+.product-information .pickup-availability {
+  color: var(--gr-text-secondary);
+  border-color: var(--gr-border-subtle);
+}

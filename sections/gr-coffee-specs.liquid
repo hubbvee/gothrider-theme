@@ -1,0 +1,309 @@
+{% if settings.gr_store_module == 'coffee' or settings.gr_store_module == 'full' %}
+  <div class="gr-coffee-specs gr-section">
+    <div class="gr-container">
+      {% if section.settings.heading != blank %}
+        <h2 class="gr-coffee-specs__title gr-reveal">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      {% if section.settings.description != blank %}
+        <p class="gr-coffee-specs__desc gr-reveal">{{ section.settings.description }}</p>
+      {% endif %}
+
+      <div class="gr-coffee-specs__grid gr-reveal">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'spec' %}
+              <div class="gr-coffee-spec-card" {{ block.shopify_attributes }}>
+                {% if block.settings.icon != 'none' %}
+                  <div class="gr-coffee-spec-card__icon">
+                    {% case block.settings.icon %}
+                      {% when 'roast' %}
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><path d="M12 20c0-4 4-6 4-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 20c0-4 4-6 4-10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20 20c0-4 4-6 4-10" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.4"/></svg>
+                      {% when 'origin' %}
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><path d="M4 16h24M16 4c-4 4-4 12 0 24M16 4c4 4 4 12 0 24" stroke="currentColor" stroke-width="1.5"/></svg>
+                      {% when 'caffeine' %}
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M6 8h14v14a4 4 0 01-4 4h-6a4 4 0 01-4-4V8z" stroke="currentColor" stroke-width="2"/><path d="M20 12h2a4 4 0 010 8h-2" stroke="currentColor" stroke-width="2"/><path d="M10 4v3M13 3v4M16 4v3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                      {% when 'flavor' %}
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                      {% when 'certification' %}
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><path d="M16 4l-2 6H8l5 4-2 6 5-4 5 4-2-6 5-4h-6z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 22v6l4-2 4 2v-6" stroke="currentColor" stroke-width="2"/></svg>
+                      {% when 'process' %}
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="currentColor" stroke-width="2"/><path d="M16 8v8l5 3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    {% endcase %}
+                  </div>
+                {% endif %}
+
+                <h3 class="gr-coffee-spec-card__label">{{ block.settings.label }}</h3>
+                <p class="gr-coffee-spec-card__value">{{ block.settings.value }}</p>
+
+                {% if block.settings.meter_value > 0 %}
+                  <div class="gr-coffee-spec-card__meter" aria-label="{{ block.settings.label }}: {{ block.settings.meter_value }} out of 5">
+                    {% for i in (1..5) %}
+                      <span class="gr-meter-dot {% if i <= block.settings.meter_value %}is-filled{% endif %}"></span>
+                    {% endfor %}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.sublabel != blank %}
+                  <span class="gr-coffee-spec-card__sub">{{ block.settings.sublabel }}</span>
+                {% endif %}
+              </div>
+
+            {% when 'divider' %}
+              <div class="gr-coffee-specs__divider" {{ block.shopify_attributes }}></div>
+
+          {% endcase %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .gr-coffee-specs {
+    padding: var(--gr-section-spacing, 4rem) 0;
+  }
+
+  .gr-coffee-specs__title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-bone-white, #F5F5DC);
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .gr-coffee-specs__desc {
+    color: var(--gr-text-muted, #999);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.6;
+  }
+
+  .gr-coffee-specs__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  /* Spec card */
+  .gr-coffee-spec-card {
+    background: var(--gr-surface, #1A1A1A);
+    border: 1px solid var(--gr-border, #333);
+    padding: 1.5rem;
+    text-align: center;
+    transition: border-color 0.3s;
+  }
+
+  .gr-coffee-spec-card:hover {
+    border-color: var(--gr-blood-red, #8B0000);
+  }
+
+  .gr-coffee-spec-card__icon {
+    color: var(--gr-blood-red, #8B0000);
+    margin-bottom: 1rem;
+  }
+
+  .gr-coffee-spec-card__icon svg {
+    width: 32px;
+    height: 32px;
+  }
+
+  .gr-coffee-spec-card__label {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gr-text-muted, #999);
+    margin-bottom: 0.5rem;
+  }
+
+  .gr-coffee-spec-card__value {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 1.15rem;
+    color: var(--gr-bone-white, #F5F5DC);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* Meter dots */
+  .gr-coffee-spec-card__meter {
+    display: flex;
+    justify-content: center;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .gr-meter-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 1px solid var(--gr-blood-red, #8B0000);
+    background: transparent;
+    transition: background 0.2s;
+  }
+
+  .gr-meter-dot.is-filled {
+    background: var(--gr-blood-red, #8B0000);
+  }
+
+  .gr-coffee-spec-card__sub {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--gr-text-muted, #999);
+    font-style: italic;
+  }
+
+  /* Divider block */
+  .gr-coffee-specs__divider {
+    grid-column: 1 / -1;
+    height: 1px;
+    background: var(--gr-border, #333);
+    margin: 0.5rem 0;
+  }
+
+  @media (max-width: 749px) {
+    .gr-coffee-specs__grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+
+    .gr-coffee-spec-card {
+      padding: 1.25rem 1rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "GR Coffee Specs",
+  "tag": "section",
+  "class": "gr-coffee-specs-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Coffee Specifications"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Every bean tells a story. Here's what's in your cup."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "roast", "label": "Roast level" },
+            { "value": "origin", "label": "Origin" },
+            { "value": "caffeine", "label": "Caffeine" },
+            { "value": "flavor", "label": "Flavor" },
+            { "value": "certification", "label": "Certification" },
+            { "value": "process", "label": "Process" }
+          ],
+          "default": "roast"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Roast Level"
+        },
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Value",
+          "default": "Dark"
+        },
+        {
+          "type": "range",
+          "id": "meter_value",
+          "label": "Meter (0 = hidden)",
+          "min": 0,
+          "max": 5,
+          "step": 1,
+          "default": 0,
+          "info": "Visual dot meter. Set to 0 to hide."
+        },
+        {
+          "type": "text",
+          "id": "sublabel",
+          "label": "Sublabel",
+          "info": "Optional small text below the value"
+        }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
+      "settings": []
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Coffee Specs",
+      "blocks": [
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "roast",
+            "label": "Roast Level",
+            "value": "Dark",
+            "meter_value": 4
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "origin",
+            "label": "Origin",
+            "value": "South America",
+            "sublabel": "Brazil & Colombia blend"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "caffeine",
+            "label": "Caffeine",
+            "value": "High",
+            "meter_value": 5,
+            "sublabel": "200mg per cup"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "flavor",
+            "label": "Flavor Notes",
+            "value": "Dark Chocolate & Smoke"
+          }
+        },
+        {
+          "type": "spec",
+          "settings": {
+            "icon": "certification",
+            "label": "Certified",
+            "value": "Fair Trade"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

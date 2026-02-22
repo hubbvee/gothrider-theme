@@ -1,0 +1,443 @@
+{{ 'gr-size-guide' | append: '.css' | asset_url | stylesheet_tag }}
+
+{% if settings.gr_store_module == 'apparel' or settings.gr_store_module == 'full' %}
+  <div id="gr-size-guide-trigger" class="gr-size-guide-trigger" style="display: none;">
+    <button type="button" class="gr-size-guide-btn" aria-controls="gr-size-guide-modal" aria-expanded="false">
+      {% render 'icon-ruler' %}
+      {{ section.settings.trigger_text }}
+    </button>
+  </div>
+
+  <div id="gr-size-guide-modal" class="gr-size-guide-overlay" role="dialog" aria-modal="true" aria-label="{{ section.settings.heading }}" hidden>
+    <div class="gr-size-guide-modal">
+      <div class="gr-size-guide-header">
+        <h2 class="gr-size-guide-title">{{ section.settings.heading }}</h2>
+        <button type="button" class="gr-size-guide-close" aria-label="{{ 'accessibility.close' | t }}">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M15 5L5 15M5 5l10 10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      {% if section.settings.unit_toggle %}
+        <div class="gr-size-guide-units">
+          <button type="button" class="gr-unit-btn is-active" data-unit="inches">Inches</button>
+          <button type="button" class="gr-unit-btn" data-unit="cm">CM</button>
+        </div>
+      {% endif %}
+
+      <div class="gr-size-guide-body">
+        {% if section.settings.fit_description != blank %}
+          <p class="gr-size-guide-fit">{{ section.settings.fit_description }}</p>
+        {% endif %}
+
+        <div class="gr-size-guide-table-wrap">
+          <table class="gr-size-guide-table" data-unit="inches">
+            <thead>
+              <tr>
+                <th>{{ section.settings.size_label | default: 'Size' }}</th>
+                {% for block in section.blocks %}
+                  {% if block.type == 'measurement' %}
+                    <th>{{ block.settings.label }}</th>
+                  {% endif %}
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              {% assign sizes = section.settings.sizes | split: ',' %}
+              {% for size in sizes %}
+                {% assign trimmed_size = size | strip %}
+                <tr>
+                  <td class="gr-size-label">{{ trimmed_size }}</td>
+                  {% for block in section.blocks %}
+                    {% if block.type == 'measurement' %}
+                      {% assign values_inches = block.settings.values_inches | split: ',' %}
+                      {% assign values_cm = block.settings.values_cm | split: ',' %}
+                      <td>
+                        <span class="gr-val-inches">{{ values_inches[forloop.parentloop.index0] | strip | default: '-' }}</span>
+                        <span class="gr-val-cm" hidden>{{ values_cm[forloop.parentloop.index0] | strip | default: '-' }}</span>
+                      </td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        {% if section.settings.model_info != blank %}
+          <p class="gr-size-guide-model">{{ section.settings.model_info }}</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const trigger = document.querySelector('.gr-size-guide-btn');
+      const overlay = document.getElementById('gr-size-guide-modal');
+      const closeBtn = overlay?.querySelector('.gr-size-guide-close');
+      const unitBtns = overlay?.querySelectorAll('.gr-unit-btn');
+      const inchVals = overlay?.querySelectorAll('.gr-val-inches');
+      const cmVals = overlay?.querySelectorAll('.gr-val-cm');
+
+      /* Show trigger near variant picker on product pages */
+      const variantPicker = document.querySelector('variant-picker, .product-form__variants, [data-variant-picker]');
+      if (variantPicker && trigger) {
+        const triggerEl = document.getElementById('gr-size-guide-trigger');
+        variantPicker.parentNode.insertBefore(triggerEl, variantPicker.nextSibling);
+        triggerEl.style.display = '';
+      }
+
+      function openModal() {
+        overlay.hidden = false;
+        overlay.querySelector('.gr-size-guide-close').focus();
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeModal() {
+        overlay.hidden = true;
+        trigger?.focus();
+        document.body.style.overflow = '';
+      }
+
+      trigger?.addEventListener('click', openModal);
+      closeBtn?.addEventListener('click', closeModal);
+
+      overlay?.addEventListener('click', function(e) {
+        if (e.target === overlay) closeModal();
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !overlay.hidden) closeModal();
+      });
+
+      /* Unit toggle */
+      unitBtns?.forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const unit = this.dataset.unit;
+          unitBtns.forEach(function(b) { b.classList.remove('is-active'); });
+          this.classList.add('is-active');
+
+          const showInches = unit === 'inches';
+          inchVals?.forEach(function(el) { el.hidden = !showInches; });
+          cmVals?.forEach(function(el) { el.hidden = showInches; });
+        });
+      });
+    })();
+  </script>
+{% endif %}
+
+{% stylesheet %}
+  .gr-size-guide-trigger {
+    margin: 1rem 0;
+  }
+
+  .gr-size-guide-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: none;
+    border: 1px solid var(--gr-border, #333);
+    color: var(--gr-bone-white, #F5F5DC);
+    padding: 0.5rem 1rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+
+  .gr-size-guide-btn:hover {
+    border-color: var(--gr-blood-red, #8B0000);
+    color: var(--gr-blood-red, #8B0000);
+  }
+
+  .gr-size-guide-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Overlay */
+  .gr-size-guide-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(4px);
+    padding: 1rem;
+  }
+
+  .gr-size-guide-overlay[hidden] {
+    display: none;
+  }
+
+  /* Modal */
+  .gr-size-guide-modal {
+    background: var(--gr-surface, #1A1A1A);
+    border: 1px solid var(--gr-border, #333);
+    max-width: 700px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    animation: gr-modal-in 0.2s ease;
+  }
+
+  @keyframes gr-modal-in {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .gr-size-guide-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--gr-border, #333);
+  }
+
+  .gr-size-guide-title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-bone-white, #F5F5DC);
+    margin: 0;
+  }
+
+  .gr-size-guide-close {
+    background: none;
+    border: none;
+    color: var(--gr-text-muted, #999);
+    cursor: pointer;
+    padding: 0.5rem;
+    transition: color 0.2s;
+  }
+
+  .gr-size-guide-close:hover {
+    color: var(--gr-bone-white, #F5F5DC);
+  }
+
+  /* Units toggle */
+  .gr-size-guide-units {
+    display: flex;
+    gap: 0;
+    padding: 1.5rem 2rem 0;
+  }
+
+  .gr-unit-btn {
+    background: transparent;
+    border: 1px solid var(--gr-border, #333);
+    color: var(--gr-text-muted, #999);
+    padding: 0.4rem 1.25rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .gr-unit-btn:first-child {
+    border-right: none;
+  }
+
+  .gr-unit-btn.is-active {
+    background: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-black, #0A0A0A);
+    border-color: var(--gr-bone-white, #F5F5DC);
+  }
+
+  /* Body */
+  .gr-size-guide-body {
+    padding: 1.5rem 2rem 2rem;
+  }
+
+  .gr-size-guide-fit {
+    color: var(--gr-text-muted, #999);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+
+  /* Table */
+  .gr-size-guide-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .gr-size-guide-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+
+  .gr-size-guide-table th {
+    font-family: 'Fjalla One', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: normal;
+    color: var(--gr-bone-white, #F5F5DC);
+    padding: 0.75rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--gr-blood-red, #8B0000);
+    white-space: nowrap;
+  }
+
+  .gr-size-guide-table td {
+    padding: 0.6rem 1rem;
+    color: var(--gr-text-primary, #F5F5F5);
+    border-bottom: 1px solid var(--gr-border, #333);
+  }
+
+  .gr-size-guide-table tr:hover td {
+    background: rgba(139, 0, 0, 0.1);
+  }
+
+  .gr-size-label {
+    font-family: 'Fjalla One', sans-serif;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+  }
+
+  .gr-size-guide-model {
+    color: var(--gr-text-muted, #999);
+    font-size: 0.8rem;
+    font-style: italic;
+    margin-top: 1.25rem;
+  }
+
+  @media (max-width: 749px) {
+    .gr-size-guide-header,
+    .gr-size-guide-units,
+    .gr-size-guide-body {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+
+    .gr-size-guide-table {
+      font-size: 0.8rem;
+    }
+
+    .gr-size-guide-table th,
+    .gr-size-guide-table td {
+      padding: 0.5rem 0.6rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "GR Size Guide",
+  "tag": "section",
+  "class": "gr-size-guide-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Size Guide"
+    },
+    {
+      "type": "text",
+      "id": "trigger_text",
+      "label": "Trigger button text",
+      "default": "Size Guide"
+    },
+    {
+      "type": "text",
+      "id": "size_label",
+      "label": "Size column label",
+      "default": "Size"
+    },
+    {
+      "type": "text",
+      "id": "sizes",
+      "label": "Sizes (comma-separated)",
+      "default": "S, M, L, XL, 2XL, 3XL",
+      "info": "e.g. S, M, L, XL, 2XL"
+    },
+    {
+      "type": "textarea",
+      "id": "fit_description",
+      "label": "Fit description",
+      "default": "Unisex relaxed fit. If between sizes, size up for oversized look, size down for fitted."
+    },
+    {
+      "type": "checkbox",
+      "id": "unit_toggle",
+      "label": "Show inches/cm toggle",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "model_info",
+      "label": "Model info",
+      "default": "Model is 6'0\" / 183cm wearing size L."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "measurement",
+      "name": "Measurement column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Measurement name",
+          "default": "Chest"
+        },
+        {
+          "type": "text",
+          "id": "values_inches",
+          "label": "Values in inches (comma-separated)",
+          "default": "36, 40, 44, 48, 52, 56",
+          "info": "One value per size, in same order as sizes above"
+        },
+        {
+          "type": "text",
+          "id": "values_cm",
+          "label": "Values in CM (comma-separated)",
+          "default": "91, 102, 112, 122, 132, 142",
+          "info": "One value per size, in same order as sizes above"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Size Guide",
+      "blocks": [
+        {
+          "type": "measurement",
+          "settings": {
+            "label": "Chest",
+            "values_inches": "36, 40, 44, 48, 52, 56",
+            "values_cm": "91, 102, 112, 122, 132, 142"
+          }
+        },
+        {
+          "type": "measurement",
+          "settings": {
+            "label": "Length",
+            "values_inches": "27, 28, 29, 30, 31, 32",
+            "values_cm": "69, 71, 74, 76, 79, 81"
+          }
+        },
+        {
+          "type": "measurement",
+          "settings": {
+            "label": "Sleeve",
+            "values_inches": "8.5, 9, 9.5, 10, 10.5, 11",
+            "values_cm": "22, 23, 24, 25, 27, 28"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,187 @@
+/* ============================================
+   GOTHRIDER COLLECTION PAGE OVERRIDES
+   ============================================ */
+
+/* ---- Collection Title ---- */
+
+.collection-heading h1,
+[class*="collection"] h1 {
+  font-family: var(--gr-font-heading);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+  color: var(--gr-text-primary);
+}
+
+[class*="collection"] .collection-description,
+.collection-heading .rte {
+  color: var(--gr-text-secondary);
+  line-height: var(--gr-leading-relaxed);
+}
+
+/* ---- Filters ---- */
+
+.facets,
+.collection-filters {
+  border-color: var(--gr-border-subtle);
+}
+
+.facets__label,
+.facet__title,
+.filter-label {
+  font-family: var(--gr-font-heading);
+  font-size: var(--gr-body-sm);
+  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-wide);
+  color: var(--gr-text-primary);
+}
+
+.facets__pill,
+.facet-pill,
+.filter-pill {
+  border-color: var(--gr-border);
+  color: var(--gr-text-primary);
+  background-color: transparent;
+  transition: all var(--gr-transition-fast);
+}
+
+.facets__pill:hover,
+.facet-pill:hover,
+.filter-pill:hover {
+  border-color: var(--gr-text-secondary);
+}
+
+.facets__pill--active,
+.facet-pill--active,
+.filter-pill--active {
+  background-color: var(--gr-text-primary);
+  color: var(--gr-black);
+  border-color: var(--gr-text-primary);
+}
+
+/* ---- Sort Dropdown ---- */
+
+.facets__sort select,
+.sort-by select {
+  background-color: var(--gr-surface);
+  color: var(--gr-text-primary);
+  border-color: var(--gr-border);
+  font-family: var(--gr-font-body);
+}
+
+/* ---- Active Filter Tags ---- */
+
+.active-facets__tag,
+.active-filter-tag {
+  background-color: var(--gr-surface);
+  border-color: var(--gr-border);
+  color: var(--gr-text-primary);
+  font-size: var(--gr-body-sm);
+}
+
+.active-facets__tag:hover,
+.active-filter-tag:hover {
+  border-color: var(--gr-blood-red);
+  color: var(--gr-blood-red);
+}
+
+/* ---- Product Grid Cards ---- */
+
+.main-collection .product-card,
+.collection-grid .product-card {
+  background-color: transparent;
+}
+
+.main-collection .product-card__title,
+.collection-grid .product-card__title {
+  font-family: var(--gr-font-body);
+  font-size: var(--gr-body-md);
+  color: var(--gr-text-primary);
+}
+
+.main-collection .product-card__title a:hover,
+.collection-grid .product-card__title a:hover {
+  color: var(--gr-blood-red);
+}
+
+.main-collection .product-card .price,
+.collection-grid .product-card .price {
+  font-family: var(--gr-font-body);
+  font-weight: var(--gr-weight-semibold);
+  color: var(--gr-text-secondary);
+}
+
+.main-collection .product-card .price--on-sale .price__sale,
+.collection-grid .product-card .price--on-sale .price__sale {
+  color: var(--gr-blood-red);
+}
+
+/* ---- Product Card Media ---- */
+
+.main-collection .product-card__gallery,
+.collection-grid .product-card__gallery {
+  border: 1px solid var(--gr-border-subtle);
+  overflow: hidden;
+  transition: border-color var(--gr-transition-base);
+}
+
+.main-collection .product-card:hover .product-card__gallery,
+.collection-grid .product-card:hover .product-card__gallery {
+  border-color: var(--gr-border);
+}
+
+/* ---- Swatches in Grid ---- */
+
+.main-collection .swatch,
+.collection-grid .swatch {
+  border-color: var(--gr-border);
+}
+
+.main-collection .swatch--selected,
+.collection-grid .swatch--selected {
+  border-color: var(--gr-text-primary);
+}
+
+/* ---- Pagination ---- */
+
+.pagination .pagination__item {
+  color: var(--gr-text-secondary);
+  font-family: var(--gr-font-heading);
+  transition: color var(--gr-transition-fast);
+}
+
+.pagination .pagination__item:hover {
+  color: var(--gr-text-primary);
+}
+
+.pagination .pagination__item--current {
+  color: var(--gr-blood-red);
+  font-weight: var(--gr-weight-bold);
+}
+
+/* ---- Empty Collection ---- */
+
+.collection--empty {
+  text-align: center;
+  color: var(--gr-text-muted);
+  padding: var(--gr-space-4xl) 0;
+}
+
+/* ---- Grid Density Toggle ---- */
+
+.grid-density button {
+  color: var(--gr-text-muted);
+  transition: color var(--gr-transition-fast);
+}
+
+.grid-density button:hover,
+.grid-density button.active {
+  color: var(--gr-text-primary);
+}
+
+/* ---- Product Count ---- */
+
+.collection-product-count,
+.facets__product-count {
+  color: var(--gr-text-muted);
+  font-size: var(--gr-body-sm);
+}

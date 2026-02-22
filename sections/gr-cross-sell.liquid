@@ -1,0 +1,167 @@
+{%- assign product = product -%}
+
+<div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-container">
+    {% if section.settings.heading != blank %}
+      <h2 class="gr-heading gr-heading-lg gr-cross-sell__heading">{{ section.settings.heading }}</h2>
+    {% endif %}
+
+    <div class="gr-cross-sell__grid" data-gr-cross-sell data-product-id="{{ product.id }}" data-limit="{{ section.settings.limit }}">
+      {% if product and section.settings.source == 'complementary' %}
+        {%- assign complementary = product.metafields.shopify--discovery--product_recommendation -%}
+      {% endif %}
+
+      {% for block in section.blocks %}
+        {%- assign rec_product = block.settings.product -%}
+        {% if rec_product %}
+          <div class="gr-cross-sell__item gr-card" {{ block.shopify_attributes }}>
+            <a href="{{ rec_product.url }}" class="gr-cross-sell__link">
+              <div class="gr-cross-sell__media">
+                {% if rec_product.featured_image %}
+                  {{ rec_product.featured_image | image_url: width: 300 | image_tag:
+                    loading: 'lazy',
+                    widths: '150, 300',
+                    class: 'gr-cross-sell__img'
+                  }}
+                {% endif %}
+              </div>
+              <div class="gr-cross-sell__info">
+                <h3 class="gr-cross-sell__title">{{ rec_product.title }}</h3>
+                <span class="gr-cross-sell__price">{{ rec_product.price | money }}</span>
+              </div>
+            </a>
+            <form method="post" action="/cart/add" class="gr-cross-sell__form">
+              <input type="hidden" name="id" value="{{ rec_product.selected_or_first_available_variant.id }}">
+              <button type="submit" class="gr-btn gr-btn--ghost gr-cross-sell__add"
+                {% unless rec_product.available %}disabled{% endunless %}
+              >
+                {% if rec_product.available %}+ Add{% else %}Sold Out{% endif %}
+              </button>
+            </form>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<style>
+  .gr-cross-sell__heading {
+    margin-bottom: var(--gr-space-xl);
+  }
+
+  .gr-cross-sell__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--gr-space-md);
+  }
+
+  .gr-cross-sell__item {
+    padding: var(--gr-space-md);
+  }
+
+  .gr-cross-sell__link {
+    display: flex;
+    gap: var(--gr-space-md);
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    margin-bottom: var(--gr-space-sm);
+  }
+
+  .gr-cross-sell__link:hover {
+    color: inherit;
+  }
+
+  .gr-cross-sell__media {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+    overflow: hidden;
+    background-color: var(--gr-surface-elevated);
+  }
+
+  .gr-cross-sell__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gr-cross-sell__title {
+    font-family: var(--gr-font-body);
+    font-size: var(--gr-body-sm);
+    font-weight: var(--gr-weight-medium);
+    text-transform: none;
+    letter-spacing: var(--gr-tracking-normal);
+    color: var(--gr-text-primary);
+    margin-bottom: var(--gr-space-xs);
+  }
+
+  .gr-cross-sell__price {
+    font-size: var(--gr-body-sm);
+    color: var(--gr-text-muted);
+  }
+
+  .gr-cross-sell__add {
+    width: 100%;
+    min-height: 36px;
+    font-size: var(--gr-body-sm);
+    padding: var(--gr-space-xs) var(--gr-space-sm);
+  }
+
+  .gr-cross-sell__add:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "GR Cross-Sell",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete the Ride"
+    },
+    {
+      "type": "select",
+      "id": "source",
+      "label": "Product source",
+      "options": [
+        { "value": "manual", "label": "Manual selection" },
+        { "value": "complementary", "label": "Complementary products" }
+      ],
+      "default": "manual"
+    },
+    {
+      "type": "range",
+      "id": "limit",
+      "label": "Max products",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Cross-Sell"
+    }
+  ]
+}
+{% endschema %}

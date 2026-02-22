@@ -1,0 +1,159 @@
+{%- assign product = product -%}
+
+{% if product %}
+<div class="gr-sticky-atc" data-gr-sticky-atc {{ section.shopify_attributes }}>
+  <div class="gr-container">
+    <div class="gr-sticky-atc__inner">
+      <div class="gr-sticky-atc__product">
+        {% if product.featured_image %}
+          <div class="gr-sticky-atc__thumb">
+            {{ product.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', widths: '80' }}
+          </div>
+        {% endif %}
+        <div class="gr-sticky-atc__info">
+          <span class="gr-sticky-atc__title">{{ product.title }}</span>
+          <span class="gr-sticky-atc__price">{{ product.selected_or_first_available_variant.price | money }}</span>
+        </div>
+      </div>
+
+      <form method="post" action="/cart/add" class="gr-sticky-atc__form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="gr-btn gr-btn--primary gr-sticky-atc__btn"
+          {% unless product.available %}disabled{% endunless %}
+        >
+          {% if product.available %}
+            {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
+          {% else %}
+            {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
+          {% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<style>
+  .gr-sticky-atc {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: var(--gr-z-sticky);
+    background-color: var(--gr-dark);
+    border-top: 1px solid var(--gr-border-subtle);
+    padding: var(--gr-space-sm) 0;
+    transform: translateY(100%);
+    transition: transform var(--gr-transition-base);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .gr-sticky-atc.is-visible {
+    transform: translateY(0);
+  }
+
+  .gr-sticky-atc__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gr-space-md);
+  }
+
+  .gr-sticky-atc__product {
+    display: flex;
+    align-items: center;
+    gap: var(--gr-space-md);
+    min-width: 0;
+  }
+
+  .gr-sticky-atc__thumb {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 1px solid var(--gr-border-subtle);
+  }
+
+  .gr-sticky-atc__thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gr-sticky-atc__info {
+    min-width: 0;
+  }
+
+  .gr-sticky-atc__title {
+    display: block;
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-wide);
+    color: var(--gr-text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gr-sticky-atc__price {
+    font-size: var(--gr-body-sm);
+    color: var(--gr-text-secondary);
+  }
+
+  .gr-sticky-atc__btn {
+    flex-shrink: 0;
+    min-height: 44px;
+    padding: var(--gr-space-sm) var(--gr-space-xl);
+  }
+
+  .gr-sticky-atc__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @media (max-width: 768px) {
+    .gr-sticky-atc__thumb {
+      display: none;
+    }
+
+    .gr-sticky-atc__title {
+      max-width: 140px;
+    }
+  }
+</style>
+
+<script>
+  (function() {
+    var stickyBar = document.querySelector('[data-gr-sticky-atc]');
+    if (!stickyBar) return;
+
+    var buyButtons = document.querySelector('.product-information .button--primary, .product-information [type="submit"].button');
+    if (!buyButtons) return;
+
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          stickyBar.classList.remove('is-visible');
+        } else {
+          stickyBar.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0 });
+
+    observer.observe(buyButtons);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "GR Sticky Add to Cart",
+  "settings": [],
+  "presets": [
+    {
+      "name": "GR Sticky Add to Cart"
+    }
+  ]
+}
+{% endschema %}
