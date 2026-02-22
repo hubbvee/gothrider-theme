@@ -154,9 +154,8 @@
   .gr-member-gate__title {
     font-family: 'Fjalla One', sans-serif;
     font-size: clamp(1.5rem, 3vw, 2rem);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
   }
 
   /* Unlocked content grid */
@@ -180,11 +179,12 @@
     aspect-ratio: 1;
     object-fit: cover;
     border: 1px solid var(--gr-border, #333);
+    border-radius: var(--gr-radius-md, 0.75rem);
     transition: border-color 0.2s;
   }
 
   .gr-member-gate__product:hover .gr-member-gate__product-img {
-    border-color: var(--gr-blood-red, #8B0000);
+    border-color: var(--gr-cta, #FF5500);
   }
 
   .gr-member-gate__product-info {
@@ -194,9 +194,8 @@
   .gr-member-gate__product-title {
     font-family: 'Fjalla One', sans-serif;
     font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
     margin-bottom: 0.25rem;
   }
 
@@ -260,7 +259,7 @@
   .gr-countdown-num {
     font-family: 'Fjalla One', sans-serif;
     font-size: 2rem;
-    color: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-text-primary, #FFFFFF);
     line-height: 1;
   }
 
@@ -277,6 +276,7 @@
   .gr-member-gate--locked {
     background: var(--gr-surface, #1A1A1A);
     border: 1px solid var(--gr-border, #333);
+    border-radius: var(--gr-radius-md, 0.75rem);
   }
 
   .gr-member-gate__locked-content {
@@ -295,9 +295,8 @@
   .gr-member-gate__locked-title {
     font-family: 'Fjalla One', sans-serif;
     font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
     margin-bottom: 0.75rem;
   }
 

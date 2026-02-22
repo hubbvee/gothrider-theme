@@ -22,15 +22,21 @@
       },
       {
         "type": "color",
+        "id": "gr_color_cta",
+        "label": "CTA (Buttons)",
+        "default": "#FF5500"
+      },
+      {
+        "type": "color",
         "id": "gr_color_background",
-        "label": "Background",
-        "default": "#0A0A0A"
+        "label": "Background (Body)",
+        "default": "#1A1A1A"
       },
       {
         "type": "color",
         "id": "gr_color_surface",
-        "label": "Surface (Cards)",
-        "default": "#1A1A1A"
+        "label": "Surface (Cards / Header)",
+        "default": "#000000"
       },
       {
         "type": "color",
@@ -42,7 +48,7 @@
         "type": "color",
         "id": "gr_color_text",
         "label": "Text",
-        "default": "#F5F5F5"
+        "default": "#FFFFFF"
       },
       {
         "type": "header",

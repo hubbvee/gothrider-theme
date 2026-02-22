@@ -10,7 +10,7 @@
           <div class="gr-testimonials__slide{% if forloop.first %} is-active{% endif %}" data-gr-slide="{{ forloop.index0 }}" role="group" aria-roledescription="slide" aria-label="Testimonial {{ forloop.index }} of {{ section.blocks.size }}" {{ block.shopify_attributes }}>
             <blockquote class="gr-testimonials__quote">
               <svg class="gr-testimonials__quote-icon" width="40" height="32" viewBox="0 0 40 32" fill="none" aria-hidden="true">
-                <path d="M0 32V19.2C0 8.53 5.87 2.13 17.6 0l1.6 3.2C11.73 5.07 8.27 9.6 8 16h8v16H0zm22.4 0V19.2C22.4 8.53 28.27 2.13 40 0l1.6 3.2C34.13 5.07 30.67 9.6 30.4 16h8v16H22.4z" fill="var(--gr-blood-red)" opacity="0.3"/>
+                <path d="M0 32V19.2C0 8.53 5.87 2.13 17.6 0l1.6 3.2C11.73 5.07 8.27 9.6 8 16h8v16H0zm22.4 0V19.2C22.4 8.53 28.27 2.13 40 0l1.6 3.2C34.13 5.07 30.67 9.6 30.4 16h8v16H22.4z" fill="var(--gr-cta)" opacity="0.3"/>
               </svg>
               <p class="gr-testimonials__text">{{ block.settings.quote }}</p>
               <footer class="gr-testimonials__author">
@@ -91,7 +91,7 @@
     font-family: var(--gr-font-body);
     font-size: clamp(1.125rem, 2vw, 1.375rem);
     line-height: var(--gr-leading-relaxed);
-    color: var(--gr-bone-white);
+    color: var(--gr-text-primary);
     font-style: italic;
     margin-bottom: var(--gr-space-xl);
   }
@@ -123,8 +123,7 @@
     font-family: var(--gr-font-heading);
     font-size: var(--gr-body-md);
     font-style: normal;
-    text-transform: uppercase;
-    letter-spacing: var(--gr-tracking-wide);
+    letter-spacing: -0.02em;
     color: var(--gr-text-primary);
   }
 
@@ -153,12 +152,12 @@
   }
 
   .gr-testimonials__dot.is-active {
-    background-color: var(--gr-blood-red);
-    border-color: var(--gr-blood-red);
+    background-color: var(--gr-cta);
+    border-color: var(--gr-cta);
   }
 
   .gr-testimonials__dot:hover {
-    border-color: var(--gr-blood-red);
+    border-color: var(--gr-cta);
   }
 </style>
 

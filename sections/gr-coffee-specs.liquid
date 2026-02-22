@@ -67,9 +67,8 @@
   .gr-coffee-specs__title {
     font-family: 'Fjalla One', sans-serif;
     font-size: clamp(1.5rem, 3vw, 2rem);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
     text-align: center;
     margin-bottom: 0.5rem;
   }
@@ -96,15 +95,16 @@
     border: 1px solid var(--gr-border, #333);
     padding: 1.5rem;
     text-align: center;
+    border-radius: var(--gr-radius-md, 0.75rem);
     transition: border-color 0.3s;
   }
 
   .gr-coffee-spec-card:hover {
-    border-color: var(--gr-blood-red, #8B0000);
+    border-color: var(--gr-cta, #FF5500);
   }
 
   .gr-coffee-spec-card__icon {
-    color: var(--gr-blood-red, #8B0000);
+    color: var(--gr-cta, #FF5500);
     margin-bottom: 1rem;
   }
 
@@ -125,10 +125,9 @@
   .gr-coffee-spec-card__value {
     font-family: 'Fjalla One', sans-serif;
     font-size: 1.15rem;
-    color: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-text-primary, #FFFFFF);
     margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: -0.02em;
   }
 
   /* Meter dots */
@@ -143,13 +142,13 @@
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    border: 1px solid var(--gr-blood-red, #8B0000);
+    border: 1px solid var(--gr-cta, #FF5500);
     background: transparent;
     transition: background 0.2s;
   }
 
   .gr-meter-dot.is-filled {
-    background: var(--gr-blood-red, #8B0000);
+    background: var(--gr-cta, #FF5500);
   }
 
   .gr-coffee-spec-card__sub {

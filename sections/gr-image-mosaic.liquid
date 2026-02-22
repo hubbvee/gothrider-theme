@@ -87,6 +87,7 @@
     position: relative;
     overflow: hidden;
     background-color: var(--gr-surface);
+    border-radius: var(--gr-radius-md, 0.75rem);
   }
 
   .gr-image-mosaic__link {
@@ -115,7 +116,7 @@
     display: flex;
     align-items: flex-end;
     padding: var(--gr-space-lg);
-    background: linear-gradient(to top, rgba(10, 10, 10, 0.7), transparent 50%);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 50%);
     opacity: 0;
     transition: opacity var(--gr-transition-base);
   }
@@ -127,8 +128,7 @@
   .gr-image-mosaic__caption {
     font-family: var(--gr-font-heading);
     font-size: var(--gr-heading-sm);
-    text-transform: uppercase;
-    letter-spacing: var(--gr-tracking-wide);
+    letter-spacing: -0.02em;
     color: var(--gr-text-primary);
   }
 

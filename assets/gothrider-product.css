@@ -7,9 +7,8 @@
 .product-information h1,
 .product-information [data-type-preset="h3"] {
   font-family: var(--gr-font-heading);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
-  color: var(--gr-text-primary);
+  letter-spacing: -0.02em;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* ---- Price ---- */
@@ -17,7 +16,7 @@
 .product-information .price,
 .product-information [class*="price"] {
   font-family: var(--gr-font-heading);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .product-information .price--on-sale .price__regular,
@@ -28,7 +27,7 @@
 
 .product-information .price--on-sale .price__sale,
 .product-information .price--on-sale .price__current {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* ---- Variant Picker ---- */
@@ -37,15 +36,14 @@
 .product-information fieldset legend {
   font-family: var(--gr-font-heading);
   font-size: var(--gr-body-sm);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
-  color: var(--gr-text-primary);
+  letter-spacing: -0.02em;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .product-information .variant-picker__button,
 .product-information .variant-button {
   border-color: var(--gr-border);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
   background-color: transparent;
   transition: all var(--gr-transition-fast);
 }
@@ -58,9 +56,9 @@
 .product-information .variant-picker__button--selected,
 .product-information .variant-picker__button[aria-checked="true"],
 .product-information .variant-button--selected {
-  border-color: var(--gr-text-primary);
-  background-color: var(--gr-text-primary);
-  color: var(--gr-black);
+  border-color: var(--gr-text-primary, #FFFFFF);
+  background-color: var(--gr-text-primary, #FFFFFF);
+  color: var(--gr-black, #000000);
 }
 
 /* ---- Buy Buttons ---- */
@@ -70,23 +68,21 @@
 .product-information .shopify-payment-button__button {
   font-family: var(--gr-font-heading);
   font-weight: var(--gr-weight-bold);
-  letter-spacing: var(--gr-tracking-wider);
-  text-transform: uppercase;
+  letter-spacing: -0.02em;
   min-height: 52px;
-  border-radius: var(--gr-radius-none);
+  border-radius: var(--gr-radius-button, 0.875rem);
 }
 
 .product-information .button--primary,
 .product-information [type="submit"].button:not(.button--secondary) {
-  background-color: var(--gr-cta);
-  color: var(--gr-text-primary);
-  border-color: var(--gr-cta);
+  background-color: var(--gr-cta, #FF5500);
+  color: var(--gr-text-primary, #FFFFFF);
+  border-color: var(--gr-cta, #FF5500);
 }
 
 .product-information .button--primary:hover,
 .product-information [type="submit"].button:not(.button--secondary):hover {
-  background-color: var(--gr-cta-hover);
-  border-color: var(--gr-cta-hover);
+  opacity: 0.85;
   box-shadow: 0 0 20px rgba(255, 85, 0, 0.3);
 }
 
@@ -102,15 +98,15 @@
 .product-information .quantity-selector,
 .product-information quantity-selector {
   border-color: var(--gr-border);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .product-information .quantity-selector__button {
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .product-information .quantity-selector__button:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* ---- Product Description ---- */
@@ -122,7 +118,7 @@
 }
 
 .product-information .rte a {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* ---- Media Gallery ---- */
@@ -138,7 +134,7 @@
 
 .product-information .product-media-gallery__thumbnail--active,
 .product-information .product-media-gallery__thumbnail:hover {
-  border-color: var(--gr-blood-red);
+  border-color: var(--gr-cta, #FF5500);
 }
 
 /* ---- Product Badges ---- */
@@ -146,8 +142,7 @@
 .product-information .badge {
   font-family: var(--gr-font-heading);
   font-weight: var(--gr-weight-bold);
-  letter-spacing: var(--gr-tracking-wider);
-  text-transform: uppercase;
+  letter-spacing: -0.02em;
 }
 
 /* ---- Dividers ---- */
@@ -162,9 +157,8 @@
 .product-recommendations h3,
 .product-recommendations [data-type-preset="h4"] {
   font-family: var(--gr-font-heading);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
-  color: var(--gr-text-primary);
+  letter-spacing: -0.02em;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* ---- Installments / Payment Info ---- */

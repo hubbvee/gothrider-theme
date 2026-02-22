@@ -78,6 +78,7 @@
     cursor: ew-resize;
     user-select: none;
     -webkit-user-select: none;
+    border-radius: var(--gr-radius-md, 0.75rem);
   }
 
   .gr-before-after__before {
@@ -117,7 +118,6 @@
     justify-content: center;
     font-family: var(--gr-font-heading);
     font-size: var(--gr-heading-lg);
-    text-transform: uppercase;
     color: var(--gr-text-muted);
   }
 
@@ -129,7 +129,7 @@
     font-size: var(--gr-body-sm);
     text-transform: uppercase;
     letter-spacing: var(--gr-tracking-wider);
-    background-color: rgba(10, 10, 10, 0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     color: var(--gr-text-primary);
   }
 
@@ -159,14 +159,14 @@
   .gr-before-after__handle-line {
     flex: 1;
     width: 2px;
-    background-color: var(--gr-bone-white);
+    background-color: var(--gr-text-primary);
   }
 
   .gr-before-after__handle-knob {
     width: 44px;
     height: 44px;
     border-radius: var(--gr-radius-full);
-    background-color: var(--gr-bone-white);
+    background-color: var(--gr-text-primary);
     color: var(--gr-black);
     display: flex;
     align-items: center;

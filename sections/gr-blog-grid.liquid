@@ -85,6 +85,7 @@
     display: block;
     overflow: hidden;
     aspect-ratio: 16 / 9;
+    border-radius: var(--gr-radius-md, 0.75rem);
   }
 
   .gr-blog-card__img {
@@ -114,7 +115,7 @@
     font-family: var(--gr-font-heading);
     text-transform: uppercase;
     letter-spacing: var(--gr-tracking-wider);
-    color: var(--gr-blood-red);
+    color: var(--gr-cta);
   }
 
   .gr-blog-card__date {
@@ -124,8 +125,7 @@
   .gr-blog-card__title {
     font-family: var(--gr-font-heading);
     font-size: var(--gr-heading-sm);
-    text-transform: uppercase;
-    letter-spacing: var(--gr-tracking-wide);
+    letter-spacing: -0.02em;
     line-height: var(--gr-leading-snug);
   }
 
@@ -134,7 +134,7 @@
   }
 
   .gr-blog-card__title a:hover {
-    color: var(--gr-blood-red);
+    color: var(--gr-cta);
   }
 
   .gr-blog-card__excerpt {

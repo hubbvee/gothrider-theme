@@ -1,43 +1,48 @@
 /* ============================================
    GOTHRIDER DESIGN SYSTEM
-   Base tokens for all GothRider stores
+   Matched to gothrider.ca (Impact theme) design
    ============================================ */
 
 :root {
-  /* ---- Color Palette ---- */
-  --gr-black: #0A0A0A;
+  /* ---- Color Palette (matched to gothrider.ca) ---- */
+  --gr-black: #000000;
   --gr-dark: #1A1A1A;
-  --gr-darker: #111111;
+  --gr-darker: #0E0E0E;
   --gr-blood-red: #8B0000;
   --gr-blood-red-hover: #A50000;
   --gr-blood-red-active: #700000;
   --gr-cta: #FF5500;
-  --gr-cta-hover: #FF6B1A;
+  --gr-cta-hover: #FF5500;
   --gr-cta-active: #E04D00;
   --gr-bone-white: #F5F5DC;
   --gr-bone-white-muted: rgba(245, 245, 220, 0.7);
-  --gr-text-primary: #F5F5F5;
+  --gr-text-primary: #FFFFFF;
   --gr-text-secondary: #999999;
   --gr-text-muted: #666666;
   --gr-border: #333333;
   --gr-border-subtle: #222222;
   --gr-surface: #1A1A1A;
   --gr-surface-elevated: #242424;
-  --gr-success: #2D5A27;
-  --gr-warning: #B8860B;
-  --gr-error: #CC0000;
+  --gr-success: #00A341;
+  --gr-success-bg: #E0F4E8;
+  --gr-warning: #FFB74A;
+  --gr-warning-bg: #FFF6E9;
+  --gr-error: #F83A3A;
+  --gr-error-bg: #FEE7E7;
+  --gr-star: #FFB74A;
+  --gr-badge-primary: #803CEE;
 
   /* ---- Typography ---- */
   --gr-font-heading: 'Fjalla One', system-ui, sans-serif;
   --gr-font-body: 'Lato', system-ui, -apple-system, sans-serif;
   --gr-font-accent: 'Special Elite', 'Courier New', monospace;
 
-  /* Heading Sizes (fluid) */
-  --gr-heading-xxl: clamp(2.5rem, 5vw, 4.5rem);
-  --gr-heading-xl: clamp(2rem, 4vw, 3.5rem);
-  --gr-heading-lg: clamp(1.75rem, 3vw, 2.5rem);
-  --gr-heading-md: clamp(1.25rem, 2vw, 1.75rem);
-  --gr-heading-sm: clamp(1rem, 1.5vw, 1.25rem);
+  /* Heading Sizes (fluid, matched to gothrider.ca responsive scale) */
+  --gr-heading-xxl: clamp(2.5rem, 5vw, 5rem);
+  --gr-heading-xl: clamp(2rem, 4vw, 3.75rem);
+  --gr-heading-lg: clamp(1.5rem, 3vw, 3rem);
+  --gr-heading-md: clamp(1.25rem, 2vw, 2.25rem);
+  --gr-heading-sm: clamp(1rem, 1.5vw, 2rem);
 
   /* Body Sizes */
   --gr-body-lg: 1.125rem;
@@ -76,19 +81,23 @@
   --gr-space-4xl: 6rem;
   --gr-space-section: clamp(3rem, 8vw, 6rem);
 
-  /* ---- Border Radius ---- */
+  /* ---- Border Radius (matched to gothrider.ca) ---- */
   --gr-radius-none: 0;
-  --gr-radius-sm: 0.25rem;
-  --gr-radius-md: 0.5rem;
-  --gr-radius-lg: 1rem;
+  --gr-radius-xs: 0.25rem;
+  --gr-radius-sm: 0.375rem;
+  --gr-radius-md: 0.75rem;
+  --gr-radius-lg: 1.5rem;
+  --gr-radius-input: 0.5rem;
+  --gr-radius-button: 0.875rem;
   --gr-radius-full: 9999px;
 
-  /* ---- Shadows ---- */
-  --gr-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --gr-shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
-  --gr-shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.5);
+  /* ---- Shadows (white glow for dark backgrounds, matched to gothrider.ca) ---- */
+  --gr-shadow-sm: 0 2px 8px rgba(255, 255, 255, 0.1);
+  --gr-shadow-md: 0 5px 15px rgba(255, 255, 255, 0.1);
+  --gr-shadow-lg: 0 5px 30px rgba(255, 255, 255, 0.1);
+  --gr-shadow-block: 0 18px 50px rgba(255, 255, 255, 0.1);
   --gr-shadow-glow-red: 0 0 20px rgba(139, 0, 0, 0.3);
-  --gr-shadow-glow-white: 0 0 20px rgba(245, 245, 220, 0.1);
+  --gr-shadow-glow-cta: 0 0 20px rgba(255, 85, 0, 0.3);
 
   /* ---- Transitions ---- */
   --gr-transition-fast: 150ms ease;
@@ -104,18 +113,18 @@
   --gr-z-modal: 400;
   --gr-z-toast: 500;
 
-  /* ---- Layout ---- */
-  --gr-container-max: 1440px;
+  /* ---- Layout (matched to gothrider.ca) ---- */
+  --gr-container-max: 1600px;
   --gr-content-max: 1200px;
   --gr-narrow-max: 800px;
-  --gr-gutter: clamp(1rem, 3vw, 2rem);
+  --gr-gutter: clamp(1.25rem, 3vw, 3rem);
 
   /* ---- Breakpoints (for reference in JS, CSS uses media queries) ---- */
-  --gr-bp-sm: 640px;
-  --gr-bp-md: 768px;
-  --gr-bp-lg: 1024px;
-  --gr-bp-xl: 1280px;
-  --gr-bp-2xl: 1536px;
+  --gr-bp-sm: 700px;
+  --gr-bp-md: 1000px;
+  --gr-bp-lg: 1150px;
+  --gr-bp-xl: 1400px;
+  --gr-bp-2xl: 1600px;
 }
 
 /* ============================================
@@ -129,7 +138,7 @@
 }
 
 html {
-  background-color: var(--gr-black);
+  background-color: var(--gr-dark);
   color: var(--gr-text-primary);
   font-family: var(--gr-font-body);
   font-size: 16px;
@@ -139,20 +148,19 @@ html {
 }
 
 body {
-  background-color: var(--gr-black);
+  background-color: var(--gr-dark);
   color: var(--gr-text-primary);
   margin: 0;
 }
 
-/* ---- Headings ---- */
+/* ---- Headings (matched to gothrider.ca: tight spacing, normal case) ---- */
 
 h1, h2, h3, h4, h5, h6,
 .gr-heading {
   font-family: var(--gr-font-heading);
-  font-weight: var(--gr-weight-bold);
+  font-weight: var(--gr-weight-regular);
   line-height: var(--gr-leading-tight);
-  letter-spacing: var(--gr-tracking-wide);
-  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-tight);
   color: var(--gr-text-primary);
   margin: 0;
 }
@@ -163,36 +171,37 @@ h3, .gr-heading-lg  { font-size: var(--gr-heading-lg); }
 h4, .gr-heading-md  { font-size: var(--gr-heading-md); }
 h5, .gr-heading-sm  { font-size: var(--gr-heading-sm); }
 
+/* Uppercase modifier — use .gr-uppercase when uppercase is needed */
+
 /* ---- Links ---- */
 
 a {
-  color: var(--gr-bone-white);
+  color: var(--gr-text-primary);
   text-decoration: none;
   transition: color var(--gr-transition-fast);
 }
 
 a:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta);
 }
 
-/* ---- Buttons ---- */
+/* ---- Buttons (matched to gothrider.ca: rounded, opacity hover) ---- */
 
 .gr-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--gr-space-sm);
-  padding: var(--gr-space-sm) var(--gr-space-lg);
+  padding: 0.5625rem var(--gr-space-lg);
   font-family: var(--gr-font-heading);
   font-size: var(--gr-body-md);
-  font-weight: var(--gr-weight-bold);
-  letter-spacing: var(--gr-tracking-wider);
-  text-transform: uppercase;
+  font-weight: var(--gr-weight-regular);
+  letter-spacing: var(--gr-tracking-normal);
   text-decoration: none;
   border: 2px solid transparent;
-  border-radius: var(--gr-radius-none);
+  border-radius: var(--gr-radius-button);
   cursor: pointer;
-  transition: all var(--gr-transition-base);
+  transition: opacity var(--gr-transition-base), box-shadow var(--gr-transition-base);
   min-height: 48px; /* Touch target */
 }
 
@@ -203,20 +212,17 @@ a:hover {
 }
 
 .gr-btn--primary:hover {
-  background-color: var(--gr-cta-hover);
-  border-color: var(--gr-cta-hover);
-  box-shadow: 0 0 20px rgba(255, 85, 0, 0.3);
+  opacity: 0.85;
 }
 
 .gr-btn--secondary {
   background-color: transparent;
-  color: var(--gr-bone-white);
-  border-color: var(--gr-bone-white);
+  color: var(--gr-text-primary);
+  border-color: var(--gr-text-primary);
 }
 
 .gr-btn--secondary:hover {
-  background-color: var(--gr-bone-white);
-  color: var(--gr-black);
+  opacity: 0.85;
 }
 
 .gr-btn--ghost {
@@ -226,10 +232,11 @@ a:hover {
 }
 
 .gr-btn--ghost:hover {
+  opacity: 0.85;
   border-color: var(--gr-text-primary);
 }
 
-/* ---- Product Badges ---- */
+/* ---- Product Badges (matched to gothrider.ca) ---- */
 
 .gr-badge {
   display: inline-flex;
@@ -237,20 +244,20 @@ a:hover {
   padding: var(--gr-space-xs) var(--gr-space-sm);
   font-family: var(--gr-font-heading);
   font-size: var(--gr-body-xs);
-  font-weight: var(--gr-weight-bold);
-  letter-spacing: var(--gr-tracking-wider);
-  text-transform: uppercase;
+  font-weight: var(--gr-weight-regular);
+  letter-spacing: var(--gr-tracking-normal);
   line-height: 1;
+  border-radius: var(--gr-radius-sm);
 }
 
 .gr-badge--new {
-  background-color: var(--gr-blood-red);
+  background-color: var(--gr-badge-primary);
   color: var(--gr-text-primary);
 }
 
 .gr-badge--sold-out {
-  background-color: var(--gr-border);
-  color: var(--gr-text-secondary);
+  background-color: var(--gr-dark);
+  color: var(--gr-text-primary);
 }
 
 .gr-badge--limited {
@@ -259,22 +266,20 @@ a:hover {
 }
 
 .gr-badge--sale {
-  background-color: var(--gr-blood-red);
+  background-color: var(--gr-error);
   color: var(--gr-text-primary);
 }
 
-/* ---- Cards ---- */
+/* ---- Cards (matched to gothrider.ca: black bg, rounded corners) ---- */
 
 .gr-card {
-  background-color: var(--gr-surface);
-  border: 1px solid var(--gr-border-subtle);
+  background-color: var(--gr-black);
+  border-radius: var(--gr-radius-md);
   overflow: hidden;
-  transition: border-color var(--gr-transition-base),
-              box-shadow var(--gr-transition-base);
+  transition: box-shadow var(--gr-transition-base);
 }
 
 .gr-card:hover {
-  border-color: var(--gr-border);
   box-shadow: var(--gr-shadow-md);
 }
 
@@ -352,12 +357,14 @@ a:hover {
    ============================================ */
 
 .gr-text-red { color: var(--gr-blood-red); }
+.gr-text-cta { color: var(--gr-cta); }
 .gr-text-bone { color: var(--gr-bone-white); }
 .gr-text-muted { color: var(--gr-text-secondary); }
+.gr-bg-black { background-color: var(--gr-black); }
 .gr-bg-dark { background-color: var(--gr-dark); }
 .gr-bg-darker { background-color: var(--gr-darker); }
 .gr-bg-surface { background-color: var(--gr-surface); }
-.gr-uppercase { text-transform: uppercase; }
+.gr-uppercase { text-transform: uppercase; letter-spacing: var(--gr-tracking-wide); }
 .gr-sr-only {
   position: absolute;
   width: 1px;
@@ -376,10 +383,6 @@ a:hover {
 @media (max-width: 768px) {
   .gr-btn {
     width: 100%;
-  }
-
-  h1, .gr-heading-xxl {
-    letter-spacing: var(--gr-tracking-normal);
   }
 }
 
@@ -404,7 +407,7 @@ a:hover {
   box-shadow: 0 0 0 4px rgba(255, 85, 0, 0.25);
 }
 
-/* Skip link (already present in Horizon, this styles GR-specific uses) */
+/* Skip link */
 .gr-skip-link {
   position: absolute;
   left: -9999px;
@@ -414,8 +417,6 @@ a:hover {
   color: var(--gr-text-primary);
   padding: var(--gr-space-sm) var(--gr-space-md);
   font-family: var(--gr-font-heading);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
 }
 
 .gr-skip-link:focus {

@@ -15,9 +15,8 @@
 .footer-content h3,
 .footer-content h4 {
   font-family: 'Fjalla One', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--gr-bone-white, #F5F5DC);
+  letter-spacing: -0.02em;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* Footer body text */
@@ -36,7 +35,7 @@
 }
 
 .footer-content a:hover {
-  color: var(--gr-blood-red, #8B0000);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* Menu blocks in footer */
@@ -68,24 +67,22 @@
 
 .footer-content .email-signup input[type="email"]:focus,
 .footer-content input[type="email"]:focus {
-  border-color: var(--gr-blood-red, #8B0000);
+  border-color: var(--gr-cta, #FF5500);
   outline: none;
 }
 
 .footer-content .email-signup button[type="submit"],
 .footer-content form button[type="submit"] {
-  background-color: var(--gr-blood-red, #8B0000);
-  color: var(--gr-bone-white, #F5F5DC);
+  background-color: var(--gr-cta, #FF5500);
+  color: var(--gr-text-primary, #FFFFFF);
   border: none;
   font-family: 'Fjalla One', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  border-radius: 0;
+  border-radius: var(--gr-radius-button, 0.875rem);
 }
 
 .footer-content .email-signup button[type="submit"]:hover,
 .footer-content form button[type="submit"]:hover {
-  background-color: #A00000;
+  opacity: 0.85;
 }
 
 /* Social links */
@@ -97,7 +94,7 @@
 
 .footer-content .social-links a:hover,
 .footer-content social-links-component a:hover {
-  color: var(--gr-blood-red, #8B0000);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* Payment icons */
@@ -156,7 +153,7 @@
 
 .footer-utilities .social-links a:hover,
 .footer-utilities social-links-component a:hover {
-  color: var(--gr-blood-red, #8B0000);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* --------------------------------------------------------------------------
@@ -179,7 +176,7 @@
 .gr-licensing-badge__icon {
   width: 16px;
   height: 16px;
-  color: var(--gr-blood-red, #8B0000);
+  color: var(--gr-cta, #FF5500);
 }
 
 .gr-licensing-badge a {

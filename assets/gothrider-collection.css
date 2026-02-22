@@ -7,9 +7,8 @@
 .collection-heading h1,
 [class*="collection"] h1 {
   font-family: var(--gr-font-heading);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
-  color: var(--gr-text-primary);
+  letter-spacing: -0.02em;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 [class*="collection"] .collection-description,
@@ -30,16 +29,15 @@
 .filter-label {
   font-family: var(--gr-font-heading);
   font-size: var(--gr-body-sm);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
-  color: var(--gr-text-primary);
+  letter-spacing: -0.02em;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .facets__pill,
 .facet-pill,
 .filter-pill {
   border-color: var(--gr-border);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
   background-color: transparent;
   transition: all var(--gr-transition-fast);
 }
@@ -53,9 +51,9 @@
 .facets__pill--active,
 .facet-pill--active,
 .filter-pill--active {
-  background-color: var(--gr-text-primary);
-  color: var(--gr-black);
-  border-color: var(--gr-text-primary);
+  background-color: var(--gr-text-primary, #FFFFFF);
+  color: var(--gr-black, #000000);
+  border-color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* ---- Sort Dropdown ---- */
@@ -63,7 +61,7 @@
 .facets__sort select,
 .sort-by select {
   background-color: var(--gr-surface);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
   border-color: var(--gr-border);
   font-family: var(--gr-font-body);
 }
@@ -74,14 +72,14 @@
 .active-filter-tag {
   background-color: var(--gr-surface);
   border-color: var(--gr-border);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
   font-size: var(--gr-body-sm);
 }
 
 .active-facets__tag:hover,
 .active-filter-tag:hover {
-  border-color: var(--gr-blood-red);
-  color: var(--gr-blood-red);
+  border-color: var(--gr-cta, #FF5500);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* ---- Product Grid Cards ---- */
@@ -95,12 +93,12 @@
 .collection-grid .product-card__title {
   font-family: var(--gr-font-body);
   font-size: var(--gr-body-md);
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .main-collection .product-card__title a:hover,
 .collection-grid .product-card__title a:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta, #FF5500);
 }
 
 .main-collection .product-card .price,
@@ -112,7 +110,7 @@
 
 .main-collection .product-card .price--on-sale .price__sale,
 .collection-grid .product-card .price--on-sale .price__sale {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta, #FF5500);
 }
 
 /* ---- Product Card Media ---- */
@@ -120,6 +118,7 @@
 .main-collection .product-card__gallery,
 .collection-grid .product-card__gallery {
   border: 1px solid var(--gr-border-subtle);
+  border-radius: var(--gr-radius-md, 0.75rem);
   overflow: hidden;
   transition: border-color var(--gr-transition-base);
 }
@@ -138,7 +137,7 @@
 
 .main-collection .swatch--selected,
 .collection-grid .swatch--selected {
-  border-color: var(--gr-text-primary);
+  border-color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* ---- Pagination ---- */
@@ -150,11 +149,11 @@
 }
 
 .pagination .pagination__item:hover {
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .pagination .pagination__item--current {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta, #FF5500);
   font-weight: var(--gr-weight-bold);
 }
 
@@ -175,7 +174,7 @@
 
 .grid-density button:hover,
 .grid-density button.active {
-  color: var(--gr-text-primary);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* ---- Product Count ---- */

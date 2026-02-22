@@ -55,9 +55,8 @@
   .gr-brand-compliance__title {
     font-family: 'Fjalla One', sans-serif;
     font-size: clamp(1.5rem, 3vw, 2rem);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
     text-align: center;
     margin-bottom: 2.5rem;
   }
@@ -74,15 +73,16 @@
     background: var(--gr-surface, #1A1A1A);
     border: 1px solid var(--gr-border, #333);
     padding: 1.75rem;
+    border-radius: var(--gr-radius-md, 0.75rem);
     transition: border-color 0.3s;
   }
 
   .gr-brand-compliance__card:hover {
-    border-color: var(--gr-blood-red, #8B0000);
+    border-color: var(--gr-cta, #FF5500);
   }
 
   .gr-brand-compliance__icon {
-    color: var(--gr-blood-red, #8B0000);
+    color: var(--gr-cta, #FF5500);
     margin-bottom: 1rem;
   }
 
@@ -94,9 +94,8 @@
   .gr-brand-compliance__label {
     font-family: 'Fjalla One', sans-serif;
     font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
     margin-bottom: 0.75rem;
   }
 
@@ -110,15 +109,14 @@
   .gr-brand-compliance__link {
     font-family: 'Fjalla One', sans-serif;
     font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: var(--gr-blood-red, #8B0000);
+    letter-spacing: -0.02em;
+    color: var(--gr-cta, #FF5500);
     text-decoration: none;
     transition: color 0.2s;
   }
 
   .gr-brand-compliance__link:hover {
-    color: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-text-primary, #FFFFFF);
   }
 
   .gr-brand-compliance__contact {

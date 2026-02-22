@@ -23,24 +23,23 @@ header-component,
 .header a,
 header-component a {
   font-family: var(--gr-font-heading);
-  letter-spacing: var(--gr-tracking-wide);
-  text-transform: uppercase;
+  letter-spacing: var(--gr-tracking-normal);
   font-size: var(--gr-body-sm);
-  color: var(--gr-bone-white);
+  color: var(--gr-text-primary);
   transition: color var(--gr-transition-fast);
 }
 
 .header__menu-item:hover,
 .header a:hover,
 header-component a:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta);
 }
 
 /* ---- Active Nav State ---- */
 
 .header__menu-item--active,
 .header__menu-item[aria-current="page"] {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta);
 }
 
 /* ---- Logo ---- */
@@ -53,13 +52,13 @@ header-component a:hover {
 
 .header__icon,
 .header-actions__icon {
-  color: var(--gr-bone-white);
+  color: var(--gr-text-primary);
   transition: color var(--gr-transition-fast);
 }
 
 .header__icon:hover,
 .header-actions__icon:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta);
 }
 
 /* ---- Cart Count Badge ---- */
@@ -86,13 +85,13 @@ header-component a:hover {
 .header__submenu a,
 .mega-menu a,
 .header__dropdown a {
-  color: var(--gr-bone-white);
+  color: var(--gr-text-primary);
 }
 
 .header__submenu a:hover,
 .mega-menu a:hover,
 .header__dropdown a:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta);
 }
 
 /* ---- Mobile Drawer ---- */
@@ -105,15 +104,14 @@ header-component a:hover {
 
 .menu-drawer a,
 .header-drawer a {
-  color: var(--gr-bone-white);
+  color: var(--gr-text-primary);
   font-family: var(--gr-font-heading);
-  text-transform: uppercase;
-  letter-spacing: var(--gr-tracking-wide);
+  letter-spacing: var(--gr-tracking-normal);
 }
 
 .menu-drawer a:hover,
 .header-drawer a:hover {
-  color: var(--gr-blood-red);
+  color: var(--gr-cta);
 }
 
 /* ---- Sticky Header Transition ---- */

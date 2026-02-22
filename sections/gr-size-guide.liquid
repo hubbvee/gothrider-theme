@@ -139,19 +139,19 @@
     gap: 0.5rem;
     background: none;
     border: 1px solid var(--gr-border, #333);
-    color: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-text-primary, #FFFFFF);
     padding: 0.5rem 1rem;
     font-family: 'Lato', sans-serif;
     font-size: 0.85rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    border-radius: var(--gr-radius-button, 0.875rem);
     cursor: pointer;
     transition: border-color 0.2s;
   }
 
   .gr-size-guide-btn:hover {
-    border-color: var(--gr-blood-red, #8B0000);
-    color: var(--gr-blood-red, #8B0000);
+    border-color: var(--gr-cta, #FF5500);
+    color: var(--gr-cta, #FF5500);
   }
 
   .gr-size-guide-btn svg {
@@ -180,6 +180,7 @@
   .gr-size-guide-modal {
     background: var(--gr-surface, #1A1A1A);
     border: 1px solid var(--gr-border, #333);
+    border-radius: var(--gr-radius-md, 0.75rem);
     max-width: 700px;
     width: 100%;
     max-height: 85vh;
@@ -203,9 +204,8 @@
   .gr-size-guide-title {
     font-family: 'Fjalla One', sans-serif;
     font-size: 1.25rem;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--gr-bone-white, #F5F5DC);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary, #FFFFFF);
     margin: 0;
   }
 
@@ -219,7 +219,7 @@
   }
 
   .gr-size-guide-close:hover {
-    color: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-text-primary, #FFFFFF);
   }
 
   /* Units toggle */
@@ -236,8 +236,7 @@
     padding: 0.4rem 1.25rem;
     font-family: 'Lato', sans-serif;
     font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: -0.02em;
     cursor: pointer;
     transition: all 0.2s;
   }
@@ -247,9 +246,9 @@
   }
 
   .gr-unit-btn.is-active {
-    background: var(--gr-bone-white, #F5F5DC);
-    color: var(--gr-black, #0A0A0A);
-    border-color: var(--gr-bone-white, #F5F5DC);
+    background: var(--gr-text-primary, #FFFFFF);
+    color: var(--gr-black, #000000);
+    border-color: var(--gr-text-primary, #FFFFFF);
   }
 
   /* Body */
@@ -278,13 +277,12 @@
 
   .gr-size-guide-table th {
     font-family: 'Fjalla One', sans-serif;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+    letter-spacing: -0.02em;
     font-weight: normal;
-    color: var(--gr-bone-white, #F5F5DC);
+    color: var(--gr-text-primary, #FFFFFF);
     padding: 0.75rem 1rem;
     text-align: left;
-    border-bottom: 2px solid var(--gr-blood-red, #8B0000);
+    border-bottom: 2px solid var(--gr-cta, #FF5500);
     white-space: nowrap;
   }
 
@@ -295,13 +293,13 @@
   }
 
   .gr-size-guide-table tr:hover td {
-    background: rgba(139, 0, 0, 0.1);
+    background: rgba(255, 85, 0, 0.1);
   }
 
   .gr-size-label {
     font-family: 'Fjalla One', sans-serif;
     font-weight: normal;
-    letter-spacing: 0.05em;
+    letter-spacing: -0.02em;
   }
 
   .gr-size-guide-model {
