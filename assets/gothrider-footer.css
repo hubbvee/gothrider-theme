@@ -1,0 +1,192 @@
+/* ==========================================================================
+   GothRider Footer Overrides
+   Themes Horizon's existing footer sections with GR aesthetic.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Main Footer Section
+   -------------------------------------------------------------------------- */
+.footer-content {
+  color: var(--gr-bone-white, #F5F5DC);
+}
+
+/* Footer headings (newsletter, column titles) */
+.footer-content h2,
+.footer-content h3,
+.footer-content h4 {
+  font-family: 'Fjalla One', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--gr-bone-white, #F5F5DC);
+}
+
+/* Footer body text */
+.footer-content p,
+.footer-content li,
+.footer-content span {
+  color: var(--gr-text-muted, #999);
+  font-family: 'Lato', sans-serif;
+}
+
+/* Footer links */
+.footer-content a {
+  color: var(--gr-text-muted, #999);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footer-content a:hover {
+  color: var(--gr-blood-red, #8B0000);
+}
+
+/* Menu blocks in footer */
+.footer-content .menu-drawer__menu a,
+.footer-content .footer-menu a {
+  color: var(--gr-text-muted, #999);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.9rem;
+}
+
+.footer-content .menu-drawer__menu a:hover,
+.footer-content .footer-menu a:hover {
+  color: var(--gr-bone-white, #F5F5DC);
+}
+
+/* Email signup in footer */
+.footer-content .email-signup input[type="email"],
+.footer-content input[type="email"] {
+  background: transparent;
+  border: 1px solid var(--gr-border, #333);
+  color: var(--gr-bone-white, #F5F5DC);
+  font-family: 'Lato', sans-serif;
+}
+
+.footer-content .email-signup input[type="email"]::placeholder,
+.footer-content input[type="email"]::placeholder {
+  color: var(--gr-text-muted, #999);
+}
+
+.footer-content .email-signup input[type="email"]:focus,
+.footer-content input[type="email"]:focus {
+  border-color: var(--gr-blood-red, #8B0000);
+  outline: none;
+}
+
+.footer-content .email-signup button[type="submit"],
+.footer-content form button[type="submit"] {
+  background-color: var(--gr-blood-red, #8B0000);
+  color: var(--gr-bone-white, #F5F5DC);
+  border: none;
+  font-family: 'Fjalla One', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-radius: 0;
+}
+
+.footer-content .email-signup button[type="submit"]:hover,
+.footer-content form button[type="submit"]:hover {
+  background-color: #A00000;
+}
+
+/* Social links */
+.footer-content .social-links a,
+.footer-content social-links-component a {
+  color: var(--gr-text-muted, #999);
+  transition: color 0.2s;
+}
+
+.footer-content .social-links a:hover,
+.footer-content social-links-component a:hover {
+  color: var(--gr-blood-red, #8B0000);
+}
+
+/* Payment icons */
+.footer-content .payment-icons svg,
+.footer-content payment-icons-component svg {
+  opacity: 0.5;
+  transition: opacity 0.2s;
+}
+
+.footer-content .payment-icons svg:hover,
+.footer-content payment-icons-component svg:hover {
+  opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   Footer Utilities (Copyright / Policies / Social)
+   -------------------------------------------------------------------------- */
+.footer-utilities {
+  color: var(--gr-text-muted, #999);
+}
+
+.footer-utilities .utilities {
+  border-top-color: var(--gr-border, #333);
+  color: var(--gr-text-muted, #999);
+}
+
+.footer-utilities a {
+  color: var(--gr-text-muted, #999);
+  transition: color 0.2s;
+}
+
+.footer-utilities a:hover {
+  color: var(--gr-bone-white, #F5F5DC);
+}
+
+/* Copyright text */
+.footer-utilities .footer-copyright,
+.footer-utilities footer-copyright-component {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+  color: var(--gr-text-muted, #999);
+}
+
+/* Policy links */
+.footer-utilities .footer-policy-list a,
+.footer-utilities footer-policy-list-component a {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.75rem;
+}
+
+/* Social in utilities */
+.footer-utilities .social-links a,
+.footer-utilities social-links-component a {
+  color: var(--gr-text-muted, #999);
+}
+
+.footer-utilities .social-links a:hover,
+.footer-utilities social-links-component a:hover {
+  color: var(--gr-blood-red, #8B0000);
+}
+
+/* --------------------------------------------------------------------------
+   GothRider Licensing Badge (injected for licensee stores)
+   -------------------------------------------------------------------------- */
+.gr-licensing-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--gr-border, #333);
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem;
+  color: var(--gr-text-muted, #999);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.gr-licensing-badge__icon {
+  width: 16px;
+  height: 16px;
+  color: var(--gr-blood-red, #8B0000);
+}
+
+.gr-licensing-badge a {
+  color: var(--gr-text-muted, #999);
+  text-decoration: none;
+}
+
+.gr-licensing-badge a:hover {
+  color: var(--gr-bone-white, #F5F5DC);
+}

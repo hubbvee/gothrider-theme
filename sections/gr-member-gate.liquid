@@ -1,0 +1,438 @@
+{% if settings.gr_store_module == 'full' or settings.gr_store_module == 'coffee' or settings.gr_store_module == 'apparel' %}
+  {% assign is_member = false %}
+  {% if customer and customer.tags contains 'member' %}
+    {% assign is_member = true %}
+  {% endif %}
+
+  {% if is_member %}
+    {%- comment -%} Member sees the gated content {%- endcomment -%}
+    <div class="gr-member-gate gr-member-gate--unlocked gr-section" {{ section.shopify_attributes }}>
+      <div class="gr-container">
+        {% if section.settings.member_heading != blank %}
+          <div class="gr-member-gate__header gr-reveal">
+            <span class="gr-member-gate__badge">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" stroke-linejoin="round"/></svg>
+              {{ section.settings.member_label | default: 'Members Only' }}
+            </span>
+            <h2 class="gr-member-gate__title">{{ section.settings.member_heading }}</h2>
+          </div>
+        {% endif %}
+
+        <div class="gr-member-gate__content gr-reveal">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when 'product' %}
+                {% if block.settings.product != blank %}
+                  {% assign prod = block.settings.product %}
+                  <a href="{{ prod.url }}" class="gr-member-gate__product" {{ block.shopify_attributes }}>
+                    {% if prod.featured_image %}
+                      <img
+                        src="{{ prod.featured_image | image_url: width: 400 }}"
+                        alt="{{ prod.title | escape }}"
+                        class="gr-member-gate__product-img"
+                        loading="lazy"
+                        width="200"
+                        height="200"
+                      >
+                    {% endif %}
+                    <div class="gr-member-gate__product-info">
+                      <h3 class="gr-member-gate__product-title">{{ prod.title }}</h3>
+                      <span class="gr-member-gate__product-price">
+                        {% if block.settings.member_price != blank %}
+                          <span class="gr-member-gate__member-price">{{ block.settings.member_price }}</span>
+                          <s class="gr-member-gate__regular-price">{{ prod.price | money }}</s>
+                        {% else %}
+                          {{ prod.price | money }}
+                        {% endif %}
+                      </span>
+                    </div>
+                  </a>
+                {% endif %}
+
+              {% when 'text' %}
+                <div class="gr-member-gate__text-block" {{ block.shopify_attributes }}>
+                  {{ block.settings.content }}
+                </div>
+
+              {% when 'countdown' %}
+                {% if block.settings.end_date != blank %}
+                  <div class="gr-member-gate__countdown" {{ block.shopify_attributes }} data-end="{{ block.settings.end_date }}">
+                    <span class="gr-member-gate__countdown-label">{{ block.settings.label | default: 'Early Access Ends' }}</span>
+                    <div class="gr-member-gate__countdown-timer">
+                      <div class="gr-countdown-unit"><span class="gr-countdown-num" data-days>--</span><span class="gr-countdown-lbl">Days</span></div>
+                      <div class="gr-countdown-unit"><span class="gr-countdown-num" data-hours>--</span><span class="gr-countdown-lbl">Hrs</span></div>
+                      <div class="gr-countdown-unit"><span class="gr-countdown-num" data-minutes>--</span><span class="gr-countdown-lbl">Min</span></div>
+                      <div class="gr-countdown-unit"><span class="gr-countdown-num" data-seconds>--</span><span class="gr-countdown-lbl">Sec</span></div>
+                    </div>
+                  </div>
+                {% endif %}
+            {% endcase %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+  {% else %}
+    {%- comment -%} Non-member sees the locked teaser {%- endcomment -%}
+    <div class="gr-member-gate gr-member-gate--locked gr-section" {{ section.shopify_attributes }}>
+      <div class="gr-container">
+        <div class="gr-member-gate__locked-content gr-reveal">
+          <svg class="gr-member-gate__lock-icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="11" width="18" height="11" rx="2"/>
+            <path d="M7 11V7a5 5 0 0110 0v4"/>
+          </svg>
+          <h2 class="gr-member-gate__locked-title">{{ section.settings.locked_heading | default: 'Members Only' }}</h2>
+          <p class="gr-member-gate__locked-text">{{ section.settings.locked_description }}</p>
+          {% if section.settings.cta_url != blank %}
+            <a href="{{ section.settings.cta_url }}" class="gr-btn gr-btn--primary">
+              {{ section.settings.cta_text | default: 'Become a Member' }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
+  <script>
+    (function() {
+      document.querySelectorAll('.gr-member-gate__countdown').forEach(function(el) {
+        var end = new Date(el.dataset.end).getTime();
+        if (isNaN(end)) return;
+
+        var days = el.querySelector('[data-days]');
+        var hours = el.querySelector('[data-hours]');
+        var minutes = el.querySelector('[data-minutes]');
+        var seconds = el.querySelector('[data-seconds]');
+
+        function tick() {
+          var now = Date.now();
+          var diff = Math.max(0, end - now);
+          var d = Math.floor(diff / 86400000);
+          var h = Math.floor((diff % 86400000) / 3600000);
+          var m = Math.floor((diff % 3600000) / 60000);
+          var s = Math.floor((diff % 60000) / 1000);
+          if (days) days.textContent = String(d).padStart(2, '0');
+          if (hours) hours.textContent = String(h).padStart(2, '0');
+          if (minutes) minutes.textContent = String(m).padStart(2, '0');
+          if (seconds) seconds.textContent = String(s).padStart(2, '0');
+          if (diff > 0) requestAnimationFrame(tick);
+        }
+        tick();
+        setInterval(tick, 1000);
+      });
+    })();
+  </script>
+{% endif %}
+
+{% stylesheet %}
+  .gr-member-gate {
+    padding: var(--gr-section-spacing, 4rem) 0;
+  }
+
+  /* Header */
+  .gr-member-gate__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .gr-member-gate__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--gr-cta-orange, #FF5500);
+    margin-bottom: 0.75rem;
+  }
+
+  .gr-member-gate__badge svg {
+    color: var(--gr-cta-orange, #FF5500);
+  }
+
+  .gr-member-gate__title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-bone-white, #F5F5DC);
+  }
+
+  /* Unlocked content grid */
+  .gr-member-gate__content {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  /* Product cards */
+  .gr-member-gate__product {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  .gr-member-gate__product-img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border: 1px solid var(--gr-border, #333);
+    transition: border-color 0.2s;
+  }
+
+  .gr-member-gate__product:hover .gr-member-gate__product-img {
+    border-color: var(--gr-blood-red, #8B0000);
+  }
+
+  .gr-member-gate__product-info {
+    padding: 0.75rem 0;
+  }
+
+  .gr-member-gate__product-title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--gr-bone-white, #F5F5DC);
+    margin-bottom: 0.25rem;
+  }
+
+  .gr-member-gate__product-price {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.85rem;
+  }
+
+  .gr-member-gate__member-price {
+    color: var(--gr-cta-orange, #FF5500);
+    font-weight: 700;
+    margin-right: 0.5rem;
+  }
+
+  .gr-member-gate__regular-price {
+    color: var(--gr-text-muted, #999);
+    text-decoration: line-through;
+    font-size: 0.8rem;
+  }
+
+  /* Text block */
+  .gr-member-gate__text-block {
+    grid-column: 1 / -1;
+    color: var(--gr-text-muted, #999);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  /* Countdown */
+  .gr-member-gate__countdown {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 1.5rem 0;
+  }
+
+  .gr-member-gate__countdown-label {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gr-text-muted, #999);
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .gr-member-gate__countdown-timer {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .gr-countdown-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .gr-countdown-num {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 2rem;
+    color: var(--gr-bone-white, #F5F5DC);
+    line-height: 1;
+  }
+
+  .gr-countdown-lbl {
+    font-family: 'Lato', sans-serif;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-text-muted, #999);
+    margin-top: 0.25rem;
+  }
+
+  /* Locked state */
+  .gr-member-gate--locked {
+    background: var(--gr-surface, #1A1A1A);
+    border: 1px solid var(--gr-border, #333);
+  }
+
+  .gr-member-gate__locked-content {
+    text-align: center;
+    padding: 3rem 1rem;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .gr-member-gate__lock-icon {
+    color: var(--gr-text-muted, #999);
+    margin-bottom: 1.5rem;
+    opacity: 0.5;
+  }
+
+  .gr-member-gate__locked-title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-bone-white, #F5F5DC);
+    margin-bottom: 0.75rem;
+  }
+
+  .gr-member-gate__locked-text {
+    color: var(--gr-text-muted, #999);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 749px) {
+    .gr-member-gate__content {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gr-countdown-num {
+      font-size: 1.5rem;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "GR Member Gate",
+  "tag": "section",
+  "class": "gr-member-gate-section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Member view"
+    },
+    {
+      "type": "text",
+      "id": "member_heading",
+      "label": "Heading (members)",
+      "default": "Exclusive Drops"
+    },
+    {
+      "type": "text",
+      "id": "member_label",
+      "label": "Badge label",
+      "default": "Members Only"
+    },
+    {
+      "type": "header",
+      "content": "Locked view (non-members)"
+    },
+    {
+      "type": "text",
+      "id": "locked_heading",
+      "label": "Heading (locked)",
+      "default": "Members Only"
+    },
+    {
+      "type": "textarea",
+      "id": "locked_description",
+      "label": "Description",
+      "default": "Join the GothRider inner circle for exclusive drops, early access, and member-only pricing."
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "CTA link"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA text",
+      "default": "Become a Member"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Member product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "member_price",
+          "label": "Member price (override)",
+          "info": "e.g. $89.00 — leave blank to show regular price"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text block",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Content",
+          "default": "<p>Get first access to limited drops before they go public.</p>"
+        }
+      ]
+    },
+    {
+      "type": "countdown",
+      "name": "Countdown timer",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Label",
+          "default": "Early Access Ends"
+        },
+        {
+          "type": "text",
+          "id": "end_date",
+          "label": "End date (ISO format)",
+          "info": "e.g. 2026-03-15T00:00:00",
+          "default": "2026-03-15T00:00:00"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Member Gate",
+      "blocks": [
+        {
+          "type": "countdown",
+          "settings": {
+            "label": "Early Access Ends",
+            "end_date": "2026-03-15T00:00:00"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+{% doc %}
+  GothRider Licensing Badge
+  Renders "Licensed by GothRider" footer badge for licensee stores.
+  Only appears when store module is set to "licensing".
+{% enddoc %}
+
+{% if settings.gr_store_module == 'licensing' %}
+  <div class="gr-licensing-badge">
+    <svg class="gr-licensing-badge__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z" stroke-linejoin="round"/>
+    </svg>
+    <span>Licensed by <a href="https://gothrider.com" target="_blank" rel="noopener">GothRider</a></span>
+  </div>
+{% endif %}

@@ -1,0 +1,238 @@
+{% if settings.gr_store_module == 'licensing' %}
+  <div class="gr-brand-compliance gr-section">
+    <div class="gr-container">
+      {% if section.settings.heading != blank %}
+        <h2 class="gr-brand-compliance__title gr-reveal">{{ section.settings.heading }}</h2>
+      {% endif %}
+
+      <div class="gr-brand-compliance__grid gr-reveal">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when 'guideline' %}
+              <div class="gr-brand-compliance__card" {{ block.shopify_attributes }}>
+                {% if block.settings.icon != 'none' %}
+                  <div class="gr-brand-compliance__icon">
+                    {% case block.settings.icon %}
+                      {% when 'logo' %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6v6H9z"/></svg>
+                      {% when 'color' %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+                      {% when 'typography' %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>
+                      {% when 'photo' %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+                      {% when 'voice' %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1v10M19 10a7 7 0 01-14 0M12 19v4M8 23h8"/></svg>
+                      {% when 'check' %}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+                    {% endcase %}
+                  </div>
+                {% endif %}
+                <h3 class="gr-brand-compliance__label">{{ block.settings.title }}</h3>
+                <div class="gr-brand-compliance__text">{{ block.settings.description }}</div>
+                {% if block.settings.link_url != blank %}
+                  <a href="{{ block.settings.link_url }}" class="gr-brand-compliance__link" target="_blank" rel="noopener">
+                    {{ block.settings.link_text | default: 'View guidelines' }} &rarr;
+                  </a>
+                {% endif %}
+              </div>
+          {% endcase %}
+        {% endfor %}
+      </div>
+
+      {% if section.settings.contact_text != blank %}
+        <p class="gr-brand-compliance__contact gr-reveal">{{ section.settings.contact_text }}</p>
+      {% endif %}
+    </div>
+  </div>
+{% endif %}
+
+{% stylesheet %}
+  .gr-brand-compliance {
+    padding: var(--gr-section-spacing, 4rem) 0;
+  }
+
+  .gr-brand-compliance__title {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-bone-white, #F5F5DC);
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .gr-brand-compliance__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .gr-brand-compliance__card {
+    background: var(--gr-surface, #1A1A1A);
+    border: 1px solid var(--gr-border, #333);
+    padding: 1.75rem;
+    transition: border-color 0.3s;
+  }
+
+  .gr-brand-compliance__card:hover {
+    border-color: var(--gr-blood-red, #8B0000);
+  }
+
+  .gr-brand-compliance__icon {
+    color: var(--gr-blood-red, #8B0000);
+    margin-bottom: 1rem;
+  }
+
+  .gr-brand-compliance__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .gr-brand-compliance__label {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--gr-bone-white, #F5F5DC);
+    margin-bottom: 0.75rem;
+  }
+
+  .gr-brand-compliance__text {
+    color: var(--gr-text-muted, #999);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .gr-brand-compliance__link {
+    font-family: 'Fjalla One', sans-serif;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--gr-blood-red, #8B0000);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .gr-brand-compliance__link:hover {
+    color: var(--gr-bone-white, #F5F5DC);
+  }
+
+  .gr-brand-compliance__contact {
+    text-align: center;
+    color: var(--gr-text-muted, #999);
+    font-size: 0.85rem;
+    margin-top: 2.5rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  @media (max-width: 749px) {
+    .gr-brand-compliance__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "GR Brand Compliance",
+  "tag": "section",
+  "class": "gr-brand-compliance-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Brand Guidelines"
+    },
+    {
+      "type": "textarea",
+      "id": "contact_text",
+      "label": "Contact text",
+      "default": "Questions about brand usage? Contact brand@gothrider.com"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "guideline",
+      "name": "Guideline",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "logo", "label": "Logo usage" },
+            { "value": "color", "label": "Color palette" },
+            { "value": "typography", "label": "Typography" },
+            { "value": "photo", "label": "Photography" },
+            { "value": "voice", "label": "Brand voice" },
+            { "value": "check", "label": "Approval" }
+          ],
+          "default": "logo"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Logo Usage"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>Use the official GothRider logo files provided. Maintain minimum clear space around the logo.</p>"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text",
+          "default": "View guidelines"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Brand Compliance",
+      "blocks": [
+        {
+          "type": "guideline",
+          "settings": {
+            "icon": "logo",
+            "title": "Logo Usage",
+            "description": "<p>Use the official GothRider logo files provided. Maintain minimum clear space. Never distort or recolor.</p>"
+          }
+        },
+        {
+          "type": "guideline",
+          "settings": {
+            "icon": "color",
+            "title": "Color Palette",
+            "description": "<p>Blood Red #8B0000, Gothic Black #0A0A0A, Bone White #F5F5DC, CTA Orange #FF5500.</p>"
+          }
+        },
+        {
+          "type": "guideline",
+          "settings": {
+            "icon": "voice",
+            "title": "Brand Voice",
+            "description": "<p>Rebellious, authentic, premium. Never discount-oriented. For those who were told to tone it down.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
