@@ -1,0 +1,15 @@
+{{ 'gothrider-design-system.css' | asset_url | stylesheet_tag }}
+
+{% if settings.gr_enable_scroll_reveal %}
+  <script src="{{ 'gothrider-scroll-reveal.js' | asset_url }}" defer></script>
+{% endif %}
+
+<style>
+  :root {
+    --gr-blood-red: {{ settings.gr_color_primary }};
+    --gr-black: {{ settings.gr_color_background }};
+    --gr-surface: {{ settings.gr_color_surface }};
+    --gr-bone-white: {{ settings.gr_color_accent }};
+    --gr-text-primary: {{ settings.gr_color_text }};
+  }
+</style>
