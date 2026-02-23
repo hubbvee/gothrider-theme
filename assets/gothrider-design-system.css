@@ -387,7 +387,7 @@ a:hover {
 .menu-list__link {
   font-family: var(--font-body--family, var(--gr-font-body)) !important;
   font-size: 1rem !important;
-  font-weight: 400 !important;
+  font-weight: 700 !important;
 }
 
 /* ============================================
