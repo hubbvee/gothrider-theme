@@ -20,7 +20,7 @@
     <div class="gr-product-carousel__grid gr-product-carousel__grid--{{ columns }}">
       {% if collection and collection.products.size > 0 %}
         {% for product in collection.products limit: limit %}
-          <div class="gr-product-card gr-card">
+          <div class="gr-product-card">
             <a href="{{ product.url }}" class="gr-product-card__link">
               <div class="gr-product-card__media">
                 {% if product.featured_image %}
@@ -65,7 +65,7 @@
         {% endfor %}
       {% else %}
         {% for i in (1..limit) %}
-          <div class="gr-product-card gr-card">
+          <div class="gr-product-card">
             <div class="gr-product-card__media gr-product-card__placeholder">
               {%- assign placeholder_index = forloop.index | minus: 1 | modulo: 6 | plus: 1 -%}
               {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
@@ -123,6 +123,7 @@
     overflow: hidden;
     aspect-ratio: 1 / 1;
     background-color: var(--gr-surface);
+    border-radius: 0;
   }
 
   .gr-product-card__img {
@@ -165,7 +166,7 @@
   }
 
   .gr-product-card__info {
-    padding: var(--gr-space-sm) 0 0;
+    padding: var(--gr-space-xs) 0 0;
   }
 
   .gr-product-card__title {
@@ -175,7 +176,7 @@
     text-transform: none;
     letter-spacing: var(--gr-tracking-normal);
     color: var(--gr-text-primary);
-    margin-bottom: var(--gr-space-xs);
+    margin-bottom: 2px;
   }
 
   .gr-product-card__price {
