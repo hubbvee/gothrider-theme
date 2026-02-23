@@ -67,7 +67,8 @@
         {% for i in (1..limit) %}
           <div class="gr-product-card gr-card">
             <div class="gr-product-card__media gr-product-card__placeholder">
-              {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- assign placeholder_index = forloop.index | minus: 1 | modulo: 6 | plus: 1 -%}
+              {{ 'product-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
             <div class="gr-product-card__info">
               <h3 class="gr-product-card__title">Sample Product {{ forloop.index }}</h3>

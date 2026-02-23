@@ -20,7 +20,8 @@
                 class: 'gr-image-mosaic__img'
               }}
             {% else %}
-              {{ 'lifestyle-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- assign placeholder_index = forloop.index | minus: 1 | modulo: 2 | plus: 1 -%}
+              {{ 'lifestyle-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
           </div>
 
