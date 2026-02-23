@@ -1,0 +1,228 @@
+{% stylesheet %}
+  .gr-hero {
+    position: relative;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .gr-hero--full { min-height: 100vh; }
+  .gr-hero--medium { min-height: 60vh; }
+
+  .gr-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .gr-hero__media img,
+  .gr-hero__media video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .gr-hero__overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+
+  .gr-hero__overlay--dark {
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.3),
+      rgba(10, 10, 10, 0.8)
+    );
+  }
+
+  .gr-hero__overlay--darker {
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.5),
+      rgba(10, 10, 10, 0.9)
+    );
+  }
+
+  .gr-hero__overlay--blood {
+    background: linear-gradient(
+      to bottom,
+      rgba(139, 0, 0, 0.2),
+      rgba(10, 10, 10, 0.85)
+    );
+  }
+
+  .gr-hero__content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: var(--gr-space-xl);
+    max-width: var(--gr-content-max);
+  }
+
+  .gr-hero__title {
+    font-size: var(--gr-heading-xxl);
+    margin-bottom: var(--gr-space-md);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .gr-hero__subtitle {
+    font-family: var(--gr-font-body);
+    font-size: var(--gr-body-lg);
+    color: var(--gr-bone-white-muted);
+    margin-bottom: var(--gr-space-xl);
+    font-weight: var(--gr-weight-regular);
+    text-transform: none;
+    letter-spacing: var(--gr-tracking-normal);
+    line-height: var(--gr-leading-normal);
+  }
+
+  .gr-hero__actions {
+    display: flex;
+    gap: var(--gr-space-md);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 768px) {
+    .gr-hero { min-height: 70vh; }
+    .gr-hero--full { min-height: 90vh; }
+    .gr-hero__content { padding: var(--gr-space-lg); }
+    .gr-hero__actions { flex-direction: column; align-items: center; }
+  }
+{% endstylesheet %}
+
+<div class="gr-hero gr-hero--{{ section.settings.height }} gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-hero__media">
+    {% if section.settings.video != blank %}
+      {{ section.settings.video | video_tag:
+        autoplay: true,
+        loop: true,
+        muted: true,
+        playsinline: true,
+        loading: 'eager'
+      }}
+    {% elsif section.settings.image %}
+      {{ section.settings.image | image_url: width: 1920 | image_tag:
+        loading: 'eager',
+        sizes: '100vw',
+        widths: '640, 960, 1280, 1600, 1920'
+      }}
+    {% endif %}
+  </div>
+
+  <div class="gr-hero__overlay gr-hero__overlay--{{ section.settings.overlay_style }}"></div>
+
+  <div class="gr-hero__content">
+    {% if section.settings.heading != blank %}
+      <h1 class="gr-hero__title gr-heading">{{ section.settings.heading }}</h1>
+    {% endif %}
+
+    {% if section.settings.subheading != blank %}
+      <p class="gr-hero__subtitle">{{ section.settings.subheading }}</p>
+    {% endif %}
+
+    <div class="gr-hero__actions">
+      {% if section.settings.button_label != blank %}
+        <a href="{{ section.settings.button_link }}" class="gr-btn gr-btn--primary">
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+      {% if section.settings.button_label_2 != blank %}
+        <a href="{{ section.settings.button_link_2 }}" class="gr-btn gr-btn--secondary">
+          {{ section.settings.button_label_2 }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "GR Hero Banner",
+  "tag": "section",
+  "class": "gr-hero-wrapper",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background Image"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "Background Video (overrides image)"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "options": [
+        { "value": "full", "label": "Full Screen" },
+        { "value": "default", "label": "Large (80vh)" },
+        { "value": "medium", "label": "Medium (60vh)" }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "select",
+      "id": "overlay_style",
+      "label": "Overlay",
+      "options": [
+        { "value": "dark", "label": "Dark Gradient" },
+        { "value": "darker", "label": "Heavy Dark" },
+        { "value": "blood", "label": "Blood Red Gradient" }
+      ],
+      "default": "dark"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "RIDE HARD. LIVE FAST."
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium coffee for those who refuse to settle."
+    },
+    {
+      "type": "header",
+      "content": "Primary Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Secondary Button"
+    },
+    {
+      "type": "text",
+      "id": "button_label_2",
+      "label": "Button Label"
+    },
+    {
+      "type": "url",
+      "id": "button_link_2",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Hero Banner"
+    }
+  ]
+}
+{% endschema %}
