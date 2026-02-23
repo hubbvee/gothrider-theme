@@ -26,7 +26,8 @@
               </a>
             {% else %}
               <a href="{{ article.url }}" class="gr-blog-card__media gr-bg-surface" style="display: flex; align-items: center; justify-content: center;">
-                {{ 'blog-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+                {%- assign placeholder_index = forloop.index | minus: 1 | modulo: 2 | plus: 1 -%}
+                {{ 'lifestyle-' | append: placeholder_index | placeholder_svg_tag: 'placeholder-svg' }}
               </a>
             {% endif %}
             <div class="gr-blog-card__content">
@@ -51,7 +52,8 @@
         {% for i in (1..3) %}
           <article class="gr-blog-card gr-card">
             <div class="gr-blog-card__media gr-bg-surface" style="aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;">
-              {{ 'blog-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              {%- assign ph_index = forloop.index | minus: 1 | modulo: 2 | plus: 1 -%}
+              {{ 'lifestyle-' | append: ph_index | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
             <div class="gr-blog-card__content">
               <div class="gr-blog-card__meta">
