@@ -24,6 +24,10 @@
                   class: 'gr-blog-card__img'
                 }}
               </a>
+            {% else %}
+              <a href="{{ article.url }}" class="gr-blog-card__media gr-bg-surface" style="display: flex; align-items: center; justify-content: center;">
+                {{ 'blog-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              </a>
             {% endif %}
             <div class="gr-blog-card__content">
               <div class="gr-blog-card__meta">

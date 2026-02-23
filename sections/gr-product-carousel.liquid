@@ -18,7 +18,7 @@
     {% endif %}
 
     <div class="gr-product-carousel__grid gr-product-carousel__grid--{{ columns }}">
-      {% if collection %}
+      {% if collection and collection.products.size > 0 %}
         {% for product in collection.products limit: limit %}
           <div class="gr-product-card gr-card">
             <a href="{{ product.url }}" class="gr-product-card__link">
