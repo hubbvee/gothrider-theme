@@ -222,11 +222,11 @@
         "social_icons": {
           "type": "social-links",
           "settings": {
-            "facebook_url": "https://www.facebook.com",
-            "instagram_url": "https://www.instagram.com",
-            "tiktok_url": "https://www.tiktok.com",
-            "twitter_url": "https://www.twitter.com",
-            "youtube_url": "https://www.youtube.com"
+            "facebook_url": "https://www.facebook.com/gothriderbrand",
+            "instagram_url": "https://instagram.com/gothrider",
+            "tiktok_url": "https://tiktok.com/@gothrider",
+            "twitter_url": "https://x.com/gothrider",
+            "pinterest_url": "https://www.pinterest.com/gothrider/"
           }
         }
       },

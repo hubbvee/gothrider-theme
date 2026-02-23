@@ -16,14 +16,15 @@
         "overlay_style": "dark",
         "heading": "RIDE HARD. LIVE FAST.",
         "subheading": "Premium coffee for those who refuse to settle.",
-        "button_label": "Shop Now"
+        "button_label": "Shop Now",
+        "button_link": "/collections/coffee"
       }
     },
     "gr_coffee_carousel": {
       "type": "gr-product-carousel",
       "settings": {
         "heading": "Discover Our Coffees",
-        "collection": "frontpage",
+        "collection": "coffee",
         "products_to_show": 8,
         "columns": "4",
         "show_second_image": true,
@@ -84,8 +85,8 @@
     "gr_tshirt_carousel": {
       "type": "gr-product-carousel",
       "settings": {
-        "heading": "InkWild T-Shirts",
-        "collection": "",
+        "heading": "InkWild\u2122 T-Shirts",
+        "collection": "inkwild",
         "products_to_show": 8,
         "columns": "4",
         "show_second_image": true,
@@ -98,7 +99,7 @@
         "marquee_block": {
           "type": "gr-marquee",
           "settings": {
-            "text": "RIDE HARD, LIVE FAST",
+            "text": "Ride hard, live fast, and never look back!!",
             "separator": "•",
             "size": "lg",
             "speed": "normal",
@@ -144,29 +145,29 @@
         "collection_1": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "title": ""
+            "collection": "coffee",
+            "title": "Coffee"
           }
         },
         "collection_2": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "title": ""
+            "collection": "coffee-machines",
+            "title": "Coffee Machines"
           }
         },
         "collection_3": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "title": ""
+            "collection": "drinkware",
+            "title": "Drinkware"
           }
         },
         "collection_4": {
           "type": "collection",
           "settings": {
-            "collection": "",
-            "title": ""
+            "collection": "apparel",
+            "title": "Apparel"
           }
         }
       },
@@ -196,25 +197,25 @@
         "testimonial_1": {
           "type": "testimonial",
           "settings": {
-            "quote": "Best coffee I've ever had. Once you go GothRider, there's no going back.",
-            "author": "Frank G.",
-            "location": "Montreal, QC"
+            "quote": "Perfectly balanced, smooth, and damn tasty.",
+            "author": "Frank Gifford",
+            "location": ""
           }
         },
         "testimonial_2": {
           "type": "testimonial",
           "settings": {
-            "quote": "I didn't think coffee could be this strong AND this smooth. Absolute game changer.",
-            "author": "Sarah M.",
-            "location": "Toronto, ON"
+            "quote": "This is the best tasting extra caffeinated coffee I have ever had.",
+            "author": "Jeff Wurst",
+            "location": ""
           }
         },
         "testimonial_3": {
           "type": "testimonial",
           "settings": {
-            "quote": "My morning ritual is now sacred thanks to GothRider. Dark, bold, and unapologetic.",
-            "author": "Jake R.",
-            "location": "Vancouver, BC"
+            "quote": "Fast delivery, great quality, and amazing support! I had a few questions and the team was incredibly helpful and friendly throughout.",
+            "author": "",
+            "location": ""
           }
         }
       },
@@ -241,7 +242,7 @@
         "brand_subheading": {
           "type": "subheading",
           "settings": {
-            "text": "Our Story"
+            "text": "About Us"
           }
         },
         "brand_heading": {
@@ -253,14 +254,14 @@
         "brand_text": {
           "type": "text",
           "settings": {
-            "text": "<p>Born from a love of dark roasts and darker aesthetics, GothRider is for those who were told to tone it down — and turned it up instead.</p>"
+            "text": "<p>We are dedicated to providing high-quality products and a great customer experience. We offer a range of clothing and accessories with a rebellious and edgy aesthetic, as well as premium coffee. We encourage our customers to embrace their rebellious spirit and take risks in their lives, and we are committed to creating products that are both stylish and functional.</p>"
           }
         },
         "brand_button": {
           "type": "button",
           "settings": {
             "label": "Learn More",
-            "link": "",
+            "link": "/pages/about-us",
             "style": "secondary"
           }
         }
@@ -280,8 +281,8 @@
     "gr_featured_product": {
       "type": "gr-featured-product",
       "settings": {
-        "heading": "Discovery Kit",
-        "product": ""
+        "heading": "GothRider Coffee Discovery Kit",
+        "product": "gasoline-coffee-discovery-kit"
       }
     },
     "gr_comparison_table": {
@@ -296,56 +297,73 @@
         "product_col_2": {
           "type": "product_column",
           "settings": {
-            "name": "Hellraiser"
+            "name": "Grease"
+          }
+        },
+        "product_col_3": {
+          "type": "product_column",
+          "settings": {
+            "name": "Blondie"
           }
         },
         "row_1": {
           "type": "row",
           "settings": {
-            "feature": "Roast Level",
-            "value_1": "Dark",
-            "value_2": "Extra Dark",
-            "value_3": ""
+            "feature": "Acidity",
+            "value_1": "Low",
+            "value_2": "Medium",
+            "value_3": "Medium-High"
           }
         },
         "row_2": {
           "type": "row",
           "settings": {
-            "feature": "Caffeine",
-            "value_1": "High",
-            "value_2": "Extreme",
-            "value_3": ""
+            "feature": "Roasting",
+            "value_1": "Medium Roast",
+            "value_2": "Dark Roast",
+            "value_3": "Light Roast"
           }
         },
         "row_3": {
           "type": "row",
           "settings": {
-            "feature": "Flavor Notes",
-            "value_1": "Smoky, Chocolate",
-            "value_2": "Bold, Intense",
-            "value_3": ""
+            "feature": "Caffeine Level",
+            "value_1": "High",
+            "value_2": "Medium",
+            "value_3": "Medium"
           }
         },
         "row_4": {
           "type": "row",
           "settings": {
-            "feature": "Best For",
-            "value_1": "Daily Rider",
-            "value_2": "Daredevils",
-            "value_3": ""
+            "feature": "Origin",
+            "value_1": "Peru",
+            "value_2": "Peru",
+            "value_3": "Guatemala"
+          }
+        },
+        "row_5": {
+          "type": "row",
+          "settings": {
+            "feature": "Certifications",
+            "value_1": "USDA/FairTrade/KOR",
+            "value_2": "USDA/FairTrade/KOR",
+            "value_3": "USDA/FairTrade/KOR"
           }
         }
       },
       "block_order": [
         "product_col_1",
         "product_col_2",
+        "product_col_3",
         "row_1",
         "row_2",
         "row_3",
-        "row_4"
+        "row_4",
+        "row_5"
       ],
       "settings": {
-        "heading": "Compare Our Coffees",
+        "heading": "Specification of Our Coffee",
         "feature_label": "Feature"
       }
     },
@@ -355,36 +373,36 @@
         "faq_1": {
           "type": "question",
           "settings": {
-            "question": "How long does shipping take?",
-            "answer": "<p>We ship within 24 hours on business days. Standard shipping takes 3-5 business days within Canada and 5-10 business days to the US.</p>"
+            "question": "Do you ship overseas?",
+            "answer": "<p>For the moment we ship to all addresses within Canada (United States shipping is halted during the tariffs negotiations).</p>"
           }
         },
         "faq_2": {
           "type": "question",
           "settings": {
-            "question": "Do you offer free shipping?",
-            "answer": "<p>Yes! We offer free shipping on all orders over $75 CAD within Canada and the US.</p>"
+            "question": "How long will it take to get my orders?",
+            "answer": "<p>Due to the heavy growth we have experienced recently, especially during the holiday season, some orders may take longer than usual. Our team is working as fast and as hard as possible to return to our normal delivery times. You will receive all delivery details in your confirmation email.</p>"
           }
         },
         "faq_3": {
           "type": "question",
           "settings": {
             "question": "What is your return policy?",
-            "answer": "<p>We accept returns within 30 days of delivery for unopened products. Contact our support team to initiate a return.</p>"
+            "answer": "<p>All products purchased from our website may be returned within 30 days of purchase for a full refund, less shipping costs, and no questions asked (excluding consumable products, exceptions may apply). International return orders may be subject to return shipping fees. To initiate such a return, please contact us.</p>"
           }
         },
         "faq_4": {
           "type": "question",
           "settings": {
-            "question": "How should I store my coffee?",
-            "answer": "<p>Store in a cool, dry place away from direct sunlight. For best flavor, use within 30 days of opening.</p>"
+            "question": "Do I need to setup an account to place an order?",
+            "answer": "<p>You do not need to set up an account to place an order. However creating an account allows you to store your shipping information, see order history, and view your product's warranty information. Additional features will be added to the account page in the near future.</p>"
           }
         },
         "faq_5": {
           "type": "question",
           "settings": {
-            "question": "Are your products available internationally?",
-            "answer": "<p>Currently we ship to Canada and the United States. International shipping is coming soon.</p>"
+            "question": "Any question?",
+            "answer": "<p>You can contact us through our contact page! We will be happy to assist you.</p>"
           }
         }
       },
@@ -396,8 +414,8 @@
         "faq_5"
       ],
       "settings": {
-        "heading": "Have a Question?",
-        "subtext": "",
+        "heading": "Have a Question? We Are Here to Help.",
+        "subtext": "<p>Check out the most common questions our customers asked. Still have questions? Contact our customer support.</p>",
         "layout": "stacked"
       }
     },
@@ -405,7 +423,7 @@
       "type": "gr-blog-grid",
       "settings": {
         "heading": "Recent Articles",
-        "blog": "",
+        "blog": "coffee",
         "posts_to_show": 3,
         "columns": "3",
         "show_excerpt": true,
@@ -415,9 +433,9 @@
     "gr_newsletter": {
       "type": "gr-newsletter",
       "settings": {
-        "heading": "Join the Ride",
-        "subtext": "Get exclusive drops, early access, and dark roast secrets delivered to your inbox.",
-        "placeholder": "Enter your email",
+        "heading": "Signup for Our Newsletter",
+        "subtext": "",
+        "placeholder": "E-mail",
         "button_label": "Subscribe",
         "success_message": "Welcome to the ride.",
         "disclaimer": "",
