@@ -14,12 +14,68 @@
     "footer": {
       "type": "footer",
       "blocks": {
-        "group_wErUQf": {
+        "logo_block": {
+          "type": "logo",
+          "settings": {
+            "unit": "pixel",
+            "pixel_width": 150
+          }
+        },
+        "menu_more": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-more",
+            "heading": "More",
+            "menu_spacing": 10,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "inherit_color_scheme": true,
+            "heading_preset": "h3",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "menu_account": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-my-account",
+            "heading": "My Account",
+            "menu_spacing": 10,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "inherit_color_scheme": true,
+            "heading_preset": "h3",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "menu_support": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-support",
+            "heading": "Support",
+            "menu_spacing": 10,
+            "show_as_accordion": true,
+            "accordion_icon": "caret",
+            "inherit_color_scheme": true,
+            "heading_preset": "h3",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          }
+        },
+        "group_newsletter": {
           "type": "group",
           "name": "Join our email list",
           "settings": {
-            "link": "",
-            "open_in_new_tab": false,
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
@@ -43,18 +99,13 @@
             "border_width": 1,
             "border_opacity": 100,
             "border_radius": 0,
-            "placeholder": "",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
-            "text_pF6rVi": {
+            "text_heading": {
               "type": "text",
               "name": "Heading",
               "settings": {
@@ -80,7 +131,7 @@
               },
               "blocks": {}
             },
-            "text_HafH7P": {
+            "text_desc": {
               "type": "text",
               "name": "Text",
               "settings": {
@@ -108,21 +159,30 @@
             }
           },
           "block_order": [
-            "text_pF6rVi",
-            "text_HafH7P"
+            "text_heading",
+            "text_desc"
           ]
         },
-        "email-signup_HafH7P": {
+        "email_signup": {
           "type": "email-signup",
           "name": "Email Signup",
           "settings": {
             "width": "fill"
           }
+        },
+        "payment_icons": {
+          "type": "payment-icons",
+          "settings": {}
         }
       },
       "block_order": [
-        "group_wErUQf",
-        "email-signup_HafH7P"
+        "logo_block",
+        "menu_more",
+        "menu_account",
+        "menu_support",
+        "group_newsletter",
+        "email_signup",
+        "payment_icons"
       ],
       "name": "t:names.footer",
       "settings": {
@@ -147,7 +207,7 @@
         "copyright": {
           "type": "footer-copyright",
           "settings": {
-            "show_powered_by": true,
+            "show_powered_by": false,
             "font_size": "0.75rem",
             "case": "none"
           }

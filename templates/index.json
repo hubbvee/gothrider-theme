@@ -9,280 +9,385 @@
  */
  {
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
+    "gr_hero_banner": {
+      "type": "section",
       "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
+        "hero_block": {
+          "type": "gr-hero-banner",
           "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground-heading)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "height": "default",
+            "overlay_style": "dark",
+            "heading": "RIDE HARD. LIVE FAST.",
+            "subheading": "Premium coffee for those who refuse to settle.",
+            "button_label": "Shop Now"
+          }
+        }
+      },
+      "block_order": ["hero_block"],
+      "settings": {
+        "section_width": "full-width",
+        "section_height": "large",
+        "color_scheme": "scheme-3",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "gr_coffee_carousel": {
+      "type": "gr-product-carousel",
+      "settings": {
+        "heading": "Discover Our Coffees",
+        "columns": "4",
+        "products_to_show": 8,
+        "show_second_image": true,
+        "view_all_label": "View All"
+      }
+    },
+    "gr_image_mosaic": {
+      "type": "gr-image-mosaic",
+      "blocks": {
+        "mosaic_img_1": {
+          "type": "image",
+          "settings": {}
         },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-secondary",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+        "mosaic_img_2": {
+          "type": "image",
+          "settings": {}
+        },
+        "mosaic_img_3": {
+          "type": "image",
+          "settings": {}
+        },
+        "mosaic_img_4": {
+          "type": "image",
+          "settings": {}
+        },
+        "mosaic_img_5": {
+          "type": "image",
+          "settings": {}
         }
       },
       "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
+        "mosaic_img_1",
+        "mosaic_img_2",
+        "mosaic_img_3",
+        "mosaic_img_4",
+        "mosaic_img_5"
       ],
-      "name": "t:names.hero",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-6",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "layout": "grid-5"
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "gr_tshirt_carousel": {
+      "type": "gr-product-carousel",
+      "settings": {
+        "heading": "InkWild T-Shirts",
+        "columns": "4",
+        "products_to_show": 8,
+        "show_second_image": true,
+        "view_all_label": "View All"
+      }
+    },
+    "gr_marquee": {
+      "type": "section",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
+        "marquee_block": {
+          "type": "gr-marquee",
           "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "font_size": "",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 4,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "color": "var(--color-foreground)",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
+            "text": "RIDE HARD, LIVE FAST",
+            "size": "lg",
+            "speed": "normal",
+            "style": "dark"
+          }
         }
       },
-      "name": "t:names.featured_collection",
+      "block_order": ["marquee_block"],
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "color_scheme": "scheme-1",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "section_width": "full-width",
+        "color_scheme": "scheme-3",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "gr_collection_list": {
+      "type": "gr-collection-list",
+      "blocks": {
+        "collection_1": {
+          "type": "collection",
+          "settings": {}
+        },
+        "collection_2": {
+          "type": "collection",
+          "settings": {}
+        },
+        "collection_3": {
+          "type": "collection",
+          "settings": {}
+        },
+        "collection_4": {
+          "type": "collection",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4"
+      ],
+      "settings": {
+        "heading": "Shop By Category",
+        "columns": "4",
+        "show_count": false
+      }
+    },
+    "gr_before_after": {
+      "type": "gr-before-after",
+      "settings": {
+        "heading": "The GothRider Effect",
+        "before_label": "Before",
+        "after_label": "After"
+      }
+    },
+    "gr_testimonials": {
+      "type": "gr-testimonials",
+      "blocks": {
+        "testimonial_1": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "Best coffee I've ever had. Once you go GothRider, there's no going back.",
+            "author": "Frank G.",
+            "location": "Montreal, QC"
+          }
+        },
+        "testimonial_2": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "I didn't think coffee could be this strong AND this smooth. Absolute game changer.",
+            "author": "Sarah M.",
+            "location": "Toronto, ON"
+          }
+        },
+        "testimonial_3": {
+          "type": "testimonial",
+          "settings": {
+            "quote": "My morning ritual is now sacred thanks to GothRider. Dark, bold, and unapologetic.",
+            "author": "Jake R.",
+            "location": "Vancouver, BC"
+          }
+        }
+      },
+      "block_order": [
+        "testimonial_1",
+        "testimonial_2",
+        "testimonial_3"
+      ],
+      "settings": {
+        "heading": "What Our Riders Say"
+      }
+    },
+    "gr_brand_story": {
+      "type": "gr-brand-story",
+      "blocks": {
+        "brand_img_1": {
+          "type": "image",
+          "settings": {}
+        },
+        "brand_img_2": {
+          "type": "image",
+          "settings": {}
+        },
+        "brand_subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Our Story"
+          }
+        },
+        "brand_heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "Expressing Our Rebel Instinct"
+          }
+        },
+        "brand_text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Born from a love of dark roasts and darker aesthetics, GothRider is for those who were told to tone it down — and turned it up instead.</p>"
+          }
+        },
+        "brand_button": {
+          "type": "button",
+          "settings": {
+            "label": "Learn More",
+            "style": "secondary"
+          }
+        }
+      },
+      "block_order": [
+        "brand_img_1",
+        "brand_img_2",
+        "brand_subheading",
+        "brand_heading",
+        "brand_text",
+        "brand_button"
+      ],
+      "settings": {
+        "layout": "image-left"
+      }
+    },
+    "gr_featured_product": {
+      "type": "gr-featured-product",
+      "settings": {
+        "heading": "Discovery Kit"
+      }
+    },
+    "gr_comparison_table": {
+      "type": "gr-comparison-table",
+      "blocks": {
+        "product_col_1": {
+          "type": "product_column",
+          "settings": {
+            "name": "Gasoline"
+          }
+        },
+        "product_col_2": {
+          "type": "product_column",
+          "settings": {
+            "name": "Hellraiser"
+          }
+        },
+        "row_1": {
+          "type": "row",
+          "settings": {
+            "feature": "Roast Level",
+            "value_1": "Dark",
+            "value_2": "Extra Dark"
+          }
+        },
+        "row_2": {
+          "type": "row",
+          "settings": {
+            "feature": "Caffeine",
+            "value_1": "High",
+            "value_2": "Extreme"
+          }
+        },
+        "row_3": {
+          "type": "row",
+          "settings": {
+            "feature": "Flavor Notes",
+            "value_1": "Smoky, Chocolate",
+            "value_2": "Bold, Intense"
+          }
+        },
+        "row_4": {
+          "type": "row",
+          "settings": {
+            "feature": "Best For",
+            "value_1": "Daily Rider",
+            "value_2": "Daredevils"
+          }
+        }
+      },
+      "block_order": [
+        "product_col_1",
+        "product_col_2",
+        "row_1",
+        "row_2",
+        "row_3",
+        "row_4"
+      ],
+      "settings": {
+        "heading": "Compare Our Coffees",
+        "feature_label": "Feature"
+      }
+    },
+    "gr_faq": {
+      "type": "gr-faq",
+      "blocks": {
+        "faq_1": {
+          "type": "question",
+          "settings": {
+            "question": "How long does shipping take?",
+            "answer": "<p>We ship within 24 hours on business days. Standard shipping takes 3-5 business days within Canada and 5-10 business days to the US.</p>"
+          }
+        },
+        "faq_2": {
+          "type": "question",
+          "settings": {
+            "question": "Do you offer free shipping?",
+            "answer": "<p>Yes! We offer free shipping on all orders over $75 CAD within Canada and the US.</p>"
+          }
+        },
+        "faq_3": {
+          "type": "question",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "<p>We accept returns within 30 days of delivery for unopened products. Contact our support team to initiate a return.</p>"
+          }
+        },
+        "faq_4": {
+          "type": "question",
+          "settings": {
+            "question": "How should I store my coffee?",
+            "answer": "<p>Store in a cool, dry place away from direct sunlight. For best flavor, use within 30 days of opening.</p>"
+          }
+        },
+        "faq_5": {
+          "type": "question",
+          "settings": {
+            "question": "Are your products available internationally?",
+            "answer": "<p>Currently we ship to Canada and the United States. International shipping is coming soon.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "faq_1",
+        "faq_2",
+        "faq_3",
+        "faq_4",
+        "faq_5"
+      ],
+      "settings": {
+        "heading": "Have a Question?",
+        "layout": "stacked"
+      }
+    },
+    "gr_blog_grid": {
+      "type": "gr-blog-grid",
+      "settings": {
+        "heading": "Recent Articles",
+        "posts_to_show": 3,
+        "columns": "3",
+        "show_excerpt": true,
+        "view_all_label": "View All"
+      }
+    },
+    "gr_newsletter": {
+      "type": "gr-newsletter",
+      "settings": {
+        "heading": "Join the Ride",
+        "subtext": "Get exclusive drops, early access, and dark roast secrets delivered to your inbox.",
+        "placeholder": "Enter your email",
+        "button_label": "Subscribe",
+        "success_message": "Welcome to the ride.",
+        "style": "default"
       }
     }
   },
   "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
+    "gr_hero_banner",
+    "gr_coffee_carousel",
+    "gr_image_mosaic",
+    "gr_tshirt_carousel",
+    "gr_marquee",
+    "gr_collection_list",
+    "gr_before_after",
+    "gr_testimonials",
+    "gr_brand_story",
+    "gr_featured_product",
+    "gr_comparison_table",
+    "gr_faq",
+    "gr_blog_grid",
+    "gr_newsletter"
   ]
 }
