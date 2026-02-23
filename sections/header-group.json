@@ -14,8 +14,23 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
+        "announcement_qG3h7F": {
+          "type": "_announcement",
+          "name": "t:names.announcement",
+          "settings": {
+            "text": "FREE SHIPPING!",
+            "link": "",
+            "font": "var(--font-subheading--family)",
+            "font_size": "0.75rem",
+            "weight": "",
+            "letter_spacing": "normal",
+            "case": "none"
+          },
+          "blocks": {}
+        },
         "announcement_1": {
           "type": "_announcement",
+          "disabled": true,
           "settings": {
             "text": "FREE SHIPPING ON ORDERS $75+",
             "link": "",
@@ -29,6 +44,7 @@
         },
         "announcement_2": {
           "type": "_announcement",
+          "disabled": true,
           "settings": {
             "text": "RIDE HARD. LIVE FAST.",
             "link": "",
@@ -42,6 +58,7 @@
         },
         "announcement_3": {
           "type": "_announcement",
+          "disabled": true,
           "settings": {
             "text": "NEW ARRIVALS DROPPING WEEKLY",
             "link": "",
@@ -55,6 +72,7 @@
         }
       },
       "block_order": [
+        "announcement_qG3h7F",
         "announcement_1",
         "announcement_2",
         "announcement_3"
@@ -111,6 +129,7 @@
         "logo_position": "center",
         "menu_position": "left",
         "menu_row": "top",
+        "customer_account_menu": "customer-account-main-menu",
         "show_search": true,
         "search_position": "right",
         "search_row": "top",
@@ -127,6 +146,10 @@
         "divider_width": 0,
         "divider_size": "page-width",
         "border_width": 0,
+        "actions_display_style": "icon",
+        "actions_font_size": "0.875rem",
+        "actions_font": "body",
+        "actions_text_case": "none",
         "color_scheme_top": "scheme-2",
         "color_scheme_bottom": "",
         "color_scheme_transparent": "scheme-6",
