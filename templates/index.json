@@ -7,7 +7,7 @@
  * made to this file may be overwritten.
  * ------------------------------------------------------------
  */
- {
+{
   "sections": {
     "gr_hero_banner": {
       "type": "section",
@@ -19,15 +19,41 @@
             "overlay_style": "dark",
             "heading": "RIDE HARD. LIVE FAST.",
             "subheading": "Premium coffee for those who refuse to settle.",
-            "button_label": "Shop Now"
-          }
+            "button_label": "Shop Now",
+            "button_link": "",
+            "button_label_2": "",
+            "button_link_2": ""
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["hero_block"],
+      "block_order": [
+        "hero_block"
+      ],
       "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
         "section_width": "full-width",
         "section_height": "large",
+        "section_height_custom": 50,
         "color_scheme": "scheme-3",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -36,8 +62,9 @@
       "type": "gr-product-carousel",
       "settings": {
         "heading": "Discover Our Coffees",
-        "columns": "4",
+        "collection": "frontpage",
         "products_to_show": 8,
+        "columns": "4",
         "show_second_image": true,
         "view_all_label": "View All"
       }
@@ -47,23 +74,38 @@
       "blocks": {
         "mosaic_img_1": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "mosaic_img_2": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "mosaic_img_3": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "mosaic_img_4": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         },
         "mosaic_img_5": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "caption": "",
+            "link": ""
+          }
         }
       },
       "block_order": [
@@ -74,6 +116,7 @@
         "mosaic_img_5"
       ],
       "settings": {
+        "heading": "",
         "layout": "grid-5"
       }
     },
@@ -81,8 +124,9 @@
       "type": "gr-product-carousel",
       "settings": {
         "heading": "InkWild T-Shirts",
-        "columns": "4",
+        "collection": "",
         "products_to_show": 8,
+        "columns": "4",
         "show_second_image": true,
         "view_all_label": "View All"
       }
@@ -94,16 +138,41 @@
           "type": "gr-marquee",
           "settings": {
             "text": "RIDE HARD, LIVE FAST",
+            "separator": "•",
             "size": "lg",
             "speed": "normal",
             "style": "dark"
-          }
+          },
+          "blocks": {}
         }
       },
-      "block_order": ["marquee_block"],
+      "block_order": [
+        "marquee_block"
+      ],
       "settings": {
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 12,
         "section_width": "full-width",
+        "section_height": "",
+        "section_height_custom": 50,
         "color_scheme": "scheme-3",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "toggle_overlay": false,
+        "overlay_color": "#00000026",
+        "overlay_style": "solid",
+        "gradient_direction": "to top",
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -113,19 +182,31 @@
       "blocks": {
         "collection_1": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "title": ""
+          }
         },
         "collection_2": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "title": ""
+          }
         },
         "collection_3": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "title": ""
+          }
         },
         "collection_4": {
           "type": "collection",
-          "settings": {}
+          "settings": {
+            "collection": "",
+            "title": ""
+          }
         }
       },
       "block_order": [
@@ -218,6 +299,7 @@
           "type": "button",
           "settings": {
             "label": "Learn More",
+            "link": "",
             "style": "secondary"
           }
         }
@@ -237,7 +319,8 @@
     "gr_featured_product": {
       "type": "gr-featured-product",
       "settings": {
-        "heading": "Discovery Kit"
+        "heading": "Discovery Kit",
+        "product": ""
       }
     },
     "gr_comparison_table": {
@@ -260,7 +343,8 @@
           "settings": {
             "feature": "Roast Level",
             "value_1": "Dark",
-            "value_2": "Extra Dark"
+            "value_2": "Extra Dark",
+            "value_3": ""
           }
         },
         "row_2": {
@@ -268,7 +352,8 @@
           "settings": {
             "feature": "Caffeine",
             "value_1": "High",
-            "value_2": "Extreme"
+            "value_2": "Extreme",
+            "value_3": ""
           }
         },
         "row_3": {
@@ -276,7 +361,8 @@
           "settings": {
             "feature": "Flavor Notes",
             "value_1": "Smoky, Chocolate",
-            "value_2": "Bold, Intense"
+            "value_2": "Bold, Intense",
+            "value_3": ""
           }
         },
         "row_4": {
@@ -284,7 +370,8 @@
           "settings": {
             "feature": "Best For",
             "value_1": "Daily Rider",
-            "value_2": "Daredevils"
+            "value_2": "Daredevils",
+            "value_3": ""
           }
         }
       },
@@ -349,6 +436,7 @@
       ],
       "settings": {
         "heading": "Have a Question?",
+        "subtext": "",
         "layout": "stacked"
       }
     },
@@ -356,6 +444,7 @@
       "type": "gr-blog-grid",
       "settings": {
         "heading": "Recent Articles",
+        "blog": "",
         "posts_to_show": 3,
         "columns": "3",
         "show_excerpt": true,
@@ -370,6 +459,7 @@
         "placeholder": "Enter your email",
         "button_label": "Subscribe",
         "success_message": "Welcome to the ride.",
+        "disclaimer": "",
         "style": "default"
       }
     }
