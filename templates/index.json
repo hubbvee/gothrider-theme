@@ -12,6 +12,7 @@
     "gr_hero_banner": {
       "type": "gr-hero-banner",
       "settings": {
+        "image": "shopify://shop_images/hero-banner.jpg",
         "height": "default",
         "overlay_style": "dark",
         "heading": "RIDE HARD. LIVE FAST.",
@@ -37,6 +38,7 @@
         "mosaic_img_1": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/mosaic-1-grease-lady.jpg",
             "caption": "",
             "link": ""
           }
@@ -44,6 +46,7 @@
         "mosaic_img_2": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/mosaic-2-mug.jpg",
             "caption": "",
             "link": ""
           }
@@ -51,6 +54,7 @@
         "mosaic_img_3": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/mosaic-3-serial.jpg",
             "caption": "",
             "link": ""
           }
@@ -58,6 +62,7 @@
         "mosaic_img_4": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/mosaic-4-fear-fur.jpg",
             "caption": "",
             "link": ""
           }
@@ -65,6 +70,7 @@
         "mosaic_img_5": {
           "type": "image",
           "settings": {
+            "image": "shopify://shop_images/mosaic-5-wendigo.jpg",
             "caption": "",
             "link": ""
           }
@@ -187,6 +193,8 @@
       "type": "gr-before-after",
       "settings": {
         "heading": "The GothRider Effect",
+        "before_image": "shopify://shop_images/before.jpg",
+        "after_image": "shopify://shop_images/after.jpg",
         "before_label": "Before",
         "after_label": "After"
       }
@@ -233,11 +241,15 @@
       "blocks": {
         "brand_img_1": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/brand-story-1.jpg"
+          }
         },
         "brand_img_2": {
           "type": "image",
-          "settings": {}
+          "settings": {
+            "image": "shopify://shop_images/brand-story-2.jpg"
+          }
         },
         "brand_subheading": {
           "type": "subheading",
@@ -291,19 +303,22 @@
         "product_col_1": {
           "type": "product_column",
           "settings": {
-            "name": "Gasoline"
+            "name": "Gasoline",
+            "image": "shopify://shop_images/comparison-gasoline.jpg"
           }
         },
         "product_col_2": {
           "type": "product_column",
           "settings": {
-            "name": "Grease"
+            "name": "Grease",
+            "image": "shopify://shop_images/comparison-grease.jpg"
           }
         },
         "product_col_3": {
           "type": "product_column",
           "settings": {
-            "name": "Blondie"
+            "name": "Blondie",
+            "image": "shopify://shop_images/comparison-blondie.jpg"
           }
         },
         "row_1": {
