@@ -1,13 +1,18 @@
 <div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
   <div class="gr-container">
     {% if section.settings.heading != blank %}
-      <h2 class="gr-heading gr-heading-xl gr-collection-list__heading">{{ section.settings.heading }}</h2>
+      <div class="gr-collection-list__header">
+        <h2 class="gr-heading gr-heading-xl">{{ section.settings.heading }}</h2>
+        {% if section.settings.view_all_link != blank %}
+          <a href="{{ section.settings.view_all_link }}" class="gr-btn gr-btn--ghost">View all</a>
+        {% endif %}
+      </div>
     {% endif %}
 
     <div class="gr-collection-list gr-collection-list--{{ section.settings.columns }}">
       {% for block in section.blocks %}
         {%- assign collection = block.settings.collection -%}
-        <a href="{{ collection.url | default: '#' }}" class="gr-collection-list__item gr-card" {{ block.shopify_attributes }}>
+        <a href="{{ collection.url | default: '#' }}" class="gr-collection-list__item gr-card{% if section.settings.text_overlay %} gr-collection-list__item--overlay{% endif %}" {{ block.shopify_attributes }}>
           <div class="gr-collection-list__media">
             {% if collection.image %}
               {{ collection.image | image_url: width: 600 | image_tag:
@@ -26,13 +31,20 @@
             {% else %}
               {{ 'collection-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
             {% endif %}
-          </div>
-          <div class="gr-collection-list__info">
-            <h3 class="gr-collection-list__title">{{ collection.title | default: block.settings.title | default: 'Collection' }}</h3>
-            {% if section.settings.show_count and collection %}
-              <span class="gr-collection-list__count">{{ collection.products_count }} {{ 'collections.general.items' | t | default: 'products' }}</span>
+            {% if section.settings.text_overlay %}
+              <div class="gr-collection-list__overlay">
+                <h3 class="gr-collection-list__title">{{ collection.title | default: block.settings.title | default: 'Collection' }}</h3>
+              </div>
             {% endif %}
           </div>
+          {% unless section.settings.text_overlay %}
+            <div class="gr-collection-list__info">
+              <h3 class="gr-collection-list__title">{{ collection.title | default: block.settings.title | default: 'Collection' }}</h3>
+              {% if section.settings.show_count and collection %}
+                <span class="gr-collection-list__count">{{ collection.products_count }} {{ 'collections.general.items' | t | default: 'products' }}</span>
+              {% endif %}
+            </div>
+          {% endunless %}
         </a>
       {% endfor %}
     </div>
@@ -40,9 +52,12 @@
 </div>
 
 <style>
-  .gr-collection-list__heading {
+  .gr-collection-list__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     margin-bottom: var(--gr-space-2xl);
-    text-align: center;
+    gap: var(--gr-space-md);
   }
 
   .gr-collection-list {
@@ -89,6 +104,23 @@
 
   .gr-collection-list__item:hover .gr-collection-list__img {
     transform: scale(1.05);
+  }
+
+  .gr-collection-list__item--overlay .gr-collection-list__media {
+    position: relative;
+  }
+
+  .gr-collection-list__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: flex-end;
+    padding: var(--gr-space-lg);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 50%);
+  }
+
+  .gr-collection-list__overlay .gr-collection-list__title {
+    color: var(--gr-text-primary);
   }
 
   .gr-collection-list__info {
@@ -142,6 +174,17 @@
       "id": "show_count",
       "label": "Show product count",
       "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "text_overlay",
+      "label": "Overlay text on image",
+      "default": true
+    },
+    {
+      "type": "url",
+      "id": "view_all_link",
+      "label": "View all link"
     }
   ],
   "blocks": [

@@ -186,7 +186,8 @@
       "settings": {
         "heading": "Shop By Category",
         "columns": "4",
-        "show_count": false
+        "show_count": false,
+        "text_overlay": true
       }
     },
     "gr_before_after": {
@@ -260,13 +261,13 @@
         "brand_heading": {
           "type": "heading",
           "settings": {
-            "heading": "Expressing Our Rebel Instinct"
+            "heading": "Renaissance"
           }
         },
         "brand_text": {
           "type": "text",
           "settings": {
-            "text": "<p>We are dedicated to providing high-quality products and a great customer experience. We offer a range of clothing and accessories with a rebellious and edgy aesthetic, as well as premium coffee. We encourage our customers to embrace their rebellious spirit and take risks in their lives, and we are committed to creating products that are both stylish and functional.</p>"
+            "text": "<p>Founded in 2015, GothRider is known for its rebellious and edgy aesthetic. In 2020, they added premium coffee to their product line. They offer a variety of blends, and their coffee is known for its strength and flavor. GothRider's products, including clothing and accessories, are designed to help customers express their individuality and live their best lives. They encourage their customers to take risks and embrace their rebellious spirit.</p>"
           }
         },
         "brand_button": {
@@ -287,7 +288,7 @@
         "brand_button"
       ],
       "settings": {
-        "layout": "image-left"
+        "layout": "image-right"
       }
     },
     "gr_featured_product": {
@@ -303,22 +304,28 @@
         "product_col_1": {
           "type": "product_column",
           "settings": {
-            "name": "Gasoline",
-            "image": "shopify://shop_images/comparison-gasoline.jpg"
+            "name": "Gasoline Coffee",
+            "image": "shopify://shop_images/comparison-gasoline.jpg",
+            "link": "/products/gasoline-coffee",
+            "price": "From $24.99 CAD"
           }
         },
         "product_col_2": {
           "type": "product_column",
           "settings": {
-            "name": "Grease",
-            "image": "shopify://shop_images/comparison-grease.jpg"
+            "name": "Grease Coffee",
+            "image": "shopify://shop_images/comparison-grease.jpg",
+            "link": "/products/grease-coffee",
+            "price": "From $24.99 CAD"
           }
         },
         "product_col_3": {
           "type": "product_column",
           "settings": {
-            "name": "Blondie",
-            "image": "shopify://shop_images/comparison-blondie.jpg"
+            "name": "Blondie Coffee",
+            "image": "shopify://shop_images/comparison-blondie.jpg",
+            "link": "/products/blondie-coffee",
+            "price": "From $24.99 CAD"
           }
         },
         "row_1": {
@@ -378,7 +385,9 @@
         "row_5"
       ],
       "settings": {
+        "subheading": "Compare",
         "heading": "Specification of Our Coffee",
+        "description": "<p>We are proud to offer a range of high-quality coffee products, and in this comparison, we will be focusing on our three main offerings. We will be examining their acidity, roasting style, caffeine levels, origin of the beans, and certifications to help you determine which of our products is the best fit for your tastes and preferences.</p>",
         "feature_label": "Feature"
       }
     },
@@ -431,7 +440,8 @@
       "settings": {
         "heading": "Have a Question? We Are Here to Help.",
         "subtext": "<p>Check out the most common questions our customers asked. Still have questions? Contact our customer support.</p>",
-        "layout": "stacked"
+        "support_text": "<p>Our customer support is available Monday to Friday: 9am-8:30pm.</p><p>Average answer time: 24h</p>",
+        "layout": "side-by-side"
       }
     },
     "gr_blog_grid": {

@@ -1,8 +1,16 @@
 <div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
   <div class="gr-container">
-    {% if section.settings.heading != blank %}
-      <h2 class="gr-heading gr-heading-xl gr-comparison__heading">{{ section.settings.heading }}</h2>
-    {% endif %}
+    <div class="gr-comparison__header">
+      {% if section.settings.subheading != blank %}
+        <p class="gr-comparison__subheading">{{ section.settings.subheading }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="gr-heading gr-heading-xl gr-comparison__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.description != blank %}
+        <div class="gr-comparison__description">{{ section.settings.description }}</div>
+      {% endif %}
+    </div>
 
     {%- assign product_columns = section.blocks | where: 'type', 'product_column' -%}
     {%- assign col_count = product_columns.size -%}
@@ -13,6 +21,9 @@
         <div class="gr-comparison__label-spacer"></div>
         {% for block in product_columns %}
           <div class="gr-comparison__product-card" {{ block.shopify_attributes }}>
+            {% if block.settings.link != blank %}
+              <a href="{{ block.settings.link }}" class="gr-comparison__product-link">
+            {% endif %}
             {% if block.settings.image %}
               <div class="gr-comparison__product-img">
                 {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '120, 200' }}
@@ -22,7 +33,22 @@
                 {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
               </div>
             {% endif %}
-            <span class="gr-comparison__product-name">{{ block.settings.name }}</span>
+            {% if block.settings.link != blank %}
+              </a>
+            {% endif %}
+            <div class="gr-comparison__product-info">
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="gr-comparison__product-name-link">{{ block.settings.name }}</a>
+              {% else %}
+                <span class="gr-comparison__product-name">{{ block.settings.name }}</span>
+              {% endif %}
+              {% if block.settings.price != blank %}
+                <span class="gr-comparison__product-price">{{ block.settings.price }}</span>
+              {% endif %}
+              {% if block.settings.link != blank %}
+                <a href="{{ block.settings.link }}" class="gr-comparison__view-btn">View</a>
+              {% endif %}
+            </div>
           </div>
         {% endfor %}
       </div>
@@ -47,9 +73,30 @@
 </div>
 
 <style>
-  .gr-comparison__heading {
+  .gr-comparison__header {
     text-align: center;
     margin-bottom: var(--gr-space-3xl);
+  }
+
+  .gr-comparison__subheading {
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-widest);
+    color: var(--gr-cta);
+    margin-bottom: var(--gr-space-md);
+  }
+
+  .gr-comparison__heading {
+    margin-bottom: var(--gr-space-lg);
+  }
+
+  .gr-comparison__description {
+    max-width: var(--gr-narrow-max);
+    margin-inline: auto;
+    color: var(--gr-text-secondary);
+    line-height: var(--gr-leading-relaxed);
+    font-size: var(--gr-body-md);
   }
 
   .gr-comparison {
@@ -78,6 +125,11 @@
     text-align: center;
   }
 
+  .gr-comparison__product-link {
+    display: block;
+    text-decoration: none;
+  }
+
   .gr-comparison__product-img {
     width: 140px;
     height: 140px;
@@ -104,10 +156,46 @@
     opacity: 0.15;
   }
 
-  .gr-comparison__product-name {
+  .gr-comparison__product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--gr-space-xs);
+  }
+
+  .gr-comparison__product-name,
+  .gr-comparison__product-name-link {
     font-family: var(--gr-font-heading);
     font-size: var(--gr-heading-sm);
     letter-spacing: -0.02em;
+    color: var(--gr-text-primary);
+    text-decoration: none;
+  }
+
+  .gr-comparison__product-name-link:hover {
+    color: var(--gr-cta);
+  }
+
+  .gr-comparison__product-price {
+    font-size: var(--gr-body-sm);
+    color: var(--gr-text-secondary);
+  }
+
+  .gr-comparison__view-btn {
+    display: inline-block;
+    margin-top: var(--gr-space-xs);
+    padding: var(--gr-space-xs) var(--gr-space-md);
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    color: var(--gr-text-primary);
+    border: 1px solid var(--gr-border);
+    border-radius: var(--gr-radius-button);
+    text-decoration: none;
+    transition: opacity var(--gr-transition-fast);
+  }
+
+  .gr-comparison__view-btn:hover {
+    opacity: 0.85;
     color: var(--gr-text-primary);
   }
 
@@ -158,9 +246,20 @@
   "settings": [
     {
       "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Compare"
+    },
+    {
+      "type": "text",
       "id": "heading",
       "label": "Heading",
       "default": "Compare Our Coffees"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
     },
     {
       "type": "text",
@@ -184,6 +283,17 @@
           "type": "image_picker",
           "id": "image",
           "label": "Product image"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Product link"
+        },
+        {
+          "type": "text",
+          "id": "price",
+          "label": "Price text",
+          "info": "e.g. From $24.99 CAD"
         }
       ]
     },

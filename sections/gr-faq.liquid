@@ -8,6 +8,9 @@
         {% if section.settings.subtext != blank %}
           <p class="gr-faq__subtext">{{ section.settings.subtext }}</p>
         {% endif %}
+        {% if section.settings.support_text != blank %}
+          <div class="gr-faq__support">{{ section.settings.support_text }}</div>
+        {% endif %}
       </div>
 
       <div class="gr-faq__list">
@@ -47,6 +50,15 @@
   .gr-faq__subtext {
     color: var(--gr-text-secondary);
     margin-top: var(--gr-space-md);
+    line-height: var(--gr-leading-relaxed);
+  }
+
+  .gr-faq__support {
+    margin-top: var(--gr-space-xl);
+    padding-top: var(--gr-space-lg);
+    border-top: 1px solid var(--gr-border-subtle);
+    color: var(--gr-text-secondary);
+    font-size: var(--gr-body-sm);
     line-height: var(--gr-leading-relaxed);
   }
 
@@ -148,6 +160,12 @@
       "type": "richtext",
       "id": "subtext",
       "label": "Subtext"
+    },
+    {
+      "type": "richtext",
+      "id": "support_text",
+      "label": "Support info text",
+      "info": "Shown below subtext (e.g. support hours)"
     },
     {
       "type": "select",
