@@ -4,42 +4,44 @@
       <h2 class="gr-heading gr-heading-xl gr-comparison__heading">{{ section.settings.heading }}</h2>
     {% endif %}
 
-    <div class="gr-comparison__wrapper">
-      <table class="gr-comparison__table">
-        <thead>
-          <tr>
-            <th class="gr-comparison__feature-header">{{ section.settings.feature_label | default: 'Feature' }}</th>
-            {% for block in section.blocks %}
-              {% if block.type == 'product_column' %}
-                <th class="gr-comparison__product-header" {{ block.shopify_attributes }}>
-                  {% if block.settings.image %}
-                    <div class="gr-comparison__product-img">
-                      {{ block.settings.image | image_url: width: 120 | image_tag: loading: 'lazy', widths: '120' }}
-                    </div>
-                  {% endif %}
-                  <span>{{ block.settings.name }}</span>
-                </th>
-              {% endif %}
-            {% endfor %}
-          </tr>
-        </thead>
-        <tbody>
-          {% for block in section.blocks %}
-            {% if block.type == 'row' %}
-              <tr {{ block.shopify_attributes }}>
-                <td class="gr-comparison__feature">{{ block.settings.feature }}</td>
-                <td class="gr-comparison__value">{{ block.settings.value_1 }}</td>
-                {% if block.settings.value_2 != blank %}
-                  <td class="gr-comparison__value">{{ block.settings.value_2 }}</td>
-                {% endif %}
-                {% if block.settings.value_3 != blank %}
-                  <td class="gr-comparison__value">{{ block.settings.value_3 }}</td>
-                {% endif %}
-              </tr>
+    {%- assign product_columns = section.blocks | where: 'type', 'product_column' -%}
+    {%- assign col_count = product_columns.size -%}
+
+    <div class="gr-comparison">
+      {%- comment -%} Product cards row {%- endcomment -%}
+      <div class="gr-comparison__products gr-comparison__grid--{{ col_count }}">
+        <div class="gr-comparison__label-spacer"></div>
+        {% for block in product_columns %}
+          <div class="gr-comparison__product-card" {{ block.shopify_attributes }}>
+            {% if block.settings.image %}
+              <div class="gr-comparison__product-img">
+                {{ block.settings.image | image_url: width: 200 | image_tag: loading: 'lazy', widths: '120, 200' }}
+              </div>
+            {% else %}
+              <div class="gr-comparison__product-img gr-comparison__product-img--placeholder">
+                {{ 'product-' | append: forloop.index | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
             {% endif %}
-          {% endfor %}
-        </tbody>
-      </table>
+            <span class="gr-comparison__product-name">{{ block.settings.name }}</span>
+          </div>
+        {% endfor %}
+      </div>
+
+      {%- comment -%} Feature rows {%- endcomment -%}
+      {% for block in section.blocks %}
+        {% if block.type == 'row' %}
+          <div class="gr-comparison__row gr-comparison__grid--{{ col_count }}" {{ block.shopify_attributes }}>
+            <div class="gr-comparison__feature">{{ block.settings.feature }}</div>
+            <div class="gr-comparison__value">{{ block.settings.value_1 }}</div>
+            {% if block.settings.value_2 != blank %}
+              <div class="gr-comparison__value">{{ block.settings.value_2 }}</div>
+            {% endif %}
+            {% if block.settings.value_3 != blank %}
+              <div class="gr-comparison__value">{{ block.settings.value_3 }}</div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
     </div>
   </div>
 </div>
@@ -50,48 +52,39 @@
     margin-bottom: var(--gr-space-3xl);
   }
 
-  .gr-comparison__wrapper {
+  .gr-comparison {
+    background-color: var(--gr-surface);
+    border-radius: var(--gr-radius-md, 0.75rem);
+    padding: var(--gr-space-xl);
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
   }
 
-  .gr-comparison__table {
-    width: 100%;
-    border-collapse: collapse;
-    min-width: 500px;
-  }
-
-  .gr-comparison__table th,
-  .gr-comparison__table td {
-    padding: var(--gr-space-md) var(--gr-space-lg);
-    text-align: center;
+  .gr-comparison__products {
+    display: grid;
+    gap: var(--gr-space-md);
+    padding-bottom: var(--gr-space-xl);
     border-bottom: 1px solid var(--gr-border-subtle);
+    margin-bottom: var(--gr-space-md);
   }
 
-  .gr-comparison__feature-header {
-    text-align: left;
-    font-family: var(--gr-font-heading);
-    font-size: var(--gr-body-sm);
-    text-transform: uppercase;
-    letter-spacing: var(--gr-tracking-wider);
-    color: var(--gr-text-muted);
+  .gr-comparison__grid--2 { grid-template-columns: 1fr repeat(2, 1fr); }
+  .gr-comparison__grid--3 { grid-template-columns: 1fr repeat(3, 1fr); }
+
+  .gr-comparison__label-spacer {
+    /* Empty first column for alignment with feature rows */
   }
 
-  .gr-comparison__product-header {
-    font-family: var(--gr-font-heading);
-    font-size: var(--gr-heading-sm);
-    letter-spacing: -0.02em;
-    color: var(--gr-text-primary);
-    padding-bottom: var(--gr-space-lg);
+  .gr-comparison__product-card {
+    text-align: center;
   }
 
   .gr-comparison__product-img {
-    width: 80px;
-    height: 80px;
+    width: 140px;
+    height: 140px;
     margin: 0 auto var(--gr-space-sm);
     border-radius: var(--gr-radius-md);
     overflow: hidden;
-    background-color: var(--gr-surface);
+    background-color: var(--gr-surface-elevated);
   }
 
   .gr-comparison__product-img img {
@@ -100,19 +93,62 @@
     object-fit: cover;
   }
 
+  .gr-comparison__product-img--placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gr-comparison__product-img--placeholder .placeholder-svg {
+    width: 60%;
+    opacity: 0.15;
+  }
+
+  .gr-comparison__product-name {
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-heading-sm);
+    letter-spacing: -0.02em;
+    color: var(--gr-text-primary);
+  }
+
+  .gr-comparison__row {
+    display: grid;
+    gap: var(--gr-space-md);
+    padding: var(--gr-space-lg) 0;
+    border-bottom: 1px solid var(--gr-border-subtle);
+    align-items: center;
+  }
+
+  .gr-comparison__row:last-child {
+    border-bottom: none;
+  }
+
   .gr-comparison__feature {
-    text-align: left;
-    font-weight: var(--gr-weight-medium);
+    font-weight: var(--gr-weight-semibold);
     color: var(--gr-text-secondary);
+    font-size: var(--gr-body-md);
   }
 
   .gr-comparison__value {
+    text-align: center;
     color: var(--gr-text-primary);
-    font-size: var(--gr-body-sm);
+    font-size: var(--gr-body-md);
   }
 
-  .gr-comparison__table tbody tr:hover {
-    background-color: var(--gr-surface);
+  @media (max-width: 768px) {
+    .gr-comparison__grid--3 {
+      grid-template-columns: 1fr repeat(3, 1fr);
+      font-size: var(--gr-body-sm);
+    }
+
+    .gr-comparison__product-img {
+      width: 80px;
+      height: 80px;
+    }
+
+    .gr-comparison {
+      padding: var(--gr-space-md);
+    }
   }
 </style>
 

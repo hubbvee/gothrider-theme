@@ -138,7 +138,7 @@
 }
 
 html {
-  background-color: var(--gr-dark);
+  background-color: var(--gr-darker);
   color: var(--gr-text-primary);
   font-family: var(--gr-font-body);
   font-size: 16px;
@@ -148,7 +148,7 @@ html {
 }
 
 body {
-  background-color: var(--gr-dark);
+  background-color: var(--gr-darker);
   color: var(--gr-text-primary);
   margin: 0;
 }
