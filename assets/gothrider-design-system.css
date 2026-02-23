@@ -390,6 +390,26 @@ a:hover {
   font-weight: 700 !important;
 }
 
+/* Dropdown chevron on nav items with mega-menu (match gothrider.ca) */
+.menu-list__link[aria-haspopup="true"] .menu-list__link-title::after {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(45deg);
+  margin-left: 5px;
+  margin-bottom: 3px;
+  vertical-align: middle;
+  transition: transform var(--gr-transition-fast);
+}
+
+.menu-list__link[aria-haspopup="true"][aria-expanded="true"] .menu-list__link-title::after {
+  transform: rotate(-135deg);
+  margin-bottom: 0;
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
