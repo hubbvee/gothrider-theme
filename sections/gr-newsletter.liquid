@@ -106,7 +106,31 @@
 
   .gr-newsletter__submit {
     flex-shrink: 0;
-    border-radius: var(--gr-radius-button, 0.875rem);
+    background-color: rgba(255, 255, 255, 0.1) !important;
+    border: none !important;
+    border-radius: 9999px !important;
+    color: var(--gr-text-primary, #FFFFFF);
+    font-size: 0;
+    line-height: 1;
+    width: 2.5rem;
+    height: 2.5rem;
+    min-height: unset;
+    padding: 0.5rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gr-newsletter__submit::after {
+    content: '\2192';
+    font-size: 1.125rem;
+    line-height: 1;
+    color: var(--gr-text-primary, #FFFFFF);
+  }
+
+  .gr-newsletter__submit:hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+    opacity: 1;
   }
 
   .gr-newsletter__success {
