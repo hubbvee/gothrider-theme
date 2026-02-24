@@ -410,6 +410,17 @@ a:hover {
   margin-bottom: 0;
 }
 
+/* Country flag alignment (match gothrider.ca: 20px circle) */
+.dropdown-localization__button .icon-flag {
+  width: 20px !important;
+  height: 20px !important;
+  flex-shrink: 0;
+}
+
+.dropdown-localization__button {
+  gap: 8px !important;
+}
+
 /* ============================================
    RESPONSIVE
    ============================================ */
