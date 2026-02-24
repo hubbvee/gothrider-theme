@@ -123,6 +123,15 @@
     --gr-hero-fit: cover;
   }
 
+  /* Full-screen hero: sit below header, fill remaining viewport */
+  #shopify-section-{{ section.id }}:has(.gr-hero--full) {
+    margin-top: 0 !important;
+  }
+
+  #shopify-section-{{ section.id }} .gr-hero--full {
+    min-height: calc(100vh - 104px);
+  }
+
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} {
       margin-top: 0 !important;
