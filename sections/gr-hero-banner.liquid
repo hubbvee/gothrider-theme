@@ -108,20 +108,8 @@
   }
 
   @media (max-width: 768px) {
-    .gr-hero {
-      min-height: 35vh;
-    }
-
-    .gr-hero--full { min-height: 50vh; }
-    .gr-hero--medium { min-height: 30vh; }
-
     .gr-hero__media {
       background-color: var(--gr-black, #0A0A0A);
-    }
-
-    .gr-hero__media img {
-      object-fit: contain;
-      object-position: center center;
     }
 
     .gr-hero__content { padding: var(--gr-space-lg); }
@@ -138,6 +126,8 @@
   @media (max-width: 768px) {
     #shopify-section-{{ section.id }} .gr-hero {
       --gr-hero-focus: {{ section.settings.mobile_focus }};
+      --gr-hero-fit: {{ section.settings.mobile_fit }};
+      min-height: {{ section.settings.mobile_height }}vh;
     }
   }
 </style>
