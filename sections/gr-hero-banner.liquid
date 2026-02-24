@@ -6,39 +6,53 @@
 
   .gr-hero {
     position: relative;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
     overflow: hidden;
   }
 
-  .gr-hero--full { min-height: 100vh; }
-  .gr-hero--medium { min-height: 60vh; }
+  /* Stack all children in the same grid cell */
+  .gr-hero > * {
+    grid-area: 1 / 1;
+  }
 
   .gr-hero__media {
-    position: absolute;
-    inset: 0;
     z-index: 0;
   }
 
   .gr-hero__media picture {
     display: block;
-    position: absolute;
-    inset: 0;
   }
 
   .gr-hero__media img,
   .gr-hero__media video {
     display: block;
     width: 100%;
+    height: auto;
+  }
+
+  /* For video, maintain cover behavior since video needs a fixed container */
+  .gr-hero__media video {
     height: 100%;
     object-fit: cover;
   }
 
+  /* Height modes: constrain with object-fit only when a fixed height is chosen */
+  .gr-hero--full .gr-hero__media img {
+    min-height: 100vh;
+    object-fit: cover;
+  }
+
+  .gr-hero--default .gr-hero__media img {
+    min-height: 80vh;
+    object-fit: cover;
+  }
+
+  .gr-hero--medium .gr-hero__media img {
+    min-height: 60vh;
+    object-fit: cover;
+  }
+
   .gr-hero__overlay {
-    position: absolute;
-    inset: 0;
     z-index: 1;
   }
 
@@ -75,11 +89,15 @@
   }
 
   .gr-hero__content {
-    position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     text-align: center;
     padding: var(--gr-space-xl);
     max-width: var(--gr-content-max);
+    margin-inline: auto;
   }
 
   .gr-hero__title {
@@ -107,8 +125,9 @@
   }
 
   @media (max-width: 768px) {
-    .gr-hero { min-height: 70vh; }
-    .gr-hero--full { min-height: 90vh; }
+    .gr-hero--full .gr-hero__media img { min-height: 90vh; }
+    .gr-hero--default .gr-hero__media img { min-height: auto; }
+    .gr-hero--medium .gr-hero__media img { min-height: auto; }
     .gr-hero__content { padding: var(--gr-space-lg); }
     .gr-hero__actions { flex-direction: column; align-items: center; }
   }
@@ -204,11 +223,12 @@
       "id": "height",
       "label": "Height",
       "options": [
+        { "value": "adapt", "label": "Adapt to image (no crop)" },
         { "value": "full", "label": "Full Screen" },
         { "value": "default", "label": "Large (80vh)" },
         { "value": "medium", "label": "Medium (60vh)" }
       ],
-      "default": "default"
+      "default": "adapt"
     },
     {
       "type": "header",
