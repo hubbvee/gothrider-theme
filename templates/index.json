@@ -13,6 +13,8 @@
       "type": "gr-hero-banner",
       "settings": {
         "image": "shopify://shop_images/hero-banner.jpg",
+        "mobile_image": "shopify://shop_images/hero-banner.jpg",
+        "image_focus": "center center",
         "height": "medium",
         "overlay_style": "custom",
         "overlay_color": "#0a0a0a",
