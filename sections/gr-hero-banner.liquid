@@ -129,6 +129,12 @@
       --gr-hero-fit: {{ section.settings.mobile_fit }};
       min-height: {{ section.settings.mobile_height }}vh;
     }
+
+    #shopify-section-{{ section.id }} .gr-hero__media img,
+    #shopify-section-{{ section.id }} .gr-hero__media video {
+      object-fit: {{ section.settings.mobile_fit }};
+      object-position: {{ section.settings.mobile_focus }};
+    }
   }
 </style>
 
