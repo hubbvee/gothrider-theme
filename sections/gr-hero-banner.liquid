@@ -118,53 +118,40 @@
 {% endstylesheet %}
 
 <style>
+  /*
+   * Natural-flow hero: the image determines the section height.
+   * No forced min-heights, no object-fit: cover cropping,
+   * no height-mode-specific hacks. Works for all viewports.
+   */
   #shopify-section-{{ section.id }} .gr-hero {
-    --gr-hero-focus: {{ section.settings.image_focus }};
-    --gr-hero-fit: cover;
+    min-height: 0 !important;
+    display: block;
   }
 
-  /* Full-screen hero: sit below header, fill remaining viewport */
-  #shopify-section-{{ section.id }}:has(.gr-hero--full) {
-    margin-top: 61px !important;
+  #shopify-section-{{ section.id }} .gr-hero__media {
+    position: relative;
+    inset: auto;
   }
 
-  #shopify-section-{{ section.id }} .gr-hero--full {
-    min-height: calc(100vh - 104px);
+  #shopify-section-{{ section.id }} .gr-hero__media img,
+  #shopify-section-{{ section.id }} .gr-hero__media video {
+    width: 100%;
+    height: auto;
+    object-fit: initial;
+  }
+
+  #shopify-section-{{ section.id }} .gr-hero__content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   @media (max-width: 768px) {
-    #shopify-section-{{ section.id }} {
-      margin-top: 0 !important;
-    }
-
     #shopify-section-{{ section.id }} .gr-hero {
-      --gr-hero-focus: {{ section.settings.mobile_focus }};
-      min-height: 0;
-      display: block;
       padding-top: 64px;
-    }
-
-    #shopify-section-{{ section.id }} .gr-hero__media {
-      position: relative;
-    }
-
-    #shopify-section-{{ section.id }} .gr-hero__media picture {
-      height: auto;
-    }
-
-    #shopify-section-{{ section.id }} .gr-hero__media img,
-    #shopify-section-{{ section.id }} .gr-hero__media video {
-      width: 100%;
-      height: auto;
-      object-fit: initial;
-    }
-
-    #shopify-section-{{ section.id }} .gr-hero__content {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background-color: var(--gr-black, #0A0A0A);
     }
   }
 </style>
