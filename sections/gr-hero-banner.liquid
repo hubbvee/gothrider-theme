@@ -22,18 +22,12 @@
     z-index: 0;
   }
 
-  .gr-hero__media-desktop,
-  .gr-hero__media-mobile {
-    position: absolute;
-    inset: 0;
-  }
-
   .gr-hero__media img,
   .gr-hero__media video {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: var(--gr-hero-fit, cover);
     object-position: var(--gr-hero-focus, center center);
   }
 
@@ -108,28 +102,25 @@
   }
 
   @media (max-width: 768px) {
-    .gr-hero { min-height: 70vh; }
-    .gr-hero--full { min-height: 90vh; }
     .gr-hero__content { padding: var(--gr-space-lg); }
     .gr-hero__actions { flex-direction: column; align-items: center; }
   }
 {% endstylesheet %}
 
-{% if section.settings.mobile_image %}
-  <style>
-    #shopify-section-{{ section.id }} .gr-hero__media-mobile {
-      display: none;
+<style>
+  #shopify-section-{{ section.id }} .gr-hero {
+    --gr-hero-focus: {{ section.settings.image_focus }};
+    --gr-hero-fit: cover;
+  }
+
+  @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} .gr-hero {
+      min-height: {{ section.settings.mobile_height }}vh;
+      --gr-hero-focus: {{ section.settings.mobile_focus }};
+      --gr-hero-fit: {{ section.settings.mobile_fit }};
     }
-    @media (max-width: 768px) {
-      #shopify-section-{{ section.id }} .gr-hero__media-desktop {
-        display: none !important;
-      }
-      #shopify-section-{{ section.id }} .gr-hero__media-mobile {
-        display: block !important;
-      }
-    }
-  </style>
-{% endif %}
+  }
+</style>
 
 {% if section.settings.overlay_style == 'custom' %}
   {% assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 %}
@@ -141,8 +132,8 @@
   </style>
 {% endif %}
 
-<div class="gr-hero gr-hero--{{ section.settings.height }} gr-reveal" style="--gr-hero-focus: {{ section.settings.image_focus }};" {{ section.shopify_attributes }}>
-  <div class="gr-hero__media{% if section.settings.mobile_image %} gr-hero__media--has-mobile{% endif %}">
+<div class="gr-hero gr-hero--{{ section.settings.height }} gr-reveal" {{ section.shopify_attributes }}>
+  <div class="gr-hero__media">
     {% if section.settings.video != blank %}
       {{ section.settings.video | video_tag:
         autoplay: true,
@@ -152,22 +143,11 @@
         loading: 'eager'
       }}
     {% elsif section.settings.image %}
-      <div class="gr-hero__media-desktop">
-        {{ section.settings.image | image_url: width: 1920 | image_tag:
-          loading: 'eager',
-          sizes: '100vw',
-          widths: '640, 960, 1280, 1600, 1920'
-        }}
-      </div>
-      {% if section.settings.mobile_image %}
-        <div class="gr-hero__media-mobile">
-          {{ section.settings.mobile_image | image_url: width: 800 | image_tag:
-            loading: 'eager',
-            sizes: '100vw',
-            widths: '400, 600, 800'
-          }}
-        </div>
-      {% endif %}
+      {{ section.settings.image | image_url: width: 1920 | image_tag:
+        loading: 'eager',
+        sizes: '100vw',
+        widths: '640, 960, 1280, 1600, 1920'
+      }}
     {% endif %}
   </div>
 
@@ -209,28 +189,9 @@
       "label": "Background Image"
     },
     {
-      "type": "image_picker",
-      "id": "mobile_image",
-      "label": "Mobile image"
-    },
-    {
       "type": "video",
       "id": "video",
       "label": "Background Video (overrides image)"
-    },
-    {
-      "type": "select",
-      "id": "image_focus",
-      "label": "Image focus point",
-      "info": "Which part of the image stays visible when cropped",
-      "options": [
-        { "value": "center center", "label": "Center" },
-        { "value": "center top", "label": "Top" },
-        { "value": "center bottom", "label": "Bottom" },
-        { "value": "left center", "label": "Left" },
-        { "value": "right center", "label": "Right" }
-      ],
-      "default": "center center"
     },
     {
       "type": "select",
@@ -242,6 +203,57 @@
         { "value": "medium", "label": "Medium (60vh)" }
       ],
       "default": "default"
+    },
+    {
+      "type": "select",
+      "id": "image_focus",
+      "label": "Image focus point",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "header",
+      "content": "Mobile display"
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "min": 30,
+      "max": 100,
+      "step": 5,
+      "unit": "vh",
+      "label": "Mobile height",
+      "default": 70
+    },
+    {
+      "type": "select",
+      "id": "mobile_fit",
+      "label": "Mobile image fit",
+      "info": "Cover fills the area (may crop). Contain shows the full image.",
+      "options": [
+        { "value": "cover", "label": "Cover (fill, may crop)" },
+        { "value": "contain", "label": "Contain (full image, no crop)" }
+      ],
+      "default": "cover"
+    },
+    {
+      "type": "select",
+      "id": "mobile_focus",
+      "label": "Mobile focus point",
+      "options": [
+        { "value": "center center", "label": "Center" },
+        { "value": "center top", "label": "Top" },
+        { "value": "center bottom", "label": "Bottom" },
+        { "value": "left center", "label": "Left" },
+        { "value": "right center", "label": "Right" }
+      ],
+      "default": "center center"
     },
     {
       "type": "header",
