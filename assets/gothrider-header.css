@@ -89,6 +89,27 @@ header-component,
   box-shadow: var(--gr-shadow-lg);
 }
 
+/* Mega menu padding (top/bottom) */
+.mega-menu.section {
+  padding-block: var(--gr-space-lg) var(--gr-space-xl);
+}
+
+/* Fix gap between link column and featured products */
+.mega-menu__grid {
+  display: flex !important;
+  gap: var(--gr-space-2xl);
+}
+
+.mega-menu__list {
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.mega-menu__content {
+  flex: 1;
+  min-width: 0;
+}
+
 .header__submenu a,
 .mega-menu a,
 .header__dropdown a {
