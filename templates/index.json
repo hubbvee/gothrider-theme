@@ -13,12 +13,16 @@
       "type": "gr-hero-banner",
       "settings": {
         "image": "shopify://shop_images/hero-banner.jpg",
-        "height": "default",
-        "overlay_style": "dark",
-        "heading": "RIDE HARD. LIVE FAST.",
-        "subheading": "Premium coffee for those who refuse to settle.",
-        "button_label": "Shop Now",
-        "button_link": "/collections/coffee"
+        "height": "medium",
+        "overlay_style": "custom",
+        "overlay_color": "#0a0a0a",
+        "overlay_opacity": 0,
+        "heading": "",
+        "subheading": "",
+        "button_label": "",
+        "button_link": "/collections/coffee",
+        "button_label_2": "",
+        "button_link_2": ""
       }
     },
     "gr_coffee_carousel": {
@@ -91,7 +95,7 @@
     "gr_tshirt_carousel": {
       "type": "gr-product-carousel",
       "settings": {
-        "heading": "InkWild\u2122 T-Shirts",
+        "heading": "InkWild™ T-Shirts",
         "collection": "inkwild",
         "products_to_show": 8,
         "columns": "4",
@@ -187,7 +191,8 @@
         "heading": "Shop By Category",
         "columns": "4",
         "show_count": false,
-        "text_overlay": true
+        "text_overlay": true,
+        "view_all_link": ""
       }
     },
     "gr_before_after": {
@@ -197,7 +202,8 @@
         "before_image": "shopify://shop_images/before.jpg",
         "after_image": "shopify://shop_images/after.jpg",
         "before_label": "Before",
-        "after_label": "After"
+        "after_label": "After",
+        "initial_position": 50
       }
     },
     "gr_testimonials": {
@@ -288,7 +294,10 @@
         "brand_button"
       ],
       "settings": {
-        "layout": "image-left"
+        "layout": "image-left",
+        "image_rotation": 0,
+        "image_glow": false,
+        "glow_color": "#ff5500"
       }
     },
     "gr_featured_product": {
