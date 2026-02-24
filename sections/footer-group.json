@@ -189,11 +189,19 @@
             "twitter_url": "https://x.com/gothrider",
             "pinterest_url": "https://www.pinterest.com/gothrider/"
           }
+        },
+        "payment_icons": {
+          "type": "payment-icons",
+          "settings": {
+            "horizontal_alignment": "flex-end",
+            "gap": 8
+          }
         }
       },
       "block_order": [
+        "social_icons",
         "copyright",
-        "social_icons"
+        "payment_icons"
       ]
     }
   },

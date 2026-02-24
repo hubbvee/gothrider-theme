@@ -23,32 +23,40 @@
 .footer-content p,
 .footer-content li,
 .footer-content span {
-  color: var(--gr-text-muted, #999);
+  color: var(--gr-text-primary, #FFFFFF);
   font-family: 'Lato', sans-serif;
 }
 
 /* Footer links */
 .footer-content a {
-  color: var(--gr-text-muted, #999);
+  color: var(--gr-text-primary, #FFFFFF);
   text-decoration: none;
-  transition: color 0.2s;
+  transition: opacity 0.2s;
 }
 
 .footer-content a:hover {
-  color: var(--gr-cta, #FF5500);
+  opacity: 0.75;
 }
 
 /* Menu blocks in footer */
 .footer-content .menu-drawer__menu a,
 .footer-content .footer-menu a {
-  color: var(--gr-text-muted, #999);
+  color: var(--gr-text-primary, #FFFFFF);
   font-family: 'Lato', sans-serif;
   font-size: 0.9rem;
 }
 
 .footer-content .menu-drawer__menu a:hover,
 .footer-content .footer-menu a:hover {
-  color: var(--gr-bone-white, #F5F5DC);
+  opacity: 0.75;
+}
+
+/* Column heading overrides (bold Lato to match production) */
+.footer-content .menu__heading {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* Email signup in footer */
@@ -71,30 +79,52 @@
   outline: none;
 }
 
+.footer-content .email-signup__button.button,
+.footer-content form .email-signup__button.button,
 .footer-content .email-signup button[type="submit"],
 .footer-content form button[type="submit"] {
-  background-color: var(--gr-cta, #FF5500);
-  color: var(--gr-text-primary, #FFFFFF);
-  border: none;
-  font-family: 'Fjalla One', sans-serif;
-  border-radius: var(--gr-radius-button, 0.875rem);
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  color: var(--gr-text-primary, #FFFFFF) !important;
+  border: none !important;
+  font-family: 'Lato', sans-serif;
+  border-radius: 9999px !important;
+  padding: 0.5rem !important;
+  min-width: unset !important;
+  width: 2.5rem !important;
+  height: 2.5rem !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  font-size: 0;
+  line-height: 1;
 }
 
+/* Arrow icon for circular submit button */
+.footer-content .email-signup__button.button::after,
+.footer-content form .email-signup__button.button::after {
+  content: '\2192';
+  font-size: 1.125rem;
+  line-height: 1;
+  color: var(--gr-text-primary, #FFFFFF);
+}
+
+.footer-content .email-signup__button.button:hover,
+.footer-content form .email-signup__button.button:hover,
 .footer-content .email-signup button[type="submit"]:hover,
 .footer-content form button[type="submit"]:hover {
-  opacity: 0.85;
+  background-color: rgba(255, 255, 255, 0.2) !important;
 }
 
 /* Social links */
 .footer-content .social-links a,
 .footer-content social-links-component a {
-  color: var(--gr-text-muted, #999);
-  transition: color 0.2s;
+  color: var(--gr-text-primary, #FFFFFF);
+  transition: opacity 0.2s;
 }
 
 .footer-content .social-links a:hover,
 .footer-content social-links-component a:hover {
-  color: var(--gr-cta, #FF5500);
+  opacity: 0.75;
 }
 
 /* Payment icons */
@@ -113,21 +143,21 @@
    Footer Utilities (Copyright / Policies / Social)
    -------------------------------------------------------------------------- */
 .footer-utilities {
-  color: var(--gr-text-muted, #999);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .footer-utilities .utilities {
-  border-top-color: var(--gr-border, #333);
-  color: var(--gr-text-muted, #999);
+  border-top-color: rgba(255, 255, 255, 0.12);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .footer-utilities a {
-  color: var(--gr-text-muted, #999);
-  transition: color 0.2s;
+  color: var(--gr-text-primary, #FFFFFF);
+  transition: opacity 0.2s;
 }
 
 .footer-utilities a:hover {
-  color: var(--gr-bone-white, #F5F5DC);
+  opacity: 0.75;
 }
 
 /* Copyright text */
@@ -135,7 +165,7 @@
 .footer-utilities footer-copyright-component {
   font-family: 'Lato', sans-serif;
   font-size: 0.75rem;
-  color: var(--gr-text-muted, #999);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 /* Policy links */
@@ -148,12 +178,12 @@
 /* Social in utilities */
 .footer-utilities .social-links a,
 .footer-utilities social-links-component a {
-  color: var(--gr-text-muted, #999);
+  color: var(--gr-text-primary, #FFFFFF);
 }
 
 .footer-utilities .social-links a:hover,
 .footer-utilities social-links-component a:hover {
-  color: var(--gr-cta, #FF5500);
+  opacity: 0.75;
 }
 
 /* --------------------------------------------------------------------------
