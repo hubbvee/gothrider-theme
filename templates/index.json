@@ -295,8 +295,8 @@
       ],
       "settings": {
         "layout": "image-left",
-        "image_rotation": 0,
-        "image_glow": false,
+        "image_rotation": -9,
+        "image_glow": true,
         "glow_color": "#ff5500"
       }
     },
