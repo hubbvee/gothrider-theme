@@ -124,6 +124,10 @@
   }
 
   @media (max-width: 768px) {
+    #shopify-section-{{ section.id }} {
+      margin-top: 0 !important;
+    }
+
     #shopify-section-{{ section.id }} .gr-hero {
       --gr-hero-focus: {{ section.settings.mobile_focus }};
       min-height: 0;
