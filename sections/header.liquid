@@ -1106,11 +1106,27 @@
   }
 {% endstylesheet %}
 
+{% if section.settings.mega_menu_glow %}
+  {% assign glow_alpha = section.settings.mega_menu_glow_intensity | divided_by: 100.0 %}
+  {% assign glow_blur = section.settings.mega_menu_glow_intensity | times: 0.6 | round %}
+  <style>
+    #header-component {
+      --gr-mega-glow: 0 6px {{ glow_blur }}px {{ section.settings.mega_menu_glow_color | color_modify: 'alpha', glow_alpha }};
+    }
+  </style>
+{% endif %}
+
 <style>
-  /* Force header background to always be solid black */
-  #header-component .header__underlay-closed {
+  /* Force header background to always be solid black (no gradient) */
+  #header-component .header__underlay-closed,
+  #header-component .header__underlay-open {
     background: var(--gr-black, #0A0A0A) !important;
     height: 100% !important;
+  }
+
+  /* Mega menu glow effect */
+  #header-component .menu-list__submenu-inner {
+    box-shadow: var(--gr-mega-glow, none);
   }
 </style>
 
@@ -1647,6 +1663,34 @@
       ],
       "default": "default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
+    },
+    {
+      "type": "header",
+      "content": "Mega menu glow"
+    },
+    {
+      "type": "checkbox",
+      "id": "mega_menu_glow",
+      "label": "Enable mega menu glow",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "mega_menu_glow_color",
+      "label": "Glow color",
+      "default": "#FF5500",
+      "visible_if": "{{ section.settings.mega_menu_glow }}"
+    },
+    {
+      "type": "range",
+      "id": "mega_menu_glow_intensity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Glow intensity",
+      "default": 40,
+      "visible_if": "{{ section.settings.mega_menu_glow }}"
     }
   ],
   "presets": []
