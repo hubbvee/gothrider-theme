@@ -84,7 +84,7 @@ header-component,
 .mega-menu,
 [data-menu-drawer],
 .header__dropdown {
-  background-color: var(--gr-dark);
+  background-color: var(--gr-black);
   border: 1px solid var(--gr-border-subtle);
   box-shadow: var(--gr-shadow-lg);
 }
