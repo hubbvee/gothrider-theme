@@ -1122,6 +1122,16 @@
     background: var(--gr-black, #0A0A0A) !important;
     height: 100% !important;
   }
+
+  /* Remove gradient from mega menu underlay — keep height for clip-path animation */
+  #header-component .header__underlay-open {
+    background: var(--gr-black, #0A0A0A) !important;
+  }
+
+  /* Glow effect on the mega menu inner container */
+  #header-component .menu-list__submenu-inner {
+    box-shadow: var(--gr-mega-glow, none);
+  }
 </style>
 
 {% unless request.design_mode %}
