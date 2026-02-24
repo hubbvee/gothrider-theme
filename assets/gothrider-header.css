@@ -17,11 +17,10 @@ header-component,
   border-bottom: 1px solid var(--gr-border-subtle);
 }
 
-/* ---- Navigation Links ---- */
+/* ---- Top-Level Navigation Links ---- */
 
 .header__menu-item,
-.header a,
-header-component a {
+.menu-list__link {
   font-family: var(--gr-font-heading);
   letter-spacing: var(--gr-tracking-normal);
   font-size: var(--gr-body-sm);
@@ -30,9 +29,17 @@ header-component a {
 }
 
 .header__menu-item:hover,
-.header a:hover,
-header-component a:hover {
+.menu-list__link:hover {
   color: var(--gr-cta);
+}
+
+/* ---- Mega Menu Dropdown Links (match gothrider.ca: Lato 16px regular) ---- */
+
+.mega-menu__link {
+  font-family: var(--gr-font-body) !important;
+  font-size: var(--gr-body-md) !important;
+  font-weight: var(--gr-weight-regular) !important;
+  letter-spacing: var(--gr-tracking-normal);
 }
 
 /* ---- Active Nav State ---- */
