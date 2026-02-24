@@ -89,6 +89,11 @@ header-component,
   box-shadow: var(--gr-shadow-lg);
 }
 
+/* Fill the submenu wrapper so no dark-gray gap shows above/below mega menu */
+.menu-list__submenu-inner {
+  background-color: var(--gr-black);
+}
+
 /* Mega menu padding (top/bottom) */
 .mega-menu.section {
   padding-block: var(--gr-space-lg) var(--gr-space-xl);
