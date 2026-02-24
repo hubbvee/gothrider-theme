@@ -15,7 +15,7 @@
         "image": "shopify://shop_images/hero-banner.jpg",
         "mobile_image": "shopify://shop_images/hero-banner.jpg",
         "image_focus": "center center",
-        "height": "medium",
+        "height": "full",
         "mobile_fit": "contain",
         "mobile_height": 50,
         "overlay_style": "custom",
