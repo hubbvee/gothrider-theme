@@ -156,6 +156,17 @@
   }
 </style>
 
+{% if section.settings.height == 'full' %}
+  <style>
+    /* Full-screen: push section below header nav (desktop only) */
+    @media (min-width: 769px) {
+      #shopify-section-{{ section.id }} {
+        margin-top: 61px !important;
+      }
+    }
+  </style>
+{% endif %}
+
 {% if section.settings.overlay_style == 'custom' %}
   {% assign overlay_alpha = section.settings.overlay_opacity | divided_by: 100.0 %}
   <style>
