@@ -159,10 +159,10 @@
     var drawer = document.querySelector('.cart-drawer__dialog');
     if (!drawer) return;
 
-    /* Shipping bar: inject above summary */
-    var summary = drawer.querySelector('.cart-drawer__summary');
-    if (summary && !summary.querySelector('.gr-shipping-bar')) {
-      summary.insertBefore(buildShippingBar(), summary.firstChild);
+    /* Shipping bar: inject above cart items (below header) */
+    var content = drawer.querySelector('.cart-drawer__content');
+    if (content && !content.querySelector('.gr-shipping-bar')) {
+      content.insertBefore(buildShippingBar(), content.firstChild);
     }
 
     /* Upsell: inject at end of items area */
