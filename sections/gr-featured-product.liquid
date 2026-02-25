@@ -1,6 +1,6 @@
 {%- comment -%}
   GR Featured Product — Card Design + Full Customization
-  Custom section with card appearance, glow option, and override controls.
+  Block-based section: each content element is a draggable block in the theme editor.
 {%- endcomment -%}
 
 {%- assign product = section.settings.product -%}
@@ -59,81 +59,107 @@
           {%- endif -%}
         </div>
 
-        {%- comment -%} Info column {%- endcomment -%}
+        {%- comment -%} Info column — block-driven {%- endcomment -%}
         <div class="gr-featured-product__info">
-          {%- if section.settings.subheading != blank -%}
-            <p class="gr-featured-product__subheading">{{ section.settings.subheading }}</p>
-          {%- endif -%}
+          {%- for block in section.blocks -%}
+            {%- case block.type -%}
 
-          {%- if product != blank -%}
-            <h3 class="gr-heading gr-heading-lg">{{ product.title }}</h3>
-          {%- else -%}
-            <h3 class="gr-heading gr-heading-lg">Select a product</h3>
-          {%- endif -%}
+              {%- when 'subheading' -%}
+                {%- if block.settings.text != blank -%}
+                  <p class="gr-featured-product__subheading" {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+                {%- endif -%}
 
-          {%- if section.settings.show_description -%}
-            <div class="gr-featured-product__description">
-              {%- if section.settings.description != blank -%}
-                {{ section.settings.description }}
-              {%- elsif product != blank and product.description != blank -%}
-                {{ product.description | truncatewords: 40 }}
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.show_price and product != blank -%}
-            {%- assign current_variant = product.selected_or_first_available_variant -%}
-            <div class="gr-featured-product__price">
-              {%- if current_variant.compare_at_price > current_variant.price -%}
-                <span class="gr-featured-product__compare-price">{{ current_variant.compare_at_price | money }}</span>
-              {%- endif -%}
-              <span class="gr-featured-product__current-price{% if current_variant.compare_at_price > current_variant.price %} gr-text-red{% endif %}">
-                {{ current_variant.price | money }}
-              </span>
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.show_variants and product != blank -%}
-            {%- unless product.has_only_default_variant -%}
-              {%- for option in product.options_with_values -%}
-                <div class="gr-featured-product__option">
-                  <label class="gr-featured-product__option-label">{{ option.name }}</label>
-                  <div class="gr-featured-product__option-values">
-                    {%- for value in option.values -%}
-                      <button
-                        class="gr-featured-product__option-btn{% if option.selected_value == value %} is-selected{% endif %}"
-                        data-option-index="{{ forloop.parentloop.index0 }}"
-                        data-value="{{ value }}"
-                      >
-                        {{ value }}
-                      </button>
-                    {%- endfor -%}
-                  </div>
-                </div>
-              {%- endfor -%}
-            {%- endunless -%}
-          {%- endif -%}
-
-          {%- if product != blank -%}
-            <form method="post" action="/cart/add" class="gr-featured-product__form">
-              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-              <div class="gr-featured-product__actions">
-                <button
-                  type="submit"
-                  class="gr-btn gr-btn--primary gr-featured-product__add-btn"
-                  {% unless product.available %}disabled{% endunless %}
-                >
-                  {%- if product.available -%}
-                    {{ section.settings.button_text | default: 'Add to Cart' }}
+              {%- when 'title' -%}
+                <div {{ block.shopify_attributes }}>
+                  {%- if product != blank -%}
+                    <h3 class="gr-heading {{ block.settings.heading_size }}">{{ product.title }}</h3>
                   {%- else -%}
-                    Sold Out
+                    <h3 class="gr-heading {{ block.settings.heading_size }}">Select a product</h3>
                   {%- endif -%}
-                </button>
-              </div>
-            </form>
-          {%- else -%}
-            <p class="gr-text-muted">Choose a product in the theme editor to display here.</p>
-          {%- endif -%}
+                </div>
+
+              {%- when 'price' -%}
+                {%- if product != blank -%}
+                  {%- assign current_variant = product.selected_or_first_available_variant -%}
+                  <div class="gr-featured-product__price" {{ block.shopify_attributes }}>
+                    {%- if current_variant.compare_at_price > current_variant.price -%}
+                      <span class="gr-featured-product__compare-price">{{ current_variant.compare_at_price | money }}</span>
+                    {%- endif -%}
+                    <span class="gr-featured-product__current-price{% if current_variant.compare_at_price > current_variant.price %} gr-text-red{% endif %}">
+                      {{ current_variant.price | money }}
+                    </span>
+                  </div>
+                {%- endif -%}
+
+              {%- when 'description' -%}
+                <div class="gr-featured-product__description" {{ block.shopify_attributes }}>
+                  {%- if block.settings.custom_text != blank -%}
+                    {{ block.settings.custom_text }}
+                  {%- elsif product != blank and product.description != blank -%}
+                    {{ product.description | truncatewords: block.settings.truncate_words }}
+                  {%- endif -%}
+                </div>
+
+              {%- when 'separator' -%}
+                <hr class="gr-featured-product__separator" {{ block.shopify_attributes }}>
+
+              {%- when 'variant_picker' -%}
+                {%- if product != blank -%}
+                  {%- unless product.has_only_default_variant -%}
+                    <div {{ block.shopify_attributes }}>
+                      {%- for option in product.options_with_values -%}
+                        <div class="gr-featured-product__option">
+                          <label class="gr-featured-product__option-label">{{ option.name }}</label>
+                          <div class="gr-featured-product__option-values">
+                            {%- for value in option.values -%}
+                              <button
+                                class="gr-featured-product__option-btn{% if option.selected_value == value %} is-selected{% endif %}"
+                                data-option-index="{{ forloop.parentloop.index0 }}"
+                                data-value="{{ value }}"
+                              >
+                                {{ value }}
+                              </button>
+                            {%- endfor -%}
+                          </div>
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                  {%- endunless -%}
+                {%- endif -%}
+
+              {%- when 'buy_buttons' -%}
+                <div {{ block.shopify_attributes }}>
+                  {%- if product != blank -%}
+                    <form method="post" action="/cart/add" class="gr-featured-product__form">
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                      <div class="gr-featured-product__actions">
+                        <button
+                          type="submit"
+                          class="gr-btn gr-btn--primary gr-featured-product__add-btn"
+                          {% unless product.available %}disabled{% endunless %}
+                        >
+                          {%- if product.available -%}
+                            {{ block.settings.button_text | default: 'Add to Cart' }}
+                          {%- else -%}
+                            Sold Out
+                          {%- endif -%}
+                        </button>
+                      </div>
+                    </form>
+                  {%- else -%}
+                    <p class="gr-text-muted">Choose a product in the theme editor.</p>
+                  {%- endif -%}
+                </div>
+
+              {%- when 'custom_text' -%}
+                {%- if block.settings.text != blank -%}
+                  <div class="gr-featured-product__custom-text" {{ block.shopify_attributes }}>
+                    {{ block.settings.text }}
+                  </div>
+                {%- endif -%}
+
+            {%- endcase -%}
+          {%- endfor -%}
         </div>
       </div>
     </div>
@@ -215,21 +241,25 @@
     object-fit: cover;
   }
 
+  .gr-featured-product__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gr-space-md);
+  }
+
   .gr-featured-product__subheading {
     font-family: var(--gr-font-heading);
     font-size: var(--gr-body-sm);
     text-transform: uppercase;
     letter-spacing: var(--gr-tracking-widest);
     color: var(--gr-cta);
-    margin: 0 0 var(--gr-space-md) 0;
+    margin: 0;
   }
 
   .gr-featured-product__price {
     display: flex;
     align-items: center;
     gap: var(--gr-space-sm);
-    margin-top: var(--gr-space-md);
-    margin-bottom: var(--gr-space-lg);
   }
 
   .gr-featured-product__current-price {
@@ -247,15 +277,20 @@
   .gr-featured-product__description {
     color: var(--gr-text-secondary);
     line-height: var(--gr-leading-relaxed);
-    margin-bottom: var(--gr-space-xl);
   }
 
   .gr-featured-product__description p {
     margin: 0;
   }
 
+  .gr-featured-product__separator {
+    border: none;
+    border-top: 1px solid var(--gr-border-subtle);
+    margin: var(--gr-space-sm) 0;
+  }
+
   .gr-featured-product__option {
-    margin-bottom: var(--gr-space-lg);
+    margin-bottom: var(--gr-space-sm);
   }
 
   .gr-featured-product__option-label {
@@ -297,12 +332,21 @@
 
   .gr-featured-product__add-btn {
     width: 100%;
-    margin-top: var(--gr-space-md);
   }
 
   .gr-featured-product__add-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
+  }
+
+  .gr-featured-product__custom-text {
+    color: var(--gr-text-secondary);
+    font-size: var(--gr-body-sm);
+    line-height: var(--gr-leading-relaxed);
+  }
+
+  .gr-featured-product__custom-text p {
+    margin: 0;
   }
 
   @media (max-width: 768px) {
@@ -318,7 +362,6 @@
 
 <script>
   (function() {
-    // Thumbnail gallery
     document.querySelectorAll('.gr-featured-product__thumb').forEach(function(thumb) {
       thumb.addEventListener('click', function() {
         var src = this.getAttribute('data-gr-thumb-src');
@@ -331,7 +374,6 @@
       });
     });
 
-    // Variant option selector
     document.querySelectorAll('.gr-featured-product__option-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
         this.closest('.gr-featured-product__option-values').querySelectorAll('.gr-featured-product__option-btn').forEach(function(b) {
@@ -358,45 +400,10 @@
       "label": "Product"
     },
     {
-      "type": "text",
-      "id": "subheading",
-      "label": "Subheading"
-    },
-    {
       "type": "image_picker",
       "id": "custom_image",
       "label": "Custom image",
       "info": "Overrides the product image"
-    },
-    {
-      "type": "richtext",
-      "id": "description",
-      "label": "Description",
-      "info": "Overrides the product description"
-    },
-    {
-      "type": "text",
-      "id": "button_text",
-      "label": "Button text",
-      "default": "Add to Cart"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_price",
-      "label": "Show price",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_variants",
-      "label": "Show variant selector",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_description",
-      "label": "Show description",
-      "default": true
     },
     {
       "type": "header",
@@ -427,9 +434,111 @@
       "visible_if": "{{ section.settings.card_glow }}"
     }
   ],
+  "blocks": [
+    {
+      "type": "subheading",
+      "name": "Subheading",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Featured"
+        }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "select",
+          "id": "heading_size",
+          "label": "Size",
+          "options": [
+            { "value": "gr-heading-xl", "label": "X-Large" },
+            { "value": "gr-heading-lg", "label": "Large" },
+            { "value": "gr-heading-md", "label": "Medium" }
+          ],
+          "default": "gr-heading-lg"
+        }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "limit": 1
+    },
+    {
+      "type": "description",
+      "name": "Description",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "custom_text",
+          "label": "Custom text",
+          "info": "Overrides the product description"
+        },
+        {
+          "type": "range",
+          "id": "truncate_words",
+          "min": 10,
+          "max": 100,
+          "step": 5,
+          "label": "Word limit (product description)",
+          "default": 40
+        }
+      ]
+    },
+    {
+      "type": "separator",
+      "name": "Separator"
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "limit": 1
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "button_text",
+          "label": "Button text",
+          "default": "Add to Cart"
+        }
+      ]
+    },
+    {
+      "type": "custom_text",
+      "name": "Custom text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
   "presets": [
     {
-      "name": "GR Featured Product"
+      "name": "GR Featured Product",
+      "blocks": [
+        { "type": "subheading" },
+        { "type": "title" },
+        { "type": "price" },
+        { "type": "separator" },
+        { "type": "description" },
+        { "type": "variant_picker" },
+        { "type": "buy_buttons" }
+      ]
     }
   ]
 }
