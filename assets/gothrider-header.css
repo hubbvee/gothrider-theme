@@ -85,8 +85,8 @@ header-component,
 [data-menu-drawer],
 .header__dropdown {
   background-color: var(--gr-black);
-  border: 1px solid var(--gr-border-subtle);
-  box-shadow: var(--gr-shadow-lg);
+  border: none;
+  box-shadow: none;
 }
 
 /* Fill the submenu wrapper so no dark-gray gap shows above/below mega menu */
