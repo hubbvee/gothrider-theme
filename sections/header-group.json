@@ -142,8 +142,8 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default",
         "mega_menu_glow": true,
-        "mega_menu_glow_color": "#FF5500",
-        "mega_menu_glow_intensity": 60
+        "mega_menu_glow_color": "#ff5500",
+        "mega_menu_glow_intensity": 10
       }
     }
   },
