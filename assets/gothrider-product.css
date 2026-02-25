@@ -194,13 +194,13 @@
   z-index: 1;
 }
 
-/* Swatch fieldset: proper gap between option boxes */
-.product-information .variant-option--swatches {
+/* Variant fieldset: proper gap between option boxes */
+.product-information .variant-option--buttons {
   gap: 8px;
 }
 
-/* Each swatch label: rectangular box with icon + text stacked */
-.product-information .variant-option__button-label--has-swatch {
+/* Each variant label: rectangular box */
+.product-information .variant-option--buttons .variant-option__button-label {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -208,7 +208,7 @@
   gap: 6px;
   padding: 12px 16px;
   min-width: 100px;
-  min-height: 80px;
+  min-height: 60px;
   border: 1px solid var(--gr-border, #333);
   border-radius: var(--gr-radius-sm, 0.375rem);
   background-color: transparent;
@@ -217,14 +217,33 @@
   flex-basis: auto;
 }
 
+/* Swatch variant: taller to accommodate icon + text */
+.product-information .variant-option__button-label--has-swatch {
+  min-height: 80px;
+}
+
+/* Hide default pill indicator inside GR boxes */
+.product-information .variant-option--buttons .variant-option__button-label__pill {
+  display: none;
+}
+
+/* Button text: GR styling */
+.product-information .variant-option--buttons .variant-option__button-label__text {
+  font-family: var(--gr-font-body);
+  font-size: var(--gr-body-sm, 0.875rem);
+  color: var(--gr-text-primary, #fff);
+  text-align: center;
+  white-space: nowrap;
+}
+
 /* Hover state */
-.product-information .variant-option__button-label--has-swatch:hover {
+.product-information .variant-option--buttons .variant-option__button-label:hover {
   border-color: var(--gr-text-secondary, #999);
   outline: none;
 }
 
 /* Selected state: orange accent border */
-.product-information .variant-option__button-label--has-swatch:has(:checked) {
+.product-information .variant-option--buttons .variant-option__button-label:has(:checked) {
   border-color: var(--gr-cta, #FF5500);
   outline: none;
 }
@@ -241,19 +260,23 @@
 }
 
 /* Unavailable variant: dimmed */
-.product-information .variant-option__button-label--has-swatch:has([data-option-available='false']) {
+.product-information .variant-option--buttons .variant-option__button-label:has([data-option-available='false']) {
   opacity: 0.4;
 }
 
 /* Mobile: slightly smaller boxes */
 @media (max-width: 749px) {
-  .product-information .variant-option--swatches {
+  .product-information .variant-option--buttons {
     gap: 6px;
   }
 
-  .product-information .variant-option__button-label--has-swatch {
+  .product-information .variant-option--buttons .variant-option__button-label {
     min-width: 80px;
     padding: 10px 8px;
+    min-height: 50px;
+  }
+
+  .product-information .variant-option__button-label--has-swatch {
     min-height: 68px;
   }
 
