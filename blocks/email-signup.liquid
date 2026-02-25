@@ -366,6 +366,30 @@
   .email-signup__message-text {
     margin: 0;
   }
+
+  /* GR overrides — match gothrider.ca footer email input */
+  .email-signup__input-group--integrated .email-signup__input.email-signup__input--all {
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+  }
+
+  .email-signup__input-group--integrated .email-signup__button--arrow {
+    width: 24px;
+    height: 24px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+  }
+
+  .email-signup__input-group--integrated .email-signup__button--arrow:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .email-signup__input-group--integrated .email-signup__button--arrow > .email-signup__button-icon {
+    width: 12px;
+    height: 12px;
+    padding: 0;
+  }
 {% endstylesheet %}
 
 {% schema %}
