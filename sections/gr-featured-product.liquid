@@ -349,13 +349,24 @@
     margin: 0;
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 749px) {
+    .gr-featured-product__section-heading {
+      font-size: clamp(1.25rem, 5vw, 1.75rem);
+      margin-bottom: var(--gr-space-xl);
+    }
+
     .gr-featured-product__grid {
       grid-template-columns: 1fr;
+      gap: var(--gr-space-xl);
     }
 
     .gr-featured-product__card {
       padding: var(--gr-space-lg);
+    }
+
+    .gr-featured-product__thumb {
+      width: 48px;
+      height: 48px;
     }
   }
 </style>
