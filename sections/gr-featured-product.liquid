@@ -1,134 +1,189 @@
+{%- comment -%}
+  GR Featured Product — Card Design + Full Customization
+  Custom section with card appearance, glow option, and override controls.
+{%- endcomment -%}
+
 {%- assign product = section.settings.product -%}
+
+{%- comment -%} Glow computation {%- endcomment -%}
+{%- assign glow_css = 'none' -%}
+{%- if section.settings.card_glow -%}
+  {%- assign glow_alpha = section.settings.glow_intensity | divided_by: 100.0 -%}
+  {%- assign glow_blur = section.settings.glow_intensity | times: 0.8 | round -%}
+  {%- capture glow_css -%}0 0 {{ glow_blur }}px {{ section.settings.glow_color | color_modify: 'alpha', glow_alpha }}{%- endcapture -%}
+{%- endif -%}
 
 <div class="gr-section gr-section--darker gr-reveal" {{ section.shopify_attributes }}>
   <div class="gr-container">
-    {% if section.settings.heading != blank %}
-      <h2 class="gr-heading gr-heading-xl gr-featured-product__heading">{{ section.settings.heading }}</h2>
-    {% endif %}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="gr-heading gr-heading-xl gr-featured-product__section-heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
 
-    {% if product %}
-      <div class="gr-featured-product">
-        <div class="gr-featured-product__gallery">
-          <div class="gr-featured-product__main-image">
-            {% if product.featured_image %}
-              {{ product.featured_image | image_url: width: 800 | image_tag:
-                loading: 'lazy',
-                sizes: '(min-width: 1024px) 50vw, 100vw',
-                widths: '400, 600, 800',
-                id: 'gr-featured-product-img'
-              }}
-            {% endif %}
-          </div>
-          {% if product.images.size > 1 %}
-            <div class="gr-featured-product__thumbs">
-              {% for image in product.images limit: 5 %}
-                <button
-                  class="gr-featured-product__thumb{% if forloop.first %} is-active{% endif %}"
-                  data-gr-thumb-src="{{ image | image_url: width: 800 }}"
-                  aria-label="View {{ image.alt | default: product.title }}"
-                >
-                  {{ image | image_url: width: 100 | image_tag: loading: 'lazy', widths: '100' }}
-                </button>
-              {% endfor %}
-            </div>
-          {% endif %}
-        </div>
+    <div class="gr-featured-product__card" style="box-shadow: {{ glow_css }}">
+      <div class="gr-featured-product__grid">
+        {%- comment -%} Image column {%- endcomment -%}
+        <div class="gr-featured-product__image-wrapper">
+          {%- if section.settings.custom_image -%}
+            {{ section.settings.custom_image | image_url: width: 800 | image_tag:
+              class: 'gr-featured-product__image',
+              loading: 'lazy',
+              widths: '400, 600, 800',
+              sizes: '(min-width: 1024px) 50vw, 100vw'
+            }}
+          {%- elsif product != blank and product.featured_image -%}
+            {{ product.featured_image | image_url: width: 800 | image_tag:
+              class: 'gr-featured-product__image',
+              loading: 'lazy',
+              widths: '400, 600, 800',
+              sizes: '(min-width: 1024px) 50vw, 100vw',
+              id: 'gr-featured-product-img'
+            }}
 
-        <div class="gr-featured-product__info">
-          <h3 class="gr-heading gr-heading-lg">{{ product.title }}</h3>
-
-          <div class="gr-featured-product__price">
-            {% if product.compare_at_price > product.price %}
-              <span class="gr-featured-product__compare-price">{{ product.compare_at_price | money }}</span>
-            {% endif %}
-            <span class="gr-featured-product__current-price{% if product.compare_at_price > product.price %} gr-text-red{% endif %}">
-              {{ product.price | money }}
-            </span>
-          </div>
-
-          {% if product.description != blank %}
-            <div class="gr-featured-product__description">
-              {{ product.description | truncatewords: 40 }}
-            </div>
-          {% endif %}
-
-          {% unless product.has_only_default_variant %}
-            {% for option in product.options_with_values %}
-              <div class="gr-featured-product__option">
-                <label class="gr-featured-product__option-label">{{ option.name }}</label>
-                <div class="gr-featured-product__option-values">
-                  {% for value in option.values %}
-                    <button
-                      class="gr-featured-product__option-btn{% if forloop.first %} is-selected{% endif %}"
-                      data-option-index="{{ forloop.parentloop.index0 }}"
-                      data-value="{{ value }}"
-                    >
-                      {{ value }}
-                    </button>
-                  {% endfor %}
-                </div>
+            {%- if product.images.size > 1 -%}
+              <div class="gr-featured-product__thumbs">
+                {%- for image in product.images limit: 5 -%}
+                  <button
+                    class="gr-featured-product__thumb{% if forloop.first %} is-active{% endif %}"
+                    data-gr-thumb-src="{{ image | image_url: width: 800 }}"
+                    aria-label="View {{ image.alt | default: product.title }}"
+                  >
+                    {{ image | image_url: width: 100 | image_tag: loading: 'lazy', widths: '100' }}
+                  </button>
+                {%- endfor -%}
               </div>
-            {% endfor %}
-          {% endunless %}
-
-          <form method="post" action="/cart/add" class="gr-featured-product__form">
-            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-            <div class="gr-featured-product__actions">
-              <button
-                type="submit"
-                class="gr-btn gr-btn--primary gr-featured-product__add-btn"
-                {% unless product.available %}disabled{% endunless %}
-              >
-                {% if product.available %}
-                  {{ 'products.product.add_to_cart' | t | default: 'Add to Cart' }}
-                {% else %}
-                  {{ 'products.product.sold_out' | t | default: 'Sold Out' }}
-                {% endif %}
-              </button>
+            {%- endif -%}
+          {%- else -%}
+            <div class="gr-featured-product__placeholder">
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
             </div>
-          </form>
+          {%- endif -%}
         </div>
-      </div>
-    {% else %}
-      <div class="gr-featured-product">
-        <div class="gr-featured-product__gallery">
-          <div class="gr-featured-product__main-image gr-bg-surface" style="aspect-ratio: 1; display: flex; align-items: center; justify-content: center;">
-            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
-          </div>
-        </div>
+
+        {%- comment -%} Info column {%- endcomment -%}
         <div class="gr-featured-product__info">
-          <h3 class="gr-heading gr-heading-lg">Select a product</h3>
-          <p class="gr-text-muted">Choose a product in the theme editor to display here.</p>
+          {%- if section.settings.subheading != blank -%}
+            <p class="gr-featured-product__subheading">{{ section.settings.subheading }}</p>
+          {%- endif -%}
+
+          {%- if product != blank -%}
+            <h3 class="gr-heading gr-heading-lg">{{ product.title }}</h3>
+          {%- else -%}
+            <h3 class="gr-heading gr-heading-lg">Select a product</h3>
+          {%- endif -%}
+
+          {%- if section.settings.show_description -%}
+            <div class="gr-featured-product__description">
+              {%- if section.settings.description != blank -%}
+                {{ section.settings.description }}
+              {%- elsif product != blank and product.description != blank -%}
+                {{ product.description | truncatewords: 40 }}
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_price and product != blank -%}
+            {%- assign current_variant = product.selected_or_first_available_variant -%}
+            <div class="gr-featured-product__price">
+              {%- if current_variant.compare_at_price > current_variant.price -%}
+                <span class="gr-featured-product__compare-price">{{ current_variant.compare_at_price | money }}</span>
+              {%- endif -%}
+              <span class="gr-featured-product__current-price{% if current_variant.compare_at_price > current_variant.price %} gr-text-red{% endif %}">
+                {{ current_variant.price | money }}
+              </span>
+            </div>
+          {%- endif -%}
+
+          {%- if section.settings.show_variants and product != blank -%}
+            {%- unless product.has_only_default_variant -%}
+              {%- for option in product.options_with_values -%}
+                <div class="gr-featured-product__option">
+                  <label class="gr-featured-product__option-label">{{ option.name }}</label>
+                  <div class="gr-featured-product__option-values">
+                    {%- for value in option.values -%}
+                      <button
+                        class="gr-featured-product__option-btn{% if option.selected_value == value %} is-selected{% endif %}"
+                        data-option-index="{{ forloop.parentloop.index0 }}"
+                        data-value="{{ value }}"
+                      >
+                        {{ value }}
+                      </button>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endfor -%}
+            {%- endunless -%}
+          {%- endif -%}
+
+          {%- if product != blank -%}
+            <form method="post" action="/cart/add" class="gr-featured-product__form">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <div class="gr-featured-product__actions">
+                <button
+                  type="submit"
+                  class="gr-btn gr-btn--primary gr-featured-product__add-btn"
+                  {% unless product.available %}disabled{% endunless %}
+                >
+                  {%- if product.available -%}
+                    {{ section.settings.button_text | default: 'Add to Cart' }}
+                  {%- else -%}
+                    Sold Out
+                  {%- endif -%}
+                </button>
+              </div>
+            </form>
+          {%- else -%}
+            <p class="gr-text-muted">Choose a product in the theme editor to display here.</p>
+          {%- endif -%}
         </div>
       </div>
-    {% endif %}
+    </div>
   </div>
 </div>
 
 <style>
-  .gr-featured-product__heading {
+  .gr-featured-product__section-heading {
     text-align: center;
     margin-bottom: var(--gr-space-3xl);
   }
 
-  .gr-featured-product {
+  .gr-featured-product__card {
+    background-color: var(--gr-surface-elevated);
+    border: 1px solid var(--gr-border-subtle);
+    border-radius: var(--gr-radius-md, 0.75rem);
+    padding: var(--gr-space-2xl);
+    transition: box-shadow var(--gr-transition-base);
+    overflow: hidden;
+  }
+
+  .gr-featured-product__grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: var(--gr-space-3xl);
     align-items: start;
   }
 
-  .gr-featured-product__main-image {
-    border: 1px solid var(--gr-border-subtle);
-    overflow: hidden;
-    background-color: var(--gr-surface);
-    border-radius: var(--gr-radius-md, 0.75rem);
+  .gr-featured-product__image-wrapper {
+    position: relative;
   }
 
-  .gr-featured-product__main-image img {
+  .gr-featured-product__image-wrapper > img,
+  .gr-featured-product__image {
     width: 100%;
     height: auto;
     display: block;
+    border-radius: var(--gr-radius-md, 0.75rem);
+    border: 1px solid var(--gr-border-subtle);
+    background-color: var(--gr-surface);
+    overflow: hidden;
+  }
+
+  .gr-featured-product__placeholder {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--gr-surface);
+    border-radius: var(--gr-radius-md, 0.75rem);
   }
 
   .gr-featured-product__thumbs {
@@ -160,6 +215,15 @@
     object-fit: cover;
   }
 
+  .gr-featured-product__subheading {
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--gr-tracking-widest);
+    color: var(--gr-cta);
+    margin: 0 0 var(--gr-space-md) 0;
+  }
+
   .gr-featured-product__price {
     display: flex;
     align-items: center;
@@ -184,6 +248,10 @@
     color: var(--gr-text-secondary);
     line-height: var(--gr-leading-relaxed);
     margin-bottom: var(--gr-space-xl);
+  }
+
+  .gr-featured-product__description p {
+    margin: 0;
   }
 
   .gr-featured-product__option {
@@ -218,8 +286,8 @@
   }
 
   .gr-featured-product__option-btn.is-selected {
-    border-color: var(--gr-text-primary);
-    background-color: var(--gr-text-primary);
+    border-color: var(--gr-cta);
+    background-color: var(--gr-cta);
     color: var(--gr-black);
   }
 
@@ -238,8 +306,12 @@
   }
 
   @media (max-width: 768px) {
-    .gr-featured-product {
+    .gr-featured-product__grid {
       grid-template-columns: 1fr;
+    }
+
+    .gr-featured-product__card {
+      padding: var(--gr-space-lg);
     }
   }
 </style>
@@ -250,7 +322,7 @@
     document.querySelectorAll('.gr-featured-product__thumb').forEach(function(thumb) {
       thumb.addEventListener('click', function() {
         var src = this.getAttribute('data-gr-thumb-src');
-        var mainImg = this.closest('.gr-featured-product__gallery').querySelector('.gr-featured-product__main-image img');
+        var mainImg = this.closest('.gr-featured-product__image-wrapper').querySelector('img:first-of-type');
         if (mainImg && src) mainImg.src = src;
         this.closest('.gr-featured-product__thumbs').querySelectorAll('.gr-featured-product__thumb').forEach(function(t) {
           t.classList.remove('is-active');
@@ -284,6 +356,75 @@
       "type": "product",
       "id": "product",
       "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading"
+    },
+    {
+      "type": "image_picker",
+      "id": "custom_image",
+      "label": "Custom image",
+      "info": "Overrides the product image"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "info": "Overrides the product description"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "Show price",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_variants",
+      "label": "Show variant selector",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Card glow"
+    },
+    {
+      "type": "checkbox",
+      "id": "card_glow",
+      "label": "Enable card glow",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "glow_color",
+      "label": "Glow color",
+      "default": "#FF5500",
+      "visible_if": "{{ section.settings.card_glow }}"
+    },
+    {
+      "type": "range",
+      "id": "glow_intensity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "label": "Glow intensity",
+      "default": 50,
+      "visible_if": "{{ section.settings.card_glow }}"
     }
   ],
   "presets": [
