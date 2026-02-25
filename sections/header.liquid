@@ -1111,7 +1111,7 @@
   {% assign glow_blur = section.settings.mega_menu_glow_intensity | times: 0.6 | round %}
   <style>
     #header-component {
-      --gr-mega-glow: 0 6px {{ glow_blur }}px {{ section.settings.mega_menu_glow_color | color_modify: 'alpha', glow_alpha }};
+      --gr-mega-glow: drop-shadow(0 4px {{ glow_blur }}px {{ section.settings.mega_menu_glow_color | color_modify: 'alpha', glow_alpha }});
     }
   </style>
 {% endif %}
@@ -1141,9 +1141,9 @@
     box-shadow: none !important;
   }
 
-  /* Glow effect on the mega menu inner container */
-  #header-component .menu-list__submenu-inner {
-    box-shadow: var(--gr-mega-glow, none);
+  /* Glow effect — filter is applied after clip-path, so the glow shows around the visible mega menu */
+  #header-component .menu-list__submenu {
+    filter: var(--gr-mega-glow, none);
   }
 </style>
 
