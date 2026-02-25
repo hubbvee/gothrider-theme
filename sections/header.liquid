@@ -1117,15 +1117,28 @@
 {% endif %}
 
 <style>
-  /* Force header background to always be solid black (no gradient) */
+  /* Force all header backgrounds to pure black — kill color-scheme gradients */
+  #header-component {
+    --color-scheme-top-row: rgba(0 0 0 / 1.0) !important;
+    --color-scheme-bottom-row: rgba(0 0 0 / 1.0) !important;
+  }
+
+  #header-component .header__underlay {
+    --color-submenu: #0A0A0A !important;
+  }
+
   #header-component .header__underlay-closed {
     background: var(--gr-black, #0A0A0A) !important;
     height: 100% !important;
   }
 
-  /* Remove gradient from mega menu underlay — keep height for clip-path animation */
   #header-component .header__underlay-open {
     background: var(--gr-black, #0A0A0A) !important;
+  }
+
+  /* Remove the popover shadow that creates a gradient at the mega menu bottom */
+  #header-component .header__underlay-open::after {
+    box-shadow: none !important;
   }
 
   /* Glow effect on the mega menu inner container */
