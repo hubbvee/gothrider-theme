@@ -1106,14 +1106,11 @@
   }
 {% endstylesheet %}
 
+{% assign glow_value = 'none' %}
 {% if section.settings.mega_menu_glow %}
   {% assign glow_alpha = section.settings.mega_menu_glow_intensity | divided_by: 100.0 %}
   {% assign glow_blur = section.settings.mega_menu_glow_intensity | times: 0.6 | round %}
-  <style>
-    #header-component {
-      --gr-mega-glow: drop-shadow(0 4px {{ glow_blur }}px {{ section.settings.mega_menu_glow_color | color_modify: 'alpha', glow_alpha }});
-    }
-  </style>
+  {% capture glow_value %}drop-shadow(0 4px {{ glow_blur }}px {{ section.settings.mega_menu_glow_color | color_modify: 'alpha', glow_alpha }}){% endcapture %}
 {% endif %}
 
 <style>
@@ -1121,6 +1118,7 @@
   #header-component {
     --color-scheme-top-row: rgba(0 0 0 / 1.0) !important;
     --color-scheme-bottom-row: rgba(0 0 0 / 1.0) !important;
+    --gr-mega-glow: {{ glow_value }};
   }
 
   #header-component .header__underlay {
