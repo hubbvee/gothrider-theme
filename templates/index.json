@@ -300,9 +300,59 @@
     },
     "gr_featured_product": {
       "type": "gr-featured-product",
+      "blocks": {
+        "fp_subheading": {
+          "type": "subheading",
+          "settings": {
+            "text": "Featured"
+          }
+        },
+        "fp_title": {
+          "type": "title",
+          "settings": {
+            "heading_size": "gr-heading-lg"
+          }
+        },
+        "fp_price": {
+          "type": "price",
+          "settings": {}
+        },
+        "fp_separator": {
+          "type": "separator",
+          "settings": {}
+        },
+        "fp_description": {
+          "type": "description",
+          "settings": {
+            "truncate_words": 40
+          }
+        },
+        "fp_variants": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "fp_buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "button_text": "Add to Cart"
+          }
+        }
+      },
+      "block_order": [
+        "fp_subheading",
+        "fp_title",
+        "fp_price",
+        "fp_separator",
+        "fp_description",
+        "fp_variants",
+        "fp_buy_buttons"
+      ],
       "settings": {
         "heading": "GothRider Coffee Discovery Kit",
-        "product": "gasoline-coffee-discovery-kit"
+        "product": "gasoline-coffee-discovery-kit",
+        "card_glow": true,
+        "glow_color": "#FF5500",
+        "glow_intensity": 50
       }
     },
     "gr_comparison_table": {
