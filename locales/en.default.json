@@ -120,8 +120,8 @@
       "error_heading": "Please adjust the following:"
     },
     "email_signup": {
-      "label": "Email",
-      "placeholder": "Email address",
+      "label": "E-mail",
+      "placeholder": "E-mail",
       "success": "Thanks for subscribing!"
     },
     "filter": "Filter",
