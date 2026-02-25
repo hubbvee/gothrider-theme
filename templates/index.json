@@ -14,10 +14,11 @@
       "settings": {
         "image": "shopify://shop_images/hero-banner.jpg",
         "mobile_image": "shopify://shop_images/hero-banner.jpg",
-        "image_focus": "center center",
         "height": "full",
-        "mobile_fit": "contain",
+        "image_focus": "center center",
         "mobile_height": 50,
+        "mobile_fit": "contain",
+        "mobile_focus": "center center",
         "overlay_style": "custom",
         "overlay_color": "#0a0a0a",
         "overlay_opacity": 0,
@@ -264,6 +265,16 @@
             "rotation": 3
           }
         },
+        "content_slide_ec3aLw": {
+          "type": "content_slide",
+          "settings": {
+            "subheading": "What we do",
+            "heading": "Expressing our rebel instinct",
+            "text": "<p>We are dedicated to providing high-quality products and a great customer experience. We offer a range of clothing and accessories with a rebellious and edgy aesthetic, as well as premium coffee. We encourage our customers to embrace their rebellious spirit and take risks in their lives, and we are committed to creating products that are both stylish and functional. We use only the finest materials in our products and carefully craft our coffee to provide the perfect balance of strength and flavor. Our ultimate goal is to help our customers live their best lives and express their individuality.</p>",
+            "button_label": "",
+            "button_link": ""
+          }
+        },
         "brand_slide_1": {
           "type": "content_slide",
           "settings": {
@@ -278,6 +289,7 @@
       "block_order": [
         "brand_img_1",
         "brand_img_2",
+        "content_slide_ec3aLw",
         "brand_slide_1"
       ],
       "settings": {
