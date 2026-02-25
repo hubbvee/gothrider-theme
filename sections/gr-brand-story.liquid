@@ -4,7 +4,6 @@
 
 <style>
   #shopify-section-{{ section.id }} {
-    --gr-image-rotation: {{ section.settings.image_rotation | default: 0 }}deg;
     {% if section.settings.image_glow %}
       --gr-image-glow: drop-shadow(0 0 20px {{ section.settings.glow_color | default: '#FF5500' }}80)
                         drop-shadow(0 0 60px {{ section.settings.glow_color | default: '#FF5500' }}40);
@@ -20,7 +19,7 @@
       <div class="gr-brand-story__media">
         {% for block in section.blocks %}
           {% if block.type == 'image' %}
-            <div class="gr-brand-story__image" {{ block.shopify_attributes }}>
+            <div class="gr-brand-story__image" style="--gr-image-rotation: {{ block.settings.rotation | default: 0 }}deg" {{ block.shopify_attributes }}>
               {% if block.settings.image %}
                 {{ block.settings.image | image_url: width: 800 | image_tag:
                   loading: 'lazy',
@@ -322,16 +321,6 @@
       "content": "Image effects"
     },
     {
-      "type": "range",
-      "id": "image_rotation",
-      "min": -15,
-      "max": 15,
-      "step": 1,
-      "unit": "deg",
-      "label": "Image rotation",
-      "default": 0
-    },
-    {
       "type": "checkbox",
       "id": "image_glow",
       "label": "Enable image glow",
@@ -353,6 +342,16 @@
           "type": "image_picker",
           "id": "image",
           "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "rotation",
+          "min": -15,
+          "max": 15,
+          "step": 1,
+          "unit": "deg",
+          "label": "Rotation angle",
+          "default": 0
         }
       ]
     },

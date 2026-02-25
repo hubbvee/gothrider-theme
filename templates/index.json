@@ -253,53 +253,35 @@
         "brand_img_1": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/brand-story-1.jpg"
+            "image": "shopify://shop_images/brand-story-1.jpg",
+            "rotation": -9
           }
         },
         "brand_img_2": {
           "type": "image",
           "settings": {
-            "image": "shopify://shop_images/brand-story-2.jpg"
+            "image": "shopify://shop_images/brand-story-2.jpg",
+            "rotation": 3
           }
         },
-        "brand_subheading": {
-          "type": "subheading",
+        "brand_slide_1": {
+          "type": "content_slide",
           "settings": {
-            "text": "About Us"
-          }
-        },
-        "brand_heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Renaissance"
-          }
-        },
-        "brand_text": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Founded in 2015, GothRider is known for its rebellious and edgy aesthetic. In 2020, they added premium coffee to their product line. They offer a variety of blends, and their coffee is known for its strength and flavor. GothRider's products, including clothing and accessories, are designed to help customers express their individuality and live their best lives. They encourage their customers to take risks and embrace their rebellious spirit.</p>"
-          }
-        },
-        "brand_button": {
-          "type": "button",
-          "settings": {
-            "label": "Learn More",
-            "link": "/pages/about-us",
-            "style": "secondary"
+            "subheading": "About Us",
+            "heading": "Renaissance",
+            "text": "<p>Founded in 2015, GothRider is known for its rebellious and edgy aesthetic. In 2020, they added premium coffee to their product line. They offer a variety of blends, and their coffee is known for its strength and flavor. GothRider's products, including clothing and accessories, are designed to help customers express their individuality and live their best lives. They encourage their customers to take risks and embrace their rebellious spirit.</p>",
+            "button_label": "Learn More",
+            "button_link": "/pages/about-us"
           }
         }
       },
       "block_order": [
         "brand_img_1",
         "brand_img_2",
-        "brand_subheading",
-        "brand_heading",
-        "brand_text",
-        "brand_button"
+        "brand_slide_1"
       ],
       "settings": {
         "layout": "image-left",
-        "image_rotation": -9,
         "image_glow": true,
         "glow_color": "#ff5500"
       }
