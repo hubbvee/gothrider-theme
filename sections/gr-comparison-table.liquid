@@ -15,7 +15,7 @@
     {%- assign product_columns = section.blocks | where: 'type', 'product_column' -%}
     {%- assign col_count = product_columns.size -%}
 
-    <div class="gr-comparison">
+    <div class="gr-comparison" style="--gr-comparison-cols: {{ col_count }}">
       {%- comment -%} Product cards row {%- endcomment -%}
       <div class="gr-comparison__products gr-comparison__grid--{{ col_count }}">
         <div class="gr-comparison__label-spacer"></div>
@@ -54,9 +54,13 @@
       </div>
 
       {%- comment -%} Feature rows {%- endcomment -%}
+      {%- assign outputted_count = 0 -%}
       {% for block in section.blocks %}
         {% if block.type == 'row' %}
-          <div class="gr-comparison__row gr-comparison__grid--{{ col_count }}" {{ block.shopify_attributes }}>
+          {%- assign outputted_count = outputted_count | plus: 1 -%}
+          <div class="gr-comparison__row gr-comparison__grid--{{ col_count }}"
+               {% if outputted_count > section.settings.max_rows %}hidden{% endif %}
+               {{ block.shopify_attributes }}>
             <div class="gr-comparison__feature">{{ block.settings.feature }}</div>
             <div class="gr-comparison__value">{{ block.settings.value_1 }}</div>
             {% if block.settings.value_2 != blank %}
@@ -68,6 +72,17 @@
           </div>
         {% endif %}
       {% endfor %}
+
+      {%- if outputted_count > section.settings.max_rows -%}
+        <div class="gr-comparison__toggle">
+          <button class="gr-comparison__toggle-btn" aria-expanded="false">
+            <span class="gr-comparison__toggle-text">{{ section.settings.view_all_text }}</span>
+            <svg class="gr-comparison__toggle-icon" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </button>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </div>
@@ -223,22 +238,124 @@
     font-size: var(--gr-body-md);
   }
 
+  /* Toggle button */
+  .gr-comparison__toggle {
+    text-align: center;
+    border-top: 1px solid var(--gr-border-subtle);
+    padding: var(--gr-space-md) 0;
+  }
+
+  .gr-comparison__toggle-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gr-space-xs);
+    background: none;
+    border: none;
+    color: var(--gr-text-primary);
+    font-family: var(--gr-font-heading);
+    font-size: var(--gr-body-sm);
+    cursor: pointer;
+    transition: opacity var(--gr-transition-fast);
+  }
+
+  .gr-comparison__toggle-btn:hover { opacity: 0.7; }
+
+  .gr-comparison__toggle-icon {
+    transition: transform var(--gr-transition-fast);
+  }
+
+  .gr-comparison[data-expanded] .gr-comparison__toggle-icon {
+    transform: rotate(180deg);
+  }
+
   @media (max-width: 768px) {
-    .gr-comparison__grid--3 {
-      grid-template-columns: 1fr repeat(3, 1fr);
+    /* Edge-to-edge bleed for full-width swipe */
+    .gr-comparison {
+      margin-inline: calc(-1 * var(--gr-gutter));
+      padding-inline: var(--gr-gutter);
+      overflow: auto hidden;
+      scrollbar-width: none;
+      scroll-snap-type: x mandatory;
+      overscroll-behavior-x: contain;
+    }
+
+    .gr-comparison::-webkit-scrollbar { display: none; }
+
+    /* Hide the empty label spacer in product row */
+    .gr-comparison__label-spacer { display: none; }
+
+    /* Product row: only product columns, fixed width */
+    .gr-comparison__products {
+      grid-template-columns: repeat(var(--gr-comparison-cols), 150px);
+    }
+
+    /* Feature rows: drop label from grid, fixed-width value columns */
+    .gr-comparison__row {
+      grid-template-columns: repeat(var(--gr-comparison-cols), 150px);
+      padding: var(--gr-space-md) 0;
+    }
+
+    /* Feature label: sticky at left edge, spans full width above values */
+    .gr-comparison__feature {
+      grid-column: 1 / -1;
+      position: sticky;
+      left: 0;
+      background: var(--gr-surface-elevated);
+      padding-bottom: var(--gr-space-xs);
       font-size: var(--gr-body-sm);
     }
 
-    .gr-comparison__product-img {
-      width: 80px;
-      height: 80px;
+    /* Values drop to row 2, under the label */
+    .gr-comparison__value {
+      grid-row: 2;
     }
 
-    .gr-comparison {
-      padding: var(--gr-space-md);
+    /* Smaller product images */
+    .gr-comparison__product-img {
+      width: 70px;
+      height: 70px;
+    }
+
+    /* Smaller product names */
+    .gr-comparison__product-name,
+    .gr-comparison__product-name-link {
+      font-size: var(--gr-body-sm);
     }
   }
 </style>
+
+<script>
+  (function() {
+    var section = document.querySelector('#shopify-section-{{ section.id }}');
+    if (!section) return;
+    var btn = section.querySelector('.gr-comparison__toggle-btn');
+    if (!btn) return;
+    var comparison = section.querySelector('.gr-comparison');
+    var viewMore = {{ section.settings.view_all_text | json }};
+    var viewLess = {{ section.settings.view_less_text | json }};
+
+    btn.addEventListener('click', function() {
+      var expanded = comparison.hasAttribute('data-expanded');
+
+      if (expanded) {
+        var max = {{ section.settings.max_rows }};
+        comparison.querySelectorAll('.gr-comparison__row').forEach(function(row, i) {
+          if (i >= max) row.hidden = true;
+        });
+        comparison.removeAttribute('data-expanded');
+        btn.querySelector('.gr-comparison__toggle-text').textContent = viewMore;
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        comparison.querySelectorAll('.gr-comparison__row[hidden]').forEach(function(row) {
+          row.hidden = false;
+        });
+        comparison.setAttribute('data-expanded', '');
+        btn.querySelector('.gr-comparison__toggle-text').textContent = viewLess;
+        btn.setAttribute('aria-expanded', 'true');
+      }
+    });
+  })();
+</script>
 
 {% schema %}
 {
@@ -266,6 +383,26 @@
       "id": "feature_label",
       "label": "Feature column label",
       "default": "Feature"
+    },
+    {
+      "type": "range",
+      "id": "max_rows",
+      "min": 1,
+      "max": 20,
+      "label": "Rows shown by default",
+      "default": 5
+    },
+    {
+      "type": "text",
+      "id": "view_all_text",
+      "label": "View all text",
+      "default": "View all"
+    },
+    {
+      "type": "text",
+      "id": "view_less_text",
+      "label": "View less text",
+      "default": "View less"
     }
   ],
   "blocks": [
