@@ -58,6 +58,11 @@
     color: rgba(255, 255, 255, 0.5);
   }
 
+  @keyframes gr-marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
   /* Speed variants */
   .gr-marquee__track--slow { animation: gr-marquee 40s linear infinite; }
   .gr-marquee__track--normal { animation: gr-marquee 25s linear infinite; }

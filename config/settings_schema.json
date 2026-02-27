@@ -90,13 +90,20 @@
       {
         "type": "range",
         "id": "gr_free_shipping_threshold",
-        "label": "Free shipping threshold ($)",
+        "label": "Free shipping threshold - default ($)",
         "min": 0,
         "max": 250,
         "step": 5,
         "default": 75,
         "unit": "$",
-        "info": "Dollar amount. Set to 0 to disable."
+        "info": "Default threshold in your base currency. Used when no per-currency override is set below. Set to 0 to disable."
+      },
+      {
+        "type": "textarea",
+        "id": "gr_free_shipping_thresholds_by_currency",
+        "label": "Free shipping thresholds by currency",
+        "info": "Set different thresholds per currency. Format: CAD:75|USD:60|EUR:55 — Use 3-letter ISO currency codes separated by pipes. Leave blank to use the default threshold above for all currencies.",
+        "placeholder": "CAD:75|USD:60|EUR:55"
       },
       {
         "type": "collection",

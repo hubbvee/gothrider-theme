@@ -9,10 +9,31 @@
 {{ 'gothrider-cart.css' | asset_url | stylesheet_tag }}
 {{ 'gothrider-footer.css' | asset_url | stylesheet_tag }}
 
+{%- liquid
+  assign gr_resolved_threshold = settings.gr_free_shipping_threshold | default: 75
+  assign gr_currency_thresholds = settings.gr_free_shipping_thresholds_by_currency | default: ''
+  assign gr_active_currency = cart.currency.iso_code | default: 'CAD'
+
+  if gr_currency_thresholds != blank
+    assign gr_pairs = gr_currency_thresholds | strip | split: '|'
+    for gr_pair in gr_pairs
+      assign gr_parts = gr_pair | strip | split: ':'
+      assign gr_pair_currency = gr_parts[0] | strip | upcase
+      if gr_pair_currency == gr_active_currency
+        assign gr_pair_value = gr_parts[1] | strip | plus: 0
+        if gr_pair_value > 0
+          assign gr_resolved_threshold = gr_pair_value
+        endif
+        break
+      endif
+    endfor
+  endif
+-%}
+
 <script
   src="{{ 'gothrider-cart.js' | asset_url }}"
   defer
-  data-threshold="{{ settings.gr_free_shipping_threshold | default: 75 | times: 100 }}"
+  data-threshold="{{ gr_resolved_threshold | times: 100 }}"
   data-currency="{{ cart.currency.symbol | default: '$' }}"
   data-upsell-collection="{{ settings.gr_cart_upsell_collection | default: '' }}"
   data-upsell-limit="6"
