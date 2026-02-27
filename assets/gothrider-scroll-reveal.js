@@ -24,7 +24,7 @@ if ('IntersectionObserver' in window) {
   });
 
   // Re-observe on section re-render (Shopify editor)
-  if (Shopify.designMode) {
+  if (window.Shopify && Shopify.designMode) {
     document.addEventListener('shopify:section:load', () => {
       document.querySelectorAll('.gr-reveal:not(.is-visible)').forEach((el) => {
         revealObserver.observe(el);

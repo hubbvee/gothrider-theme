@@ -384,10 +384,10 @@ a:hover {
    HEADER NAVIGATION OVERRIDE (match gothrider.ca)
    ============================================ */
 
-.menu-list__link {
-  font-family: var(--font-body--family, var(--gr-font-body)) !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
+.header .menu-list__link {
+  font-family: var(--font-body--family, var(--gr-font-body));
+  font-size: 1rem;
+  font-weight: 700;
 }
 
 /* Dropdown chevron on nav items with mega-menu (match gothrider.ca) */
@@ -411,14 +411,14 @@ a:hover {
 }
 
 /* Country flag alignment (match gothrider.ca: 20px circle) */
-.dropdown-localization__button .icon-flag {
-  width: 20px !important;
-  height: 20px !important;
+.header .dropdown-localization__button .icon-flag {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
 
-.dropdown-localization__button {
-  gap: 8px !important;
+.header .dropdown-localization__button {
+  gap: 8px;
 }
 
 /* ============================================
