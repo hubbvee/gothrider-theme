@@ -323,7 +323,9 @@
         },
         "fp_description": {
           "type": "description",
+          "disabled": true,
           "settings": {
+            "custom_text": "",
             "truncate_words": 40
           }
         },
@@ -351,7 +353,7 @@
         "heading": "GothRider Coffee Discovery Kit",
         "product": "gasoline-coffee-discovery-kit",
         "card_glow": true,
-        "glow_color": "#FF5500",
+        "glow_color": "#ff5500",
         "glow_intensity": 50
       }
     },
