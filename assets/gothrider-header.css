@@ -35,10 +35,10 @@ header-component,
 
 /* ---- Mega Menu Dropdown Links (match gothrider.ca: Lato 16px regular) ---- */
 
-.mega-menu__link {
-  font-family: var(--gr-font-body) !important;
-  font-size: var(--gr-body-md) !important;
-  font-weight: var(--gr-weight-regular) !important;
+.header .mega-menu .mega-menu__link {
+  font-family: var(--gr-font-body);
+  font-size: var(--gr-body-md);
+  font-weight: var(--gr-weight-regular);
   letter-spacing: var(--gr-tracking-normal);
 }
 
@@ -100,8 +100,8 @@ header-component,
 }
 
 /* Fix gap between link column and featured products */
-.mega-menu__grid {
-  display: flex !important;
+.header .menu-list__submenu .mega-menu__grid {
+  display: flex;
   gap: var(--gr-space-2xl);
 }
 

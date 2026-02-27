@@ -25,6 +25,8 @@
     var el = document.querySelector('[data-cart-subtotal]');
     if (!el) return 0;
     var raw = el.getAttribute('value') || el.textContent || '';
+    /* Note: strips non-numeric chars. Works for USD/CAD but may misparse
+       locales using comma as decimal separator (e.g. "1.234,56"). */
     var num = parseFloat(raw.replace(/[^0-9.]/g, ''));
     return isNaN(num) ? 0 : Math.round(num * 100);
   }
@@ -119,8 +121,11 @@
           var imgSrc = product.images && product.images.length > 0
             ? product.images[0].src + '&width=240'
             : '';
-          var price = product.variants && product.variants.length > 0
-            ? formatMoney(Math.round(parseFloat(product.variants[0].price) * 100))
+          var variantPrice = product.variants && product.variants.length > 0
+            ? parseFloat(product.variants[0].price)
+            : NaN;
+          var price = (!isNaN(variantPrice) && variantPrice > 0)
+            ? formatMoney(Math.round(variantPrice * 100))
             : '';
           var url = '/products/' + encodeURIComponent(product.handle);
 
@@ -149,7 +154,8 @@
           container.style.display = 'none';
         }
       })
-      .catch(function () {
+      .catch(function (err) {
+        console.error('[GothRider] Upsell fetch failed:', err);
         container.style.display = 'none';
       });
   }
@@ -211,18 +217,6 @@
       setTimeout(injectIntoDrawer, 50);
     });
 
-    /* Fallback: watch for dialog[open] attribute */
-    var drawerDialog = document.querySelector('.cart-drawer__dialog');
-    if (drawerDialog) {
-      var attrObserver = new MutationObserver(function (mutations) {
-        mutations.forEach(function (m) {
-          if (m.attributeName === 'open' && drawerDialog.hasAttribute('open')) {
-            setTimeout(injectIntoDrawer, 50);
-          }
-        });
-      });
-      attrObserver.observe(drawerDialog, { attributes: true });
-    }
   }
 
   if (document.readyState === 'loading') {
