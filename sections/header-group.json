@@ -176,8 +176,8 @@
     }
   },
   "order": [
+    "gr_cart_drawer",
     "header_announcements_9jGBFp",
-    "header_section",
-    "gr_cart_drawer"
+    "header_section"
   ]
 }
