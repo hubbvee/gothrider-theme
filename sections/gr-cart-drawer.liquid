@@ -4,6 +4,8 @@
   Rendered as a static section from theme.liquid.
 {%- endcomment -%}
 
+{% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+
 <script
   src="{{ 'cart-drawer.js' | asset_url }}"
   type="module"
@@ -361,6 +363,8 @@
   })();
 </script>
 
+{% endif %}
+
 {%- comment -%} Section-specific styles for trust badges and shipping bar padding {%- endcomment -%}
 {% stylesheet %}
   .gr-trust-badges {
@@ -424,9 +428,6 @@
   "class": "gr-cart-drawer-section",
   "limit": 1,
   "tag": null,
-  "enabled_on": {
-    "groups": ["*"]
-  },
   "default": {
     "blocks": [
       {

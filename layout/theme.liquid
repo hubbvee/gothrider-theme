@@ -47,9 +47,7 @@
       {% sections 'header-group' %}
     </div>
 
-    {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
-      {% section 'gr-cart-drawer' %}
-    {% endif %}
+    {% section 'gr-cart-drawer' %}
 
     <script>
       // Inline header height and menu style calculations to prevent layout shift
