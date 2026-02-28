@@ -220,7 +220,7 @@
     display: grid;
     gap: var(--gr-space-md);
     padding: var(--gr-space-lg) 0;
-    border-bottom: 1px solid var(--gr-border-subtle);
+    border-bottom: 1px solid var(--gr-border, var(--gr-border-subtle, rgba(255,255,255,.1)));
     align-items: center;
   }
 
@@ -238,6 +238,9 @@
     text-align: center;
     color: var(--gr-text-primary);
     font-size: var(--gr-body-md);
+    background: var(--gr-surface-base, #1a1a1a);
+    border-radius: 999px;
+    padding: var(--gr-space-xs) var(--gr-space-md);
   }
 
   /* Toggle button */
