@@ -4,7 +4,9 @@
       <h2 class="gr-heading gr-heading-xl gr-image-mosaic__heading">{{ section.settings.heading }}</h2>
     {% endif %}
 
-    <div class="gr-image-mosaic gr-image-mosaic--{{ section.settings.layout }}">
+    {%- assign block_count = section.blocks.size -%}
+    {%- assign is_odd = block_count | modulo: 2 -%}
+    <div class="gr-image-mosaic{% if is_odd == 1 %} gr-image-mosaic--odd{% endif %}">
       {% for block in section.blocks %}
         <div class="gr-image-mosaic__item" {{ block.shopify_attributes }}>
           {% if block.settings.link != blank %}
@@ -47,41 +49,13 @@
 
   .gr-image-mosaic {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--gr-space-sm);
   }
 
-  .gr-image-mosaic--grid-5 {
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto auto;
-  }
-
-  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(1) {
-    grid-column: 1 / 2;
-    grid-row: 1 / 3;
-  }
-
-  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(2) {
-    grid-column: 2 / 3;
-  }
-
-  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(3) {
-    grid-column: 3 / 4;
-  }
-
-  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(4) {
-    grid-column: 2 / 3;
-  }
-
-  .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(5) {
-    grid-column: 3 / 4;
-  }
-
-  .gr-image-mosaic--grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .gr-image-mosaic--grid-4 {
-    grid-template-columns: repeat(2, 1fr);
+  /* Odd count: first image spans full width */
+  .gr-image-mosaic--odd .gr-image-mosaic__item:first-child {
+    grid-column: 1 / -1;
   }
 
   .gr-image-mosaic__item {
@@ -144,20 +118,6 @@
   }
 
   @media (max-width: 768px) {
-    .gr-image-mosaic--grid-5,
-    .gr-image-mosaic--grid-3 {
-      grid-template-columns: repeat(2, 1fr);
-    }
-
-    .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(1) {
-      grid-column: 1 / -1;
-      grid-row: auto;
-    }
-
-    .gr-image-mosaic--grid-5 .gr-image-mosaic__item:nth-child(n) {
-      grid-column: auto;
-    }
-
     .gr-image-mosaic__overlay {
       opacity: 1;
     }
@@ -172,17 +132,6 @@
       "type": "text",
       "id": "heading",
       "label": "Heading"
-    },
-    {
-      "type": "select",
-      "id": "layout",
-      "label": "Layout",
-      "options": [
-        { "value": "grid-5", "label": "5-image mosaic (1 tall + 4 grid)" },
-        { "value": "grid-4", "label": "4-image grid (2x2)" },
-        { "value": "grid-3", "label": "3-column grid" }
-      ],
-      "default": "grid-5"
     }
   ],
   "blocks": [
