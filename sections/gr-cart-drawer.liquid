@@ -427,6 +427,9 @@
   "name": "GR Cart Drawer",
   "class": "gr-cart-drawer-section",
   "limit": 1,
+  "enabled_on": {
+    "groups": ["header"]
+  },
   "default": {
     "blocks": [
       {
@@ -609,17 +612,6 @@
           "label": "Text",
           "default": "Satisfaction Guaranteed"
         }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "GR Cart Drawer",
-      "blocks": [
-        { "type": "free_shipping_bar" },
-        { "type": "cart_items" },
-        { "type": "upsell" },
-        { "type": "trust_badges" }
       ]
     }
   ]

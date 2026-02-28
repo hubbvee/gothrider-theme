@@ -69,6 +69,34 @@
         "padding-block-end": 15
       }
     },
+    "gr_cart_drawer": {
+      "type": "gr-cart-drawer",
+      "blocks": {
+        "free_shipping_bar": {
+          "type": "free_shipping_bar",
+          "settings": {}
+        },
+        "cart_items": {
+          "type": "cart_items",
+          "settings": {}
+        },
+        "upsell": {
+          "type": "upsell",
+          "settings": {}
+        },
+        "trust_badges": {
+          "type": "trust_badges",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "free_shipping_bar",
+        "cart_items",
+        "upsell",
+        "trust_badges"
+      ],
+      "settings": {}
+    },
     "header_section": {
       "type": "header",
       "blocks": {
@@ -149,6 +177,7 @@
   },
   "order": [
     "header_announcements_9jGBFp",
-    "header_section"
+    "header_section",
+    "gr_cart_drawer"
   ]
 }
