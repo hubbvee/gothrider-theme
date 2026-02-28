@@ -293,6 +293,7 @@
     .gr-comparison__row {
       grid-template-columns: repeat(var(--gr-comparison-cols), 150px);
       padding: var(--gr-space-md) 0;
+      min-width: calc(100vw - 2 * var(--gr-gutter));
     }
 
     /* Feature label: sticky at left edge, spans full width above values */
@@ -300,9 +301,11 @@
       grid-column: 1 / -1;
       position: sticky;
       left: 0;
+      width: calc(100vw - 2 * var(--gr-gutter));
       background: var(--gr-surface-elevated);
       padding-bottom: var(--gr-space-xs);
       font-size: var(--gr-body-sm);
+      z-index: 1;
     }
 
     /* Values drop to row 2, under the label */
