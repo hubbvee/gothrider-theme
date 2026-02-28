@@ -62,12 +62,12 @@
                {% if outputted_count > section.settings.max_rows %}hidden{% endif %}
                {{ block.shopify_attributes }}>
             <div class="gr-comparison__feature">{{ block.settings.feature }}</div>
-            <div class="gr-comparison__value">{{ block.settings.value_1 }}</div>
+            <div class="gr-comparison__value" data-product="{{ product_columns[0].settings.name | escape }}">{{ block.settings.value_1 }}</div>
             {% if block.settings.value_2 != blank %}
-              <div class="gr-comparison__value">{{ block.settings.value_2 }}</div>
+              <div class="gr-comparison__value" data-product="{{ product_columns[1].settings.name | escape }}">{{ block.settings.value_2 }}</div>
             {% endif %}
             {% if block.settings.value_3 != blank %}
-              <div class="gr-comparison__value">{{ block.settings.value_3 }}</div>
+              <div class="gr-comparison__value" data-product="{{ product_columns[2].settings.name | escape }}">{{ block.settings.value_3 }}</div>
             {% endif %}
           </div>
         {% endif %}
@@ -315,6 +315,15 @@
     /* Values drop to row 2, under the label */
     .gr-comparison__value {
       grid-row: 2;
+    }
+
+    /* Show product name above each value */
+    .gr-comparison__value::before {
+      content: attr(data-product);
+      display: block;
+      font-size: 0.65rem;
+      color: var(--gr-text-secondary);
+      margin-bottom: 2px;
     }
 
     /* Smaller product images */
