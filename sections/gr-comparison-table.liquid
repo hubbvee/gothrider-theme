@@ -55,20 +55,22 @@
 
       {%- comment -%} Feature rows {%- endcomment -%}
       {%- assign outputted_count = 0 -%}
+      {%- assign row_index = 0 -%}
       {% for block in section.blocks %}
         {% if block.type == 'row' %}
+          {%- assign row_index = row_index | plus: 1 -%}
           {%- assign outputted_count = outputted_count | plus: 1 -%}
           <div class="gr-comparison__row gr-comparison__grid--{{ col_count }}"
                {% if outputted_count > section.settings.max_rows %}hidden{% endif %}
                {{ block.shopify_attributes }}>
             <div class="gr-comparison__feature">{{ block.settings.feature }}</div>
-            <div class="gr-comparison__value" data-product="{{ product_columns[0].settings.name | escape }}">{{ block.settings.value_1 }}</div>
-            {% if block.settings.value_2 != blank %}
-              <div class="gr-comparison__value" data-product="{{ product_columns[1].settings.name | escape }}">{{ block.settings.value_2 }}</div>
-            {% endif %}
-            {% if block.settings.value_3 != blank %}
-              <div class="gr-comparison__value" data-product="{{ product_columns[2].settings.name | escape }}">{{ block.settings.value_3 }}</div>
-            {% endif %}
+            {% for product in product_columns %}
+              {%- assign value_key = 'value_row_' | append: row_index -%}
+              {%- assign cell_value = product.settings[value_key] -%}
+              <div class="gr-comparison__value" data-product="{{ product.settings.name | escape }}">
+                {{ cell_value | default: '—' }}
+              </div>
+            {% endfor %}
           </div>
         {% endif %}
       {% endfor %}
@@ -312,9 +314,13 @@
       z-index: 1;
     }
 
-    /* Values drop to row 2, under the label */
+    /* Values drop to row 2, under the label — filled pill style */
     .gr-comparison__value {
       grid-row: 2;
+      background: var(--gr-surface-base, #1a1a1a);
+      border-radius: 999px;
+      padding: var(--gr-space-xs) var(--gr-space-md);
+      font-size: var(--gr-body-sm);
     }
 
     /* Show product name above each value */
@@ -447,7 +453,17 @@
           "id": "price",
           "label": "Price text",
           "info": "e.g. From $24.99 CAD"
-        }
+        },
+        { "type": "text", "id": "value_row_1", "label": "Row 1 value" },
+        { "type": "text", "id": "value_row_2", "label": "Row 2 value" },
+        { "type": "text", "id": "value_row_3", "label": "Row 3 value" },
+        { "type": "text", "id": "value_row_4", "label": "Row 4 value" },
+        { "type": "text", "id": "value_row_5", "label": "Row 5 value" },
+        { "type": "text", "id": "value_row_6", "label": "Row 6 value" },
+        { "type": "text", "id": "value_row_7", "label": "Row 7 value" },
+        { "type": "text", "id": "value_row_8", "label": "Row 8 value" },
+        { "type": "text", "id": "value_row_9", "label": "Row 9 value" },
+        { "type": "text", "id": "value_row_10", "label": "Row 10 value" }
       ]
     },
     {
@@ -459,22 +475,6 @@
           "id": "feature",
           "label": "Feature name",
           "default": "Roast Level"
-        },
-        {
-          "type": "text",
-          "id": "value_1",
-          "label": "Product 1 value",
-          "default": "Dark"
-        },
-        {
-          "type": "text",
-          "id": "value_2",
-          "label": "Product 2 value"
-        },
-        {
-          "type": "text",
-          "id": "value_3",
-          "label": "Product 3 value"
         }
       ]
     }
