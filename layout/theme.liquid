@@ -47,6 +47,10 @@
       {% sections 'header-group' %}
     </div>
 
+    {% if settings.cart_type == 'drawer' and template.name != 'cart' %}
+      {% section 'gr-cart-drawer' %}
+    {% endif %}
+
     <script>
       // Inline header height and menu style calculations to prevent layout shift
       // Note: Updates in calculateHeaderGroupHeight(), updateTransparentHeaderOffset() and setHeaderMenuStyle() utilities.js should be kept in sync with this function

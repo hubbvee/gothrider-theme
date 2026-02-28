@@ -9,39 +9,6 @@
 {{ 'gothrider-cart.css' | asset_url | stylesheet_tag }}
 {{ 'gothrider-footer.css' | asset_url | stylesheet_tag }}
 
-{%- liquid
-  assign gr_resolved_threshold = settings.gr_free_shipping_threshold | default: 75
-  assign gr_currency_thresholds = settings.gr_free_shipping_thresholds_by_currency | default: ''
-  assign gr_active_currency = cart.currency.iso_code | default: 'CAD'
-
-  if gr_currency_thresholds != blank
-    assign gr_pairs = gr_currency_thresholds | strip | split: '|'
-    for gr_pair in gr_pairs
-      assign gr_parts = gr_pair | strip | split: ':'
-      assign gr_pair_currency = gr_parts[0] | strip | upcase
-      if gr_pair_currency == gr_active_currency
-        assign gr_pair_value = gr_parts[1] | strip | plus: 0
-        if gr_pair_value > 0
-          assign gr_resolved_threshold = gr_pair_value
-        endif
-        break
-      endif
-    endfor
-  endif
--%}
-
-<script
-  src="{{ 'gothrider-cart.js' | asset_url }}"
-  defer
-  data-threshold="{{ gr_resolved_threshold | times: 100 }}"
-  data-currency="{{ cart.currency.symbol | default: '$' }}"
-  data-upsell-collection="{{ settings.gr_cart_upsell_collection | default: '' }}"
-  data-upsell-limit="6"
-  data-qualified-text="{{ 'general.cart.free_shipping_qualified' | t | default: 'You qualify for free shipping!' }}"
-  data-remaining-text="{{ 'general.cart.free_shipping_remaining' | t | default: 'away from free shipping' }}"
-  data-upsell-title="{{ 'general.cart.upsell_title' | t | default: 'You might also like' }}"
-></script>
-
 {% if settings.gr_enable_scroll_reveal %}
   <script src="{{ 'gothrider-scroll-reveal.js' | asset_url }}" defer></script>
 {% endif %}

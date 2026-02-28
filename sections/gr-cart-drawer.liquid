@@ -1,0 +1,627 @@
+{%- comment -%}
+  GothRider Cart Drawer
+  Block-based cart drawer section with configurable, reorderable blocks.
+  Rendered as a static section from theme.liquid.
+{%- endcomment -%}
+
+<script
+  src="{{ 'cart-drawer.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+{%- liquid
+  # --- Multi-currency threshold resolution ---
+  # Finds the free_shipping_bar block and resolves the threshold for the active currency.
+  assign gr_shipping_threshold_cents = 0
+  for block in section.blocks
+    if block.type == 'free_shipping_bar'
+      assign gr_base_threshold = block.settings.threshold | default: 75
+      assign gr_resolved_threshold = gr_base_threshold
+      assign gr_currency_thresholds = settings.gr_free_shipping_thresholds_by_currency | default: ''
+      assign gr_active_currency = cart.currency.iso_code | default: 'CAD'
+
+      if gr_currency_thresholds != blank
+        assign gr_pairs = gr_currency_thresholds | strip | split: '|'
+        for gr_pair in gr_pairs
+          assign gr_parts = gr_pair | strip | split: ':'
+          assign gr_pair_currency = gr_parts[0] | strip | upcase
+          if gr_pair_currency == gr_active_currency
+            assign gr_pair_value = gr_parts[1] | strip | plus: 0
+            if gr_pair_value > 0
+              assign gr_resolved_threshold = gr_pair_value
+            endif
+            break
+          endif
+        endfor
+      endif
+
+      assign gr_shipping_threshold_cents = gr_resolved_threshold | times: 100
+      break
+    endif
+  endfor
+-%}
+
+{%- comment -%} Empty cart state (used as template + initial render when empty) {%- endcomment -%}
+{%- capture empty_cart_drawer_content -%}
+  <div class="cart-drawer__header">
+    <button
+      ref="closeButton"
+      on:click="cart-drawer-component/close"
+      class="button close-button cart-drawer__close-button button-unstyled"
+      aria-label="{{ 'actions.close_dialog' | t }}"
+    >
+      <span class="svg-wrapper">
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </span>
+    </button>
+  </div>
+
+  <div
+    class="cart-drawer__content"
+    aria-label="{{ 'accessibility.cart' | t }}"
+  >
+    <h2
+      class="cart-drawer__heading h4 cart-drawer__heading--empty"
+      id="cart-drawer-heading-empty"
+    >
+      {{ 'content.your_cart_is_empty' | t }}
+    </h2>
+
+    <div class="cart-drawer__items">
+      {% render 'cart-products', force_empty: true %}
+    </div>
+  </div>
+{%- endcapture -%}
+
+<cart-drawer-component
+  class="cart-drawer"
+  {% if settings.auto_open_cart_drawer %}
+    auto-open
+  {% endif %}
+>
+  <template id="empty-cart-template">
+    {{ empty_cart_drawer_content }}
+  </template>
+
+  <dialog
+    ref="dialog"
+    class="cart-drawer__dialog dialog-modal dialog-drawer color-{{ settings.drawer_color_scheme }}{% if cart.empty? %} cart-drawer--empty{% endif %}"
+    data-testid="cart-drawer-dialog"
+    aria-labelledby="{% if cart.empty? %}cart-drawer-heading-empty{% else %}cart-drawer-heading{% endif %}"
+    scroll-lock
+    cart-summary-sticky="true"
+  >
+    <div
+      class="cart-drawer__inner"
+      data-hydration-key="cart-drawer-inner"
+    >
+      <cart-items-component
+        class="cart-items-component"
+        data-drawer
+        data-section-id="{{ section.id }}"
+      >
+        {%- if cart.empty? -%}
+          {{ empty_cart_drawer_content }}
+        {%- else -%}
+          {%- comment -%} FIXED: Drawer header (title + close button) {%- endcomment -%}
+          <div
+            class="cart-drawer__header"
+            id="cart-drawer-header"
+          >
+            <h2
+              class="cart-drawer__heading h4"
+              id="cart-drawer-heading"
+            >
+              {{ 'content.cart_title' | t }}
+              {% render 'cart-bubble' %}
+            </h2>
+
+            <button
+              ref="closeButton"
+              on:click="cart-drawer-component/close"
+              class="button close-button cart-drawer__close-button button-unstyled"
+              aria-label="{{ 'actions.close_dialog' | t }}"
+            >
+              <span class="svg-wrapper">
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </span>
+            </button>
+          </div>
+
+          {%- comment -%} Scrollable content: blocks rendered in editor order {%- endcomment -%}
+          <scroll-hint
+            class="cart-drawer__content"
+            aria-label="{{ 'accessibility.cart' | t }}"
+            style="--header-height: 60px;"
+          >
+            {% for block in section.blocks %}
+              {% case block.type %}
+
+                {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
+                {% when 'free_shipping_bar' %}
+                  {%- liquid
+                    assign ship_total = cart.total_price
+                    assign ship_pct = ship_total | times: 100 | divided_by: gr_shipping_threshold_cents
+                    if ship_pct > 100
+                      assign ship_pct = 100
+                    endif
+                    assign ship_remaining = gr_shipping_threshold_cents | minus: ship_total
+                    if ship_remaining < 0
+                      assign ship_remaining = 0
+                    endif
+                  -%}
+                  <div
+                    class="gr-shipping-bar"
+                    {{ block.shopify_attributes }}
+                    role="status"
+                    aria-live="polite"
+                    data-threshold="{{ gr_shipping_threshold_cents }}"
+                    data-currency="{{ cart.currency.symbol | default: '$' }}"
+                    data-qualified-text="{{ block.settings.qualified_text | escape }}"
+                    data-remaining-text="{{ block.settings.remaining_text | escape }}"
+                  >
+                    <div class="gr-shipping-bar__text{% if ship_total >= gr_shipping_threshold_cents %} gr-shipping-bar__text--complete{% endif %}">
+                      {%- if ship_total >= gr_shipping_threshold_cents -%}
+                        <strong>{{ block.settings.qualified_text }}</strong>
+                      {%- else -%}
+                        <strong>{{ ship_remaining | money }}</strong> {{ block.settings.remaining_text }}
+                      {%- endif -%}
+                    </div>
+                    <div class="gr-shipping-bar__track">
+                      <div class="gr-shipping-bar__fill" style="width: {{ ship_pct }}%;"></div>
+                    </div>
+                  </div>
+
+                {%- comment -%} ===== CART ITEMS ===== {%- endcomment -%}
+                {% when 'cart_items' %}
+                  <scroll-hint
+                    class="cart-drawer__items"
+                    {{ block.shopify_attributes }}
+                  >
+                    {% render 'cart-products', drawer_context: 'drawer' %}
+                  </scroll-hint>
+
+                {%- comment -%} ===== UPSELL PRODUCTS ===== {%- endcomment -%}
+                {% when 'upsell' %}
+                  {%- if block.settings.collection != blank -%}
+                    {%- liquid
+                      assign upsell_collection = block.settings.collection
+                      assign upsell_heading = block.settings.heading
+                      assign upsell_limit = block.settings.limit | default: 4
+                      # Build delimited list of cart product IDs for filtering
+                      assign cart_product_ids = '|'
+                      for item in cart.items
+                        assign cart_product_ids = cart_product_ids | append: item.product.id | append: '|'
+                      endfor
+                    -%}
+                    {%- assign upsell_shown = 0 -%}
+                    {%- capture upsell_cards -%}
+                      {%- for product in upsell_collection.products -%}
+                        {%- if upsell_shown >= upsell_limit -%}{%- break -%}{%- endif -%}
+                        {%- assign pid_check = '|' | append: product.id | append: '|' -%}
+                        {%- if cart_product_ids contains pid_check -%}{%- continue -%}{%- endif -%}
+                        <a href="{{ product.url }}" class="gr-cart-upsell__card">
+                          {%- if product.featured_image -%}
+                            <img
+                              class="gr-cart-upsell__img"
+                              src="{{ product.featured_image | image_url: width: 240 }}"
+                              alt="{{ product.title | escape }}"
+                              loading="lazy"
+                              width="120"
+                              height="120"
+                            >
+                          {%- endif -%}
+                          <div class="gr-cart-upsell__name">{{ product.title }}</div>
+                          <div class="gr-cart-upsell__price">{{ product.price | money }}</div>
+                        </a>
+                        {%- assign upsell_shown = upsell_shown | plus: 1 -%}
+                      {%- endfor -%}
+                    {%- endcapture -%}
+
+                    {%- if upsell_shown > 0 -%}
+                      <div class="gr-cart-upsell" {{ block.shopify_attributes }}>
+                        {%- if upsell_heading != blank -%}
+                          <div class="gr-cart-upsell__title">{{ upsell_heading }}</div>
+                        {%- endif -%}
+                        <div class="gr-cart-upsell__items">
+                          {{ upsell_cards }}
+                        </div>
+                      </div>
+                    {%- endif -%}
+                  {%- endif -%}
+
+                {%- comment -%} ===== TRUST BADGES ===== {%- endcomment -%}
+                {% when 'trust_badges' %}
+                  {%- capture trust_badge_html -%}
+                    {%- for i in (1..4) -%}
+                      {%- liquid
+                        case i
+                          when 1
+                            assign badge_icon = block.settings.badge_1_icon
+                            assign badge_text = block.settings.badge_1_text
+                          when 2
+                            assign badge_icon = block.settings.badge_2_icon
+                            assign badge_text = block.settings.badge_2_text
+                          when 3
+                            assign badge_icon = block.settings.badge_3_icon
+                            assign badge_text = block.settings.badge_3_text
+                          when 4
+                            assign badge_icon = block.settings.badge_4_icon
+                            assign badge_text = block.settings.badge_4_text
+                        endcase
+                      -%}
+                      {%- if badge_text != blank -%}
+                        <div class="gr-trust-badge">
+                          <span class="gr-trust-badge__icon" aria-hidden="true">
+                            {%- case badge_icon -%}
+                              {%- when 'lock' -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                              {%- when 'truck' -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                              {%- when 'shield' -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                              {%- when 'heart' -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                              {%- when 'star' -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                              {%- when 'return' -%}
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                            {%- endcase -%}
+                          </span>
+                          <span class="gr-trust-badge__text">{{ badge_text }}</span>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  {%- endcapture -%}
+
+                  {%- if trust_badge_html != blank -%}
+                    <div class="gr-trust-badges" {{ block.shopify_attributes }}>
+                      {{ trust_badge_html }}
+                    </div>
+                  {%- endif -%}
+
+              {% endcase %}
+            {% endfor %}
+
+            {%- comment -%} FIXED: Sticky summary (totals + checkout) {%- endcomment -%}
+            <div class="cart-drawer__summary">
+              {% render 'cart-summary', section_id: section.id %}
+            </div>
+          </scroll-hint>
+        {%- endif -%}
+      </cart-items-component>
+    </div>
+  </dialog>
+</cart-drawer-component>
+
+{%- comment -%} Inline JS: trigger connection + shipping bar dynamic updates {%- endcomment -%}
+<script>
+  (function() {
+    /* Connect header cart trigger (.gr-cart-trigger) to cart-drawer-component.open() */
+    document.addEventListener('click', function(e) {
+      if (e.target.closest('.gr-cart-trigger')) {
+        var drawer = document.querySelector('cart-drawer-component');
+        if (drawer && typeof drawer.open === 'function') {
+          drawer.open();
+        }
+      }
+    });
+
+    /* Update shipping bar progress dynamically on cart changes */
+    function updateShippingBar() {
+      var bar = document.querySelector('.gr-shipping-bar');
+      if (!bar) return;
+
+      var threshold = parseInt(bar.dataset.threshold || '0', 10);
+      if (!threshold) return;
+
+      var subtotalEl = document.querySelector('[data-cart-subtotal]');
+      if (!subtotalEl) return;
+
+      var raw = subtotalEl.getAttribute('value') || subtotalEl.textContent || '';
+      var num = parseFloat(raw.replace(/[^0-9.]/g, ''));
+      var totalCents = isNaN(num) ? 0 : Math.round(num * 100);
+
+      var pct = Math.min((totalCents / threshold) * 100, 100);
+      var fill = bar.querySelector('.gr-shipping-bar__fill');
+      if (fill) fill.style.width = pct + '%';
+
+      var textEl = bar.querySelector('.gr-shipping-bar__text');
+      if (!textEl) return;
+
+      var currency = bar.dataset.currency || '$';
+      var qualifiedText = bar.dataset.qualifiedText || 'You qualify for free shipping!';
+      var remainingText = bar.dataset.remainingText || 'away from free shipping';
+
+      /* Clear existing children safely */
+      while (textEl.firstChild) textEl.removeChild(textEl.firstChild);
+
+      if (totalCents >= threshold) {
+        textEl.className = 'gr-shipping-bar__text gr-shipping-bar__text--complete';
+        var strong = document.createElement('strong');
+        strong.textContent = qualifiedText;
+        textEl.appendChild(strong);
+      } else {
+        textEl.className = 'gr-shipping-bar__text';
+        var amtStrong = document.createElement('strong');
+        amtStrong.textContent = currency + ((threshold - totalCents) / 100).toFixed(2);
+        textEl.appendChild(amtStrong);
+        textEl.appendChild(document.createTextNode(' ' + remainingText));
+      }
+    }
+
+    /* Observe cart drawer mutations for dynamic updates */
+    var dialog = document.querySelector('.cart-drawer__dialog');
+    if (dialog) {
+      new MutationObserver(function() {
+        setTimeout(updateShippingBar, 50);
+      }).observe(dialog, { childList: true, subtree: true });
+    }
+  })();
+</script>
+
+{%- comment -%} Section-specific styles for trust badges and shipping bar padding {%- endcomment -%}
+{% stylesheet %}
+  .gr-trust-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 0.75rem var(--cart-drawer-padding);
+    justify-content: center;
+
+    @media screen and (min-width: 750px) {
+      padding-inline: var(--cart-drawer-padding-desktop);
+    }
+  }
+
+  .gr-trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.7rem;
+    color: var(--gr-text-muted, #999);
+    white-space: nowrap;
+  }
+
+  .gr-trust-badge__icon {
+    display: flex;
+    align-items: center;
+    color: var(--gr-cta, #FF5500);
+    flex-shrink: 0;
+  }
+
+  .gr-trust-badge__icon svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .gr-trust-badge__text {
+    letter-spacing: 0.02em;
+  }
+
+  .gr-shipping-bar {
+    padding: 0.75rem var(--cart-drawer-padding);
+
+    @media screen and (min-width: 750px) {
+      padding-inline: var(--cart-drawer-padding-desktop);
+    }
+  }
+
+  .gr-cart-upsell {
+    padding-inline: var(--cart-drawer-padding);
+
+    @media screen and (min-width: 750px) {
+      padding-inline: var(--cart-drawer-padding-desktop);
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "GR Cart Drawer",
+  "class": "gr-cart-drawer-section",
+  "limit": 1,
+  "tag": null,
+  "enabled_on": {
+    "groups": ["*"]
+  },
+  "default": {
+    "blocks": [
+      {
+        "type": "free_shipping_bar"
+      },
+      {
+        "type": "cart_items"
+      },
+      {
+        "type": "upsell"
+      },
+      {
+        "type": "trust_badges"
+      }
+    ]
+  },
+  "blocks": [
+    {
+      "type": "free_shipping_bar",
+      "name": "Free Shipping Bar",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "range",
+          "id": "threshold",
+          "label": "Free shipping threshold",
+          "info": "Default threshold in your primary currency. Multi-currency overrides use the theme setting.",
+          "min": 0,
+          "max": 250,
+          "step": 5,
+          "default": 75,
+          "unit": "$"
+        },
+        {
+          "type": "text",
+          "id": "qualified_text",
+          "label": "Qualified message",
+          "default": "You qualify for free shipping!"
+        },
+        {
+          "type": "text",
+          "id": "remaining_text",
+          "label": "Remaining message",
+          "info": "Shown after the remaining amount, e.g. '$25.00 away from free shipping'",
+          "default": "away from free shipping"
+        }
+      ]
+    },
+    {
+      "type": "cart_items",
+      "name": "Cart Items",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "upsell",
+      "name": "Upsell Products",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Upsell collection"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "You might also like"
+        },
+        {
+          "type": "range",
+          "id": "limit",
+          "label": "Max products to show",
+          "min": 2,
+          "max": 8,
+          "step": 1,
+          "default": 4
+        }
+      ]
+    },
+    {
+      "type": "trust_badges",
+      "name": "Trust Badges",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Badge 1"
+        },
+        {
+          "type": "select",
+          "id": "badge_1_icon",
+          "label": "Icon",
+          "default": "lock",
+          "options": [
+            { "value": "lock", "label": "Lock" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "return", "label": "Return" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "badge_1_text",
+          "label": "Text",
+          "default": "Secure Checkout"
+        },
+        {
+          "type": "header",
+          "content": "Badge 2"
+        },
+        {
+          "type": "select",
+          "id": "badge_2_icon",
+          "label": "Icon",
+          "default": "truck",
+          "options": [
+            { "value": "lock", "label": "Lock" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "return", "label": "Return" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "badge_2_text",
+          "label": "Text",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "header",
+          "content": "Badge 3"
+        },
+        {
+          "type": "select",
+          "id": "badge_3_icon",
+          "label": "Icon",
+          "default": "shield",
+          "options": [
+            { "value": "lock", "label": "Lock" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "return", "label": "Return" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "badge_3_text",
+          "label": "Text",
+          "default": "Buyer Protection"
+        },
+        {
+          "type": "header",
+          "content": "Badge 4"
+        },
+        {
+          "type": "select",
+          "id": "badge_4_icon",
+          "label": "Icon",
+          "default": "heart",
+          "options": [
+            { "value": "lock", "label": "Lock" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "star", "label": "Star" },
+            { "value": "return", "label": "Return" }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "badge_4_text",
+          "label": "Text",
+          "default": "Satisfaction Guaranteed"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "GR Cart Drawer",
+      "blocks": [
+        { "type": "free_shipping_bar" },
+        { "type": "cart_items" },
+        { "type": "upsell" },
+        { "type": "trust_badges" }
+      ]
+    }
+  ]
+}
+{% endschema %}
