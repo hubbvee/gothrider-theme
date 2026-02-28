@@ -366,7 +366,17 @@
             "name": "Gasoline Coffee",
             "image": "shopify://shop_images/comparison-gasoline.jpg",
             "link": "/products/gasoline-coffee",
-            "price": "From $24.99 CAD"
+            "price": "From $24.99 CAD",
+            "value_row_1": "Low",
+            "value_row_2": "Medium Roast",
+            "value_row_3": "High",
+            "value_row_4": "Peru",
+            "value_row_5": "USDA/FairTrade/KOR",
+            "value_row_6": "",
+            "value_row_7": "",
+            "value_row_8": "",
+            "value_row_9": "",
+            "value_row_10": ""
           }
         },
         "product_col_2": {
@@ -375,7 +385,17 @@
             "name": "Grease Coffee",
             "image": "shopify://shop_images/comparison-grease.jpg",
             "link": "/products/grease-coffee",
-            "price": "From $24.99 CAD"
+            "price": "From $24.99 CAD",
+            "value_row_1": "Medium",
+            "value_row_2": "Dark",
+            "value_row_3": "Medium",
+            "value_row_4": "Peru",
+            "value_row_5": "USDA/FairTrade/KOR",
+            "value_row_6": "",
+            "value_row_7": "",
+            "value_row_8": "",
+            "value_row_9": "",
+            "value_row_10": ""
           }
         },
         "product_col_3": {
@@ -384,52 +404,47 @@
             "name": "Blondie Coffee",
             "image": "shopify://shop_images/comparison-blondie.jpg",
             "link": "/products/blondie-coffee",
-            "price": "From $24.99 CAD"
+            "price": "From $24.99 CAD",
+            "value_row_1": "",
+            "value_row_2": "",
+            "value_row_3": "",
+            "value_row_4": "",
+            "value_row_5": "",
+            "value_row_6": "",
+            "value_row_7": "",
+            "value_row_8": "",
+            "value_row_9": "",
+            "value_row_10": ""
           }
         },
         "row_1": {
           "type": "row",
           "settings": {
-            "feature": "Acidity",
-            "value_1": "Low",
-            "value_2": "Medium",
-            "value_3": "Medium-High"
+            "feature": "Acidity"
           }
         },
         "row_2": {
           "type": "row",
           "settings": {
-            "feature": "Roasting",
-            "value_1": "Medium Roast",
-            "value_2": "Dark Roast",
-            "value_3": "Light Roast"
+            "feature": "Roasting"
           }
         },
         "row_3": {
           "type": "row",
           "settings": {
-            "feature": "Caffeine Level",
-            "value_1": "High",
-            "value_2": "Medium",
-            "value_3": "Medium"
+            "feature": "Caffeine Level"
           }
         },
         "row_4": {
           "type": "row",
           "settings": {
-            "feature": "Origin",
-            "value_1": "Peru",
-            "value_2": "Peru",
-            "value_3": "Guatemala"
+            "feature": "Origin"
           }
         },
         "row_5": {
           "type": "row",
           "settings": {
-            "feature": "Certifications",
-            "value_1": "USDA/FairTrade/KOR",
-            "value_2": "USDA/FairTrade/KOR",
-            "value_3": "USDA/FairTrade/KOR"
+            "feature": "Certifications"
           }
         }
       },
@@ -447,7 +462,10 @@
         "subheading": "Compare",
         "heading": "Specification of Our Coffee",
         "description": "<p>We are proud to offer a range of high-quality coffee products, and in this comparison, we will be focusing on our three main offerings. We will be examining their acidity, roasting style, caffeine levels, origin of the beans, and certifications to help you determine which of our products is the best fit for your tastes and preferences.</p>",
-        "feature_label": "Feature"
+        "feature_label": "Feature",
+        "max_rows": 5,
+        "view_all_text": "View all",
+        "view_less_text": "View less"
       }
     },
     "gr_faq": {
