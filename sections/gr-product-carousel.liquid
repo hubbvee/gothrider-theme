@@ -11,16 +11,7 @@
   {%- capture glow_css -%}0 0 {{ glow_blur }}px {{ section.settings.glow_color | color_modify: 'alpha', glow_alpha }}{%- endcapture -%}
 {%- endif -%}
 
-<style>
-  #shopify-section-{{ section.id }} .gr-product-card__media {
-    border-radius: {{ section.settings.card_border_radius }}px;
-  }
-  #shopify-section-{{ section.id }} .gr-product-card:hover {
-    box-shadow: {{ glow_css }};
-  }
-</style>
-
-<div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
+<div class="gr-section gr-reveal" {{ section.shopify_attributes }} style="--card-radius: {{ section.settings.card_border_radius }}px; --card-glow: {{ glow_css }};">
   <div class="gr-container">
     {% if section.settings.heading != blank %}
       <div class="gr-product-carousel__header">
@@ -124,7 +115,11 @@
   .gr-product-card {
     position: relative;
     transition: box-shadow var(--gr-transition-base);
-    border-radius: inherit;
+    border-radius: var(--card-radius, 0);
+  }
+
+  .gr-product-card:hover {
+    box-shadow: var(--card-glow, none);
   }
 
   .gr-product-card__link {
@@ -141,6 +136,7 @@
     overflow: hidden;
     aspect-ratio: 1 / 1;
     background-color: var(--gr-surface);
+    border-radius: var(--card-radius, 0);
   }
 
   .gr-product-card__img {
