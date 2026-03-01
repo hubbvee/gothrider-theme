@@ -4,6 +4,22 @@
   assign columns = section.settings.columns
 -%}
 
+{%- assign glow_css = 'none' -%}
+{%- if section.settings.card_glow -%}
+  {%- assign glow_alpha = section.settings.glow_intensity | divided_by: 100.0 -%}
+  {%- assign glow_blur = section.settings.glow_intensity | times: 0.8 | round -%}
+  {%- capture glow_css -%}0 0 {{ glow_blur }}px {{ section.settings.glow_color | color_modify: 'alpha', glow_alpha }}{%- endcapture -%}
+{%- endif -%}
+
+<style>
+  #shopify-section-{{ section.id }} .gr-product-card__media {
+    border-radius: {{ section.settings.card_border_radius }}px;
+  }
+  #shopify-section-{{ section.id }} .gr-product-card:hover {
+    box-shadow: {{ glow_css }};
+  }
+</style>
+
 <div class="gr-section gr-reveal" {{ section.shopify_attributes }}>
   <div class="gr-container">
     {% if section.settings.heading != blank %}
@@ -107,6 +123,8 @@
 
   .gr-product-card {
     position: relative;
+    transition: box-shadow var(--gr-transition-base);
+    border-radius: inherit;
   }
 
   .gr-product-card__link {
@@ -123,7 +141,6 @@
     overflow: hidden;
     aspect-ratio: 1 / 1;
     background-color: var(--gr-surface);
-    border-radius: 0;
   }
 
   .gr-product-card__img {
@@ -254,6 +271,39 @@
       "id": "show_second_image",
       "label": "Show second image on hover",
       "default": true
+    },
+    { "type": "header", "content": "Card style" },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "checkbox",
+      "id": "card_glow",
+      "label": "Enable hover glow",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "glow_color",
+      "label": "Glow color",
+      "default": "#FF5500"
+    },
+    {
+      "type": "range",
+      "id": "glow_intensity",
+      "label": "Glow intensity",
+      "min": 0,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 50
     },
     {
       "type": "text",
