@@ -22,7 +22,7 @@
         {% for product in collection.products limit: limit %}
           <div class="gr-product-card">
             <a href="{{ product.url }}" class="gr-product-card__link">
-              <div class="gr-product-card__media">
+              <div class="gr-product-card__media{% if product.images[1] and section.settings.show_second_image %} gr-product-card__media--has-hover{% endif %}">
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 600 | image_tag:
                     loading: 'lazy',
@@ -143,7 +143,7 @@
     opacity: 1;
   }
 
-  .gr-product-card:hover .gr-product-card__img--primary {
+  .gr-product-card__media--has-hover:hover .gr-product-card__img--primary {
     opacity: 0;
   }
 
