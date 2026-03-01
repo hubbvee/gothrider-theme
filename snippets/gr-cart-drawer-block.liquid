@@ -1,0 +1,153 @@
+{%- comment -%}
+  Renders a single cart drawer block.
+  Used by gr-cart-drawer section for two-pass (top/bottom) rendering.
+
+  @param {block} block - The section block to render
+  @param {number} gr_shipping_threshold_cents - Resolved shipping threshold in cents
+{%- endcomment -%}
+
+{% case block.type %}
+
+  {%- comment -%} ===== FREE SHIPPING BAR ===== {%- endcomment -%}
+  {% when 'free_shipping_bar' %}
+    {%- liquid
+      assign ship_total = cart.total_price
+      assign ship_pct = ship_total | times: 100 | divided_by: gr_shipping_threshold_cents
+      if ship_pct > 100
+        assign ship_pct = 100
+      endif
+      assign ship_remaining = gr_shipping_threshold_cents | minus: ship_total
+      if ship_remaining < 0
+        assign ship_remaining = 0
+      endif
+    -%}
+    <div
+      class="gr-shipping-bar"
+      {{ block.shopify_attributes }}
+      role="status"
+      aria-live="polite"
+      data-threshold="{{ gr_shipping_threshold_cents }}"
+      data-currency="{{ cart.currency.symbol | default: '$' }}"
+      data-qualified-text="{{ block.settings.qualified_text | escape }}"
+      data-remaining-text="{{ block.settings.remaining_text | escape }}"
+    >
+      <div class="gr-shipping-bar__text{% if ship_total >= gr_shipping_threshold_cents %} gr-shipping-bar__text--complete{% endif %}">
+        {%- if ship_total >= gr_shipping_threshold_cents -%}
+          <strong>{{ block.settings.qualified_text }}</strong>
+        {%- else -%}
+          <strong>{{ ship_remaining | money }}</strong> {{ block.settings.remaining_text }}
+        {%- endif -%}
+      </div>
+      <div class="gr-shipping-bar__track">
+        <div class="gr-shipping-bar__fill" style="width: {{ ship_pct }}%;"></div>
+      </div>
+    </div>
+
+  {%- comment -%} ===== CART ITEMS ===== {%- endcomment -%}
+  {% when 'cart_items' %}
+    <scroll-hint
+      class="cart-drawer__items"
+      {{ block.shopify_attributes }}
+    >
+      {% render 'cart-products', drawer_context: 'drawer' %}
+    </scroll-hint>
+
+  {%- comment -%} ===== UPSELL PRODUCTS ===== {%- endcomment -%}
+  {% when 'upsell' %}
+    {%- if block.settings.collection != blank -%}
+      {%- liquid
+        assign upsell_collection = block.settings.collection
+        assign upsell_heading = block.settings.heading
+        assign upsell_limit = block.settings.limit | default: 4
+        assign cart_product_ids = '|'
+        for item in cart.items
+          assign cart_product_ids = cart_product_ids | append: item.product.id | append: '|'
+        endfor
+      -%}
+      {%- assign upsell_shown = 0 -%}
+      {%- capture upsell_cards -%}
+        {%- for product in upsell_collection.products -%}
+          {%- if upsell_shown >= upsell_limit -%}{%- break -%}{%- endif -%}
+          {%- assign pid_check = '|' | append: product.id | append: '|' -%}
+          {%- if cart_product_ids contains pid_check -%}{%- continue -%}{%- endif -%}
+          <a href="{{ product.url }}" class="gr-cart-upsell__card">
+            {%- if product.featured_image -%}
+              <img
+                class="gr-cart-upsell__img"
+                src="{{ product.featured_image | image_url: width: 240 }}"
+                alt="{{ product.title | escape }}"
+                loading="lazy"
+                width="120"
+                height="120"
+              >
+            {%- endif -%}
+            <div class="gr-cart-upsell__name">{{ product.title }}</div>
+            <div class="gr-cart-upsell__price">{{ product.price | money }}</div>
+          </a>
+          {%- assign upsell_shown = upsell_shown | plus: 1 -%}
+        {%- endfor -%}
+      {%- endcapture -%}
+
+      {%- if upsell_shown > 0 -%}
+        <div class="gr-cart-upsell" {{ block.shopify_attributes }}>
+          {%- if upsell_heading != blank -%}
+            <div class="gr-cart-upsell__title">{{ upsell_heading }}</div>
+          {%- endif -%}
+          <div class="gr-cart-upsell__items">
+            {{ upsell_cards }}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+  {%- comment -%} ===== TRUST BADGES ===== {%- endcomment -%}
+  {% when 'trust_badges' %}
+    {%- capture trust_badge_html -%}
+      {%- for i in (1..4) -%}
+        {%- liquid
+          case i
+            when 1
+              assign badge_icon = block.settings.badge_1_icon
+              assign badge_text = block.settings.badge_1_text
+            when 2
+              assign badge_icon = block.settings.badge_2_icon
+              assign badge_text = block.settings.badge_2_text
+            when 3
+              assign badge_icon = block.settings.badge_3_icon
+              assign badge_text = block.settings.badge_3_text
+            when 4
+              assign badge_icon = block.settings.badge_4_icon
+              assign badge_text = block.settings.badge_4_text
+          endcase
+        -%}
+        {%- if badge_text != blank -%}
+          <div class="gr-trust-badge">
+            <span class="gr-trust-badge__icon" aria-hidden="true">
+              {%- case badge_icon -%}
+                {%- when 'lock' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                {%- when 'truck' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                {%- when 'shield' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+                {%- when 'heart' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                {%- when 'star' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                {%- when 'return' -%}
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+              {%- endcase -%}
+            </span>
+            <span class="gr-trust-badge__text">{{ badge_text }}</span>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+
+    {%- if trust_badge_html != blank -%}
+      <div class="gr-trust-badges" {{ block.shopify_attributes }}>
+        {{ trust_badge_html }}
+      </div>
+    {%- endif -%}
+
+{% endcase %}
