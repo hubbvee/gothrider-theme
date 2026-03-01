@@ -53,7 +53,14 @@
     gap: var(--gr-space-sm);
   }
 
-  /* Odd count: first image spans full width on mobile only */
+  /* Odd count — desktop: first image spans 2 rows, rest stack on the right */
+  @media (min-width: 769px) {
+    .gr-image-mosaic--odd .gr-image-mosaic__item:first-child {
+      grid-row: span 2;
+    }
+  }
+
+  /* Odd count — mobile: first image spans full width */
   @media (max-width: 768px) {
     .gr-image-mosaic--odd .gr-image-mosaic__item:first-child {
       grid-column: 1 / -1;
