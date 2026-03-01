@@ -53,10 +53,20 @@
     gap: var(--gr-space-sm);
   }
 
-  /* Odd count — desktop: first image spans 2 rows, rest stack on the right */
+  /* Odd count — desktop: first image takes left half (2 rows), rest form 2x2 grid on right */
   @media (min-width: 769px) {
+    .gr-image-mosaic--odd {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
     .gr-image-mosaic--odd .gr-image-mosaic__item:first-child {
+      grid-column: span 2;
       grid-row: span 2;
+    }
+
+    /* Images after the hero group (6th onward) go back to half-width pairing */
+    .gr-image-mosaic--odd .gr-image-mosaic__item:nth-child(n+6) {
+      grid-column: span 2;
     }
   }
 
