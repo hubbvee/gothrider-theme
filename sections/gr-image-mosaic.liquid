@@ -53,9 +53,11 @@
     gap: var(--gr-space-sm);
   }
 
-  /* Odd count: first image spans full width */
-  .gr-image-mosaic--odd .gr-image-mosaic__item:first-child {
-    grid-column: 1 / -1;
+  /* Odd count: first image spans full width on mobile only */
+  @media (max-width: 768px) {
+    .gr-image-mosaic--odd .gr-image-mosaic__item:first-child {
+      grid-column: 1 / -1;
+    }
   }
 
   .gr-image-mosaic__item {
