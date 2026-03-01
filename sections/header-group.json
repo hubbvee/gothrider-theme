@@ -11,6 +11,57 @@
   "type": "header",
   "name": "t:names.header",
   "sections": {
+    "gr_cart_drawer": {
+      "type": "gr-cart-drawer",
+      "blocks": {
+        "free_shipping_bar": {
+          "type": "free_shipping_bar",
+          "settings": {
+            "position": "top",
+            "threshold": 75,
+            "qualified_text": "You qualify for free shipping!",
+            "remaining_text": "away from free shipping"
+          }
+        },
+        "cart_items": {
+          "type": "cart_items",
+          "settings": {
+            "position": "top"
+          }
+        },
+        "upsell": {
+          "type": "upsell",
+          "settings": {
+            "position": "bottom",
+            "collection": "inkwild",
+            "heading": "You might also like",
+            "limit": 4
+          }
+        },
+        "trust_badges": {
+          "type": "trust_badges",
+          "disabled": true,
+          "settings": {
+            "position": "bottom",
+            "badge_1_icon": "lock",
+            "badge_1_text": "Secure Checkout",
+            "badge_2_icon": "truck",
+            "badge_2_text": "Free Shipping",
+            "badge_3_icon": "shield",
+            "badge_3_text": "Buyer Protection",
+            "badge_4_icon": "heart",
+            "badge_4_text": "Satisfaction Guaranteed"
+          }
+        }
+      },
+      "block_order": [
+        "free_shipping_bar",
+        "cart_items",
+        "upsell",
+        "trust_badges"
+      ],
+      "settings": {}
+    },
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
@@ -68,34 +119,6 @@
         "padding-block-start": 15,
         "padding-block-end": 15
       }
-    },
-    "gr_cart_drawer": {
-      "type": "gr-cart-drawer",
-      "blocks": {
-        "free_shipping_bar": {
-          "type": "free_shipping_bar",
-          "settings": {}
-        },
-        "cart_items": {
-          "type": "cart_items",
-          "settings": {}
-        },
-        "upsell": {
-          "type": "upsell",
-          "settings": {}
-        },
-        "trust_badges": {
-          "type": "trust_badges",
-          "settings": {}
-        }
-      },
-      "block_order": [
-        "free_shipping_bar",
-        "cart_items",
-        "upsell",
-        "trust_badges"
-      ],
-      "settings": {}
     },
     "header_section": {
       "type": "header",
