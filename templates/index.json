@@ -543,6 +543,7 @@
     },
     "gr_newsletter": {
       "type": "gr-newsletter",
+      "disabled": true,
       "settings": {
         "heading": "Signup for Our Newsletter",
         "subtext": "",
