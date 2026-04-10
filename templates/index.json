@@ -102,6 +102,7 @@
     },
     "gr_tshirt_carousel": {
       "type": "gr-product-carousel",
+      "disabled": true,
       "settings": {
         "heading": "InkWild™ T-Shirts",
         "collection": "inkwild",
@@ -199,6 +200,7 @@
         "collection_3",
         "collection_4"
       ],
+      "disabled": true,
       "settings": {
         "heading": "Shop By Category",
         "columns": "4",
