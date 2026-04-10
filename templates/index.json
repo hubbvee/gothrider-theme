@@ -35,7 +35,7 @@
       "settings": {
         "heading": "Discover Our Coffees",
         "collection": "coffee",
-        "products_to_show": 8,
+        "products_to_show": 4,
         "columns": "4",
         "show_second_image": true,
         "card_border_radius": 0,
